@@ -15,7 +15,7 @@
 
 - [x] 实现简单的登陆和注册界面
 
-![](https://github.com/zyxeeker/Inn-client/blob/master/img/image-20210414105545665.png)
+![](/img/image-20210414105545665.png)
 
 ![](/img/image-20210414105658792.png)
 
