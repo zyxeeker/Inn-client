@@ -6,8 +6,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     auth e;
-    //Innclient w;
+    Innclient w;
     e.show();
-    //w.show();
+    w.show();
     return a.exec();
 }

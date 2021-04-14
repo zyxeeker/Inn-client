@@ -2,10 +2,14 @@
 #include <string>
 #include <iostream>
 
+
+QTcpSocket*  auth::m_socket;
+
 void auth::send_message() {
 	QByteArray buffer = m_socket->readAll();
 	ui.message->setText(buffer);
-	m_socket->abort();
+	m_socket->disconnect();
+	//m_socket->abort();
 }
 
 

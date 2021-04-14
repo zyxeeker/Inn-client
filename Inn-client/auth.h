@@ -4,7 +4,9 @@
 #include <QtWidgets/qbuttongroup.h>
 #include "ui_auth.h"
 #include <QString>
-#include<QtNetwork/QtNetwork>
+#include <string>
+#include <QtNetwork/QtNetwork>
+
 
 class auth : public QMainWindow
 {
@@ -20,6 +22,8 @@ public:
 	
 	void send_message();
 
+	static QTcpSocket* m_socket;
+
 private slots:
 	void login_info();
 
@@ -32,7 +36,7 @@ private:
 	QString m_pwd;
 
 	char m_message_buff[1024];
-	QTcpSocket* m_socket;
+	//QTcpSocket* m_socket;
 
 	std::string m_data;
 };
