@@ -10,7 +10,6 @@ void Innclient::chat_content() {
 void Innclient::chat_content(QByteArray text) {
     QDateTime time = QDateTime::currentDateTime();
     QString str = m_item->text() + " " + time.toString("yyyy.MM.dd hh:mm:ss ddd") + " :\n" + text;
-
     ui.textBrowser->append(str);
 }
 
