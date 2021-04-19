@@ -91,6 +91,7 @@
     <QtMoc Include="Innclient.h" />
     <ClCompile Include="auth.cpp" />
     <ClCompile Include="chat_frame.cpp" />
+    <ClCompile Include="chat_view.cpp" />
     <ClCompile Include="Innclient.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -99,6 +100,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="chat_frame.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="chat_view.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
