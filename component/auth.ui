@@ -47,7 +47,9 @@ background-color: transparent;
     <widget class="QWidget" name="content" native="true">
      <property name="styleSheet">
       <string notr="true">#content{
-background-color: rgb(255, 255, 255);
+background-image: url(:/common/resource/bk.png);
+/*background-color: rgb(255, 255, 255);*/
+	background-color: #001122;
 border-radius: 5px;
 }</string>
      </property>
@@ -82,11 +84,8 @@ border-radius: 5px;
           </property>
           <property name="styleSheet">
            <string notr="true">border-top-left-radius: 5px;
-border-bottom-left-radius:8px;
-background-color: rgb(85, 170, 255);</string>
-          </property>
-          <property name="text">
-           <string/>
+border-bottom-left-radius:5px;
+/*background-image: url(:/common/resource/wave-haikei.png);*/</string>
           </property>
          </widget>
         </item>
@@ -134,6 +133,9 @@ background-color: rgb(85, 170, 255);</string>
                 <pointsize>20</pointsize>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true">color:white;</string>
+              </property>
               <property name="text">
                <string>ttt</string>
               </property>
@@ -149,6 +151,9 @@ background-color: rgb(85, 170, 255);</string>
                 <family>Microsoft YaHei UI</family>
                 <pointsize>10</pointsize>
                </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white;</string>
               </property>
               <property name="text">
                <string>Username</string>
@@ -195,6 +200,9 @@ QLineEdit:focus{
                 <pointsize>10</pointsize>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true">color:white;</string>
+              </property>
               <property name="text">
                <string>Password</string>
               </property>
@@ -237,6 +245,9 @@ QLineEdit:focus{
                   <family>Microsoft YaHei UI</family>
                   <pointsize>10</pointsize>
                  </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color:white;</string>
                 </property>
                 <property name="text">
                  <string>rememberPwd</string>
