@@ -25,11 +25,6 @@
   <property name="windowTitle">
    <string>Auth</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">#Auth{
-background-color: transparent;
-}</string>
-  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>0</number>
@@ -47,9 +42,7 @@ background-color: transparent;
     <widget class="QWidget" name="content" native="true">
      <property name="styleSheet">
       <string notr="true">#content{
-background-image: url(:/common/resource/bk.png);
-/*background-color: rgb(255, 255, 255);*/
-	background-color: #001122;
+background-image: url(:/auth/resource/bk.png);
 border-radius: 5px;
 }</string>
      </property>
@@ -69,27 +62,6 @@ border-radius: 5px;
       <item row="0" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QLabel" name="label">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-            <horstretch>1</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>400</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-top-left-radius: 5px;
-border-bottom-left-radius:5px;
-/*background-image: url(:/common/resource/wave-haikei.png);*/</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <spacer name="horizontalSpacer_3">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -99,7 +71,7 @@ border-bottom-left-radius:5px;
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>30</width>
+            <width>430</width>
             <height>20</height>
            </size>
           </property>
@@ -182,12 +154,17 @@ border-bottom-left-radius:5px;
               </property>
               <property name="styleSheet">
                <string notr="true">QLineEdit{
+	color:white;
     border-radius:2px;
-    border:1px solid #cccccc;
+	padding:5px;
+    border:1px solid rgb(48, 48, 48);
+	background-color: rgb(36, 36, 36);
+	selection-background-color: rgb(251, 174, 60);
+	selection-color: rgb(36, 36, 36);
 }
 QLineEdit:focus{
-    
-	border-color: rgb(144, 187, 255);
+	border-color: rgb(251, 174, 60);
+	/*border-color: rgb(144, 187, 255);*/
 }</string>
               </property>
              </widget>
@@ -224,17 +201,131 @@ QLineEdit:focus{
               </property>
               <property name="styleSheet">
                <string notr="true">QLineEdit{
+	color:white;
     border-radius:2px;
-    border:1px solid #cccccc;
+	padding:5px;
+    border:1px solid rgb(48, 48, 48);
+	background-color: rgb(36, 36, 36);
+	selection-background-color: rgb(251, 174, 60);
+	selection-color: rgb(36, 36, 36);
 }
 QLineEdit:focus{
-	border-color: rgb(144, 187, 255);
+	border-color: rgb(251, 174, 60);
 }</string>
               </property>
               <property name="echoMode">
                <enum>QLineEdit::Password</enum>
               </property>
              </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="tip">
+              <property name="font">
+               <font>
+                <family>Microsoft YaHei UI</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(251, 174, 60);</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <item>
+               <widget class="QPushButton" name="exitBtn">
+                <property name="minimumSize">
+                 <size>
+                  <width>35</width>
+                  <height>35</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>35</width>
+                  <height>35</height>
+                 </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+border-radius:2px;
+background-color:#A7233A;
+}
+
+QPushButton:hover {
+background-color:rgb(205, 45, 75);
+color:white;
+}
+
+QPushButton:pressed {
+background-color:rgb(205, 45, 75);
+}
+
+QPushButton:disabled {
+background-color:gray;
+color:lightgray;
+}</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../res.qrc">
+                  <normaloff>:/auth/resource/exit.png</normaloff>:/auth/resource/exit.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>15</width>
+                  <height>15</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="loginBtn">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>35</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Microsoft YaHei UI</family>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+border-radius:2px;
+background-color:rgb(65, 65, 65);
+color:white;
+}
+
+QPushButton:hover {
+background-color:rgba(251, 174, 60, 250);
+color:white;
+}
+
+QPushButton:pressed {
+background-color:rgba(251, 174, 60, 250);
+}
+
+QPushButton:disabled {
+background-color:gray;
+color:lightgray;
+}</string>
+                </property>
+                <property name="text">
+                 <string>LoginIN</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout">
@@ -247,44 +338,57 @@ QLineEdit:focus{
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">color:white;</string>
+                 <string notr="true">QCheckBox{
+color:white;
+}
+QCheckBox::indicator {
+border:1px solid rgb(251, 174, 60);
+border-radius:2px;
+background:transparent;
+width:13px;
+height:13px;
+}
+QCheckBox::indicator:unchecked:hover{
+	background-color: rgba(255, 255, 255, 50);
+}
+QCheckBox::indicator:checked{
+background:rgb(251, 174, 60);
+image: url(:/common/resource/checked.png);
+}</string>
                 </property>
                 <property name="text">
-                 <string>rememberPwd</string>
+                 <string>lll</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QPushButton" name="forgetPwd">
+                <property name="font">
+                 <font>
+                  <family>Microsoft YaHei UI</family>
+                  <pointsize>9</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+color:white;
+background-color:transparent;
+}
+
+QPushButton:hover {
+color:rgb(251, 174, 60);
+}
+
+QPushButton:disabled {
+color:lightgray;
+}</string>
+                </property>
                 <property name="text">
-                 <string>PushButton</string>
+                 <string>forget?</string>
                 </property>
                </widget>
               </item>
              </layout>
-            </item>
-            <item>
-             <widget class="QPushButton" name="loginBtn">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>35</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Microsoft YaHei UI</family>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">border-radius:2px;
-background-color: rgb(85, 170, 255);</string>
-              </property>
-              <property name="text">
-               <string>LoginIN</string>
-              </property>
-             </widget>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -303,8 +407,28 @@ background-color: rgb(85, 170, 255);</string>
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_3">
+                <property name="font">
+                 <font>
+                  <family>Microsoft YaHei UI</family>
+                  <pointsize>9</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{
+color:white;
+background-color:transparent;
+}
+
+QPushButton:hover {
+color:rgb(251, 174, 60);
+}
+
+QPushButton:disabled {
+color:lightgray;
+}</string>
+                </property>
                 <property name="text">
-                 <string>PushButton</string>
+                 <string>resigter</string>
                 </property>
                </widget>
               </item>
@@ -322,55 +446,6 @@ background-color: rgb(85, 170, 255);</string>
                </spacer>
               </item>
              </layout>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <spacer name="horizontalSpacer_6">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="exitBtn">
-              <property name="minimumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>40</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_7">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </item>
@@ -399,7 +474,7 @@ background-color: rgb(85, 170, 255);</string>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>30</width>
+            <width>35</width>
             <height>20</height>
            </size>
           </property>
@@ -415,5 +490,22 @@ background-color: rgb(85, 170, 255);</string>
  <resources>
   <include location="../res.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>exitBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>Auth</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>457</x>
+     <y>300</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

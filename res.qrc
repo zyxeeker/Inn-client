@@ -1,8 +1,9 @@
 <RCC>
-  <qresource prefix="common">
-    <file>resource/blob-scene-haikei.png</file>
+  <qresource prefix="auth">
     <file>resource/bk.png</file>
-    <file>resource/wave-haikei.png</file>
-    <file>resource/blurry-gradient-haikei.png</file>
+    <file>resource/exit.png</file>
+  </qresource>
+  <qresource prefix="common">
+    <file>resource/checked.png</file>
   </qresource>
 </RCC>
