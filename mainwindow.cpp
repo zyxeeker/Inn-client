@@ -16,7 +16,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::ImportContentBackground() {
-    QSvgRenderer r(QString(":/common/resource/bk_test.svg"));
+    QSvgRenderer r(QString(":/common/resource/content_bk.svg"));
     m_px = new QPixmap(ui->content->size());
     QPainter Painter;
     m_px->fill(Qt::transparent);
