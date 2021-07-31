@@ -3,7 +3,25 @@
     <file>resource/bk.png</file>
     <file>resource/exit.png</file>
   </qresource>
+  <qresource prefix="main">
+    <file>resource/group.png</file>
+    <file>resource/group_checked.png</file>
+    <file>resource/people.png</file>
+    <file>resource/people_checked.png</file>
+    <file>resource/setting.png</file>
+    <file>resource/setting_checked.png</file>
+    <file>resource/home_checked.png</file>
+    <file>resource/home.png</file>
+    <file>resource/close.png</file>
+    <file>resource/close_2.png</file>
+    <file>resource/hide.png</file>
+    <file>resource/max.png</file>
+    <file>resource/min.png</file>
+  </qresource>
   <qresource prefix="common">
+    <file>resource/bk_2.png</file>
+    <file>resource/bk_test.svg</file>
+    <file>resource/patchNote.png</file>
     <file>resource/checked.png</file>
   </qresource>
 </RCC>
