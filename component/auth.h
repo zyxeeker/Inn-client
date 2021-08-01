@@ -32,6 +32,12 @@ private:
     Ui::Auth *ui;
     QString m_username;
     QString m_pwd;
+
+    const int m_titleXMin = 0;
+    const int m_titleYMin = 0;
+    const int m_titleXMax = 700;
+    const int m_titleYMax = 30;
+
     QPoint m_mousePosition;
     bool m_mousePress;
 

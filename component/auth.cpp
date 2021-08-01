@@ -11,7 +11,7 @@
 Auth::Auth(QWidget *parent) :
         QWidget(parent), ui(new Ui::Auth) {
     ui->setupUi(this);
-    setWindowFlag(Qt::WindowStaysOnTopHint);
+//    setWindowFlag(Qt::WindowStaysOnTopHint);
     setWindowFlag(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground, true);
 }
@@ -22,8 +22,12 @@ Auth::~Auth() {
 
 void Auth::mousePressEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
-        m_mousePress = true;
         m_mousePosition = event->pos();
+        if (m_mousePosition.x() <= m_titleXMin) return;
+        if (m_mousePosition.x() >= m_titleXMax) return;
+        if (m_mousePosition.y() <= m_titleYMin) return;
+        if (m_mousePosition.y() >= m_titleYMax) return;
+        m_mousePress = true;
     }
 }
 

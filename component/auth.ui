@@ -46,7 +46,7 @@ background-image: url(:/auth/resource/bk.png);
 border-radius: 5px;
 }</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
+     <layout class="QGridLayout" name="gridLayout_3">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -59,8 +59,224 @@ border-radius: 5px;
       <property name="bottomMargin">
        <number>0</number>
       </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <item row="0" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <widget class="QWidget" name="title" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#title{
+background-color: rgb(36, 36, 36);
+border-top-right-radius:2px;
+border-top-left-radius:2px;
+}</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="minimumSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(85, 170, 255);</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_10">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Minimum</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>5</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_5">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color:lightgray;</string>
+             </property>
+             <property name="text">
+              <string>Inn</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="hideBtn">
+             <property name="minimumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton{
+border-radius:none;
+background-color:rgba(65, 65, 65, 120);
+}
+
+QPushButton:hover {
+background-color:rgba(65, 65, 65, 200);
+}
+
+QPushButton:pressed {
+background-color:rgb(65, 65, 65);
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../res.qrc">
+               <normaloff>:/main/resource/hide.png</normaloff>:/main/resource/hide.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>15</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="closeBtn">
+             <property name="minimumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton{
+border-top-right-radius:2px;
+background-color:rgb(167, 35, 58);
+}
+
+QPushButton:hover {
+background-color:rgba(205, 45, 75, 240);
+color:white;
+}
+
+QPushButton:pressed {
+background-color:rgb(205, 45, 75);
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../res.qrc">
+               <normaloff>:/main/resource/close_2.png</normaloff>:/main/resource/close_2.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>15</width>
+               <height>15</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <spacer name="horizontalSpacer_3">
           <property name="orientation">
@@ -97,6 +313,9 @@ border-radius: 5px;
           </item>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout">
+            <property name="spacing">
+             <number>6</number>
+            </property>
             <item>
              <widget class="QLabel" name="label_4">
               <property name="font">
@@ -233,6 +452,9 @@ QLineEdit:focus{
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <property name="spacing">
+               <number>5</number>
+              </property>
               <item>
                <widget class="QPushButton" name="exitBtn">
                 <property name="minimumSize">
@@ -253,6 +475,10 @@ QLineEdit:focus{
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
 border-radius:2px;
+border-top-right-radius:5px;
+border-top-left-radius:15px;
+border-bottom-left-radius:5px;
+border-bottom-right-radius:5px;
 background-color:#A7233A;
 }
 
@@ -286,7 +512,7 @@ color:lightgray;
                <widget class="QPushButton" name="loginBtn">
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
+                  <width>175</width>
                   <height>35</height>
                  </size>
                 </property>
@@ -301,7 +527,10 @@ color:lightgray;
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton{
-border-radius:2px;
+border-top-right-radius:15px;
+border-top-left-radius:5px;
+border-bottom-left-radius:5px;
+border-bottom-right-radius:5px;
 background-color:rgb(65, 65, 65);
 color:white;
 }

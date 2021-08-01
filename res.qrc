@@ -20,7 +20,7 @@
   </qresource>
   <qresource prefix="common">
     <file>resource/bk_2.png</file>
-    <file>resource/bk_test.svg</file>
+    <file>resource/content_bk.svg</file>
     <file>resource/patchNote.png</file>
     <file>resource/checked.png</file>
   </qresource>
