@@ -391,7 +391,8 @@ background-color:rgb(52, 52, 52);
               </property>
               <property name="icon">
                <iconset resource="res.qrc">
-                <normaloff>:/main/resource/home.png</normaloff>:/main/resource/home.png</iconset>
+                <normaloff>:/main/resource/home.png</normaloff>
+                <activeon>:/main/resource/home_checked.png</activeon>:/main/resource/home.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -411,7 +412,7 @@ background-color:rgb(52, 52, 52);
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_3">
+             <widget class="QPushButton" name="peopleBtn">
               <property name="minimumSize">
                <size>
                 <width>50</width>
@@ -448,7 +449,8 @@ background-color:rgb(52, 52, 52);
               </property>
               <property name="icon">
                <iconset resource="res.qrc">
-                <normaloff>:/main/resource/people.png</normaloff>:/main/resource/people.png</iconset>
+                <normaloff>:/main/resource/people.png</normaloff>
+                <activeon>:/main/resource/people_checked.png</activeon>:/main/resource/people.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -465,7 +467,7 @@ background-color:rgb(52, 52, 52);
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_7">
+             <widget class="QPushButton" name="groupBtn">
               <property name="minimumSize">
                <size>
                 <width>50</width>
@@ -502,7 +504,8 @@ background-color:rgb(52, 52, 52);
               </property>
               <property name="icon">
                <iconset resource="res.qrc">
-                <normaloff>:/main/resource/group.png</normaloff>:/main/resource/group.png</iconset>
+                <normaloff>:/main/resource/group.png</normaloff>
+                <activeon>:/main/resource/group_checked.png</activeon>:/main/resource/group.png</iconset>
               </property>
               <property name="iconSize">
                <size>
