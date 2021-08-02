@@ -69,9 +69,29 @@ void MainWindow::mouseMoveEvent(QMouseEvent *e) {
     if (m_mousePress) {
         QPoint position = e->globalPos();
         move(position - m_mousePosition);
+        if (m_windowMax) m_windowMax = false;
     }
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *e) {
     m_mousePress = false;
+}
+
+void MainWindow::mouseDoubleClickEvent(QMouseEvent *e) {
+    m_mousePosition = e->pos();
+    if (m_mousePosition.x() <= m_titleXMin) return;
+    if (m_mousePosition.x() >= m_titleXMax) return;
+    if (m_mousePosition.y() <= m_titleYMin) return;
+    if (m_mousePosition.y() >= m_titleYMax) return;
+    if (!m_windowMax) {
+        showMaximized();
+        m_windowMax = true;
+    } else {
+        showNormal();
+        m_windowMax = false;
+    }
+}
+
+void MainWindow::on_hideBtn_clicked() {
+    showMaximized();
 }

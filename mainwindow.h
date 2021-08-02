@@ -28,6 +28,8 @@ protected:
 
     void mouseReleaseEvent(QMouseEvent *e);
 
+    void mouseDoubleClickEvent(QMouseEvent *e);
+
 private:
     Ui::MainWindow *ui;
     QPixmap *m_px;
@@ -38,11 +40,19 @@ private:
     const int m_titleYMax = 30;
 
     bool m_mousePress;
+    bool m_windowMax = false;
     QPoint m_mousePosition;
 
 private:
     void SetContentBackground();
 
     void ImportContentBackground();
+
+private slots:
+
+    void on_hideBtn_clicked();
+//
+//    void on_peopleBtn_clicked();
+
 };
 #endif // MAINWINDOW_H
