@@ -7,6 +7,20 @@
 #include <QMouseEvent>
 #include <QtSvg/QSvgRenderer>
 
+#ifdef Q_OS_WIN
+
+#include <windows.h>
+
+#ifndef GET_X_LPARAM
+#define GET_X_LPARAM(lParam) ((int)(short)LOWORD(lParam))
+#endif
+#ifndef GET_Y_LPARAM
+#define GET_Y_LPARAM(lParam) ((int)(short)HIWORD(lParam))
+
+#endif
+
+
+#endif
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -22,6 +36,7 @@ public:
 protected:
     void resizeEvent(QResizeEvent *e);
 
+#if 0
     void mouseMoveEvent(QMouseEvent *e);
 
     void mousePressEvent(QMouseEvent *e);
@@ -29,6 +44,10 @@ protected:
     void mouseReleaseEvent(QMouseEvent *e);
 
     void mouseDoubleClickEvent(QMouseEvent *e);
+#endif
+
+    //    eventType, message, result
+    bool nativeEvent(const QByteArray &et, void *m, long *r);
 
 private:
     Ui::MainWindow *ui;
@@ -37,7 +56,7 @@ private:
     const int m_titleXMin = 0;
     const int m_titleYMin = 0;
     int m_titleXMax = 800;
-    const int m_titleYMax = 30;
+    const int m_titleYMax = 20;
 
     bool m_mousePress;
     bool m_windowMax = false;
