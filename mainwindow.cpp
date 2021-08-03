@@ -6,16 +6,9 @@
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-    setWindowFlag(Qt::FramelessWindowHint);
-//    setWindowFlag(Qt::WindowMinimizeButtonHint);
+//    setWindowFlag(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground, true);
     ImportContentBackground();
-#if 0
-    QPalette pal = palette();
-    pal.setColor(QPalette::Background, QColor(0x00,0xff,0x00,0x00));
-    setPalette(pal);
-#endif
-
 #ifdef Q_OS_WIN
     HWND hwnd = reinterpret_cast<HWND>(winId());
     DWORD style = GetWindowLong(hwnd, GWL_STYLE);
@@ -38,31 +31,26 @@ void MainWindow::ImportContentBackground() {
 }
 
 void MainWindow::SetContentBackground() {
+#if 0
     ui->content->setAutoFillBackground(true);
     QPalette palette = ui->content->palette();
     palette.setBrush(QPalette::Window,
-                     QBrush(m_px->scaled(ui->content->size(),
-                                         Qt::KeepAspectRatioByExpanding/*, Qt::FastTransformation*//*Qt::IgnoreAspectRatio*/,
-                                         Qt::SmoothTransformation)));
+                     QBrush(m_px->scaled(ui->content->size(),Qt::IgnoreAspectRatio, Qt::SmoothTransformation)));
     ui->content->setPalette(palette);
+#endif
+}
+
+void MainWindow::SetMax2Min() {
+    m_maximized = true;
+    ui->maximizedBtn->setIcon(QIcon(":/main/resource/min.png"));
+}
+
+void MainWindow::SetMin2Max() {
+    m_maximized = false;
+    ui->maximizedBtn->setIcon(QIcon(":/main/resource/max.png"));
 }
 
 void MainWindow::resizeEvent(QResizeEvent *e) {
-#if 0
-    QSvgRenderer r(QString(":/common/resource/bk_test.svg"));
-    QPixmap px(ui->content->size());
-    QPainter Painter;
-
-    px.fill(Qt::transparent);
-    Painter.begin(&px);
-    r.render(&Painter);
-    Painter.end();
-
-    ui->content->setAutoFillBackground(true);
-    QPalette palette = ui->content->palette();
-    palette.setBrush(QPalette::Window,QBrush(m_px->scaled(ui->content->size(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation)));
-    ui->content->setPalette(palette);
-#endif
     SetContentBackground();
 }
 
@@ -107,10 +95,6 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *e) {
 //    }
 }
 #endif
-
-void MainWindow::on_hideBtn_clicked() {
-    showMaximized();
-}
 
 bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *result) {
 #ifdef Q_OS_WIN
@@ -169,8 +153,8 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
             if (!ui->title) return false;
 
             //support highdpi
-            double dpr = this->devicePixelRatioF();
-            QPoint pos = ui->title->mapFromGlobal(QPoint(x / dpr, y / dpr));
+//            double dpr = this->devicePixelRatioF();
+            QPoint pos = ui->title->mapFromGlobal(QPoint(x, y));
 
             if (!ui->title->rect().contains(pos)) return false;
             QWidget *child = ui->title->childAt(pos);
@@ -178,7 +162,7 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
                 *result = HTCAPTION;
                 return true;
             } else {
-                if (child == ui->icon || child == ui->text) {
+                if (child == ui->text) {
                     *result = HTCAPTION;
                     return true;
                 }
@@ -189,13 +173,15 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
             if (::IsZoomed(msg->hwnd)) {
                 RECT frame = {0, 0, 0, 0};
                 AdjustWindowRectEx(&frame, WS_OVERLAPPEDWINDOW, FALSE, 0);
-
                 //record frame area data
-                double dpr = this->devicePixelRatioF();
-                this->setContentsMargins(abs(frame.left) / dpr + 0.5, abs(frame.bottom) / dpr + 0.5,
-                                         abs(frame.right) / dpr + 0.5, abs(frame.bottom) / dpr + 0.5);
+//                double dpr = this->devicePixelRatioF();
+                this->setContentsMargins(abs(frame.left), abs(frame.bottom),
+                                         abs(frame.right), abs(frame.bottom));
+                SetMax2Min();
+
             } else {
                 this->setContentsMargins(0, 0, 0, 0);
+                SetMin2Max();
             }
             return false;
         }
@@ -203,4 +189,22 @@ bool MainWindow::nativeEvent(const QByteArray &eventType, void *message, long *r
             return QMainWindow::nativeEvent(eventType, message, result);
     }
 #endif
+}
+
+void MainWindow::on_minimizedBtn_clicked() {
+    this->showMinimized();
+}
+
+void MainWindow::on_exitBtn_clicked() {
+    this->close();
+}
+
+void MainWindow::on_maximizedBtn_clicked() {
+    if (m_maximized) {
+        this->showNormal();
+        SetMin2Max();
+    } else {
+        this->showMaximized();
+        SetMax2Min();
+    }
 }

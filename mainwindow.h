@@ -59,7 +59,7 @@ private:
     const int m_titleYMax = 20;
 
     bool m_mousePress;
-    bool m_windowMax = false;
+    bool m_maximized = false;
     QPoint m_mousePosition;
 
 private:
@@ -67,9 +67,17 @@ private:
 
     void ImportContentBackground();
 
+    void SetMax2Min();
+
+    void SetMin2Max();
+
 private slots:
 
-    void on_hideBtn_clicked();
+    void on_minimizedBtn_clicked();
+
+    void on_maximizedBtn_clicked();
+
+    void on_exitBtn_clicked();
 //
 //    void on_peopleBtn_clicked();
 
