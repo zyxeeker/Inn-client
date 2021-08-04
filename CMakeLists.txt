@@ -33,7 +33,7 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        component/auth.cpp component/auth.h component/auth.ui res.qrc)
+        component/auth.cpp component/auth.h component/auth.ui res.qrc page/overview.cpp page/overview.h page/live_stream.cpp page/live_stream.h page/live_stream.ui)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(InnClient

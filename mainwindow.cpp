@@ -9,6 +9,13 @@ MainWindow::MainWindow(QWidget *parent)
 //    setWindowFlag(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground, true);
     ImportContentBackground();
+#if 1
+    Overview *oo = new Overview;
+    ui->stackedContent->addWidget(oo);
+    qDebug() << ui->stackedContent->currentWidget();
+    ui->stackedContent->setCurrentIndex(0);
+//    ui->stackedContent->setCurrentWidget(&oo);
+#endif
 #ifdef Q_OS_WIN
     HWND hwnd = reinterpret_cast<HWND>(winId());
     DWORD style = GetWindowLong(hwnd, GWL_STYLE);

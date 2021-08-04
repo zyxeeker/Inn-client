@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QtSvg/QSvgRenderer>
+#include "./page/overview.h"
 
 #ifdef Q_OS_WIN
 
