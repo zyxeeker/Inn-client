@@ -25,5 +25,6 @@
     <file>resource/content_bk.svg</file>
     <file>resource/patchNote.png</file>
     <file>resource/checked.png</file>
+    <file>resource/bk.jpg</file>
   </qresource>
 </RCC>
