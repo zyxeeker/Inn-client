@@ -3,22 +3,24 @@
     <file>resource/bk.png</file>
     <file>resource/exit.png</file>
   </qresource>
-  <qresource prefix="main">
-    <file>resource/group.png</file>
-    <file>resource/group_checked.png</file>
-    <file>resource/people.png</file>
-    <file>resource/people_checked.png</file>
-    <file>resource/setting.png</file>
-    <file>resource/setting_checked.png</file>
-    <file>resource/home_checked.png</file>
-    <file>resource/home.png</file>
-    <file>resource/close.png</file>
-    <file>resource/close_2.png</file>
-    <file>resource/hide.png</file>
-    <file>resource/max.png</file>
-    <file>resource/min.png</file>
+  <qresource prefix="main"/>
+  <qresource prefix="nav">
+    <file>resource/setting.svg</file>
+    <file>resource/setting_checked.svg</file>
+    <file>resource/home.svg</file>
+    <file>resource/home_checked.svg</file>
+    <file>resource/group.svg</file>
+    <file>resource/group_checked.svg</file>
+    <file>resource/people.svg</file>
+    <file>resource/people_checked.svg</file>
+    <file>resource/live.svg</file>
+    <file>resource/live_checked.svg</file>
   </qresource>
   <qresource prefix="common">
+    <file>resource/hide.svg</file>
+    <file>resource/close.svg</file>
+    <file>resource/max.svg</file>
+    <file>resource/min.svg</file>
     <file>resource/bk_2.png</file>
     <file>resource/content_bk.svg</file>
     <file>resource/patchNote.png</file>

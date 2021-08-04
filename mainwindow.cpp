@@ -42,12 +42,12 @@ void MainWindow::SetContentBackground() {
 
 void MainWindow::SetMax2Min() {
     m_maximized = true;
-    ui->maximizedBtn->setIcon(QIcon(":/main/resource/min.png"));
+    ui->maximizedBtn->setIcon(QIcon(":/common/resource/min.svg"));
 }
 
 void MainWindow::SetMin2Max() {
     m_maximized = false;
-    ui->maximizedBtn->setIcon(QIcon(":/main/resource/max.png"));
+    ui->maximizedBtn->setIcon(QIcon(":/common/resource/max.svg"));
 }
 
 void MainWindow::resizeEvent(QResizeEvent *e) {
