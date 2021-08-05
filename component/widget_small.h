@@ -12,6 +12,7 @@
 #include <QPushButton>
 #include <QListWidget>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QPropertyAnimation>
 #include <QDebug>
 
@@ -53,7 +54,10 @@ private:
 private:
     QWidget *m_banner;
     QWidget *m_sContent;
-    QWidget *m_w2;
+
+    QVBoxLayout *m_layout;
+    QHBoxLayout *m_btns;
+    QVBoxLayout *m_listLayout;
 
     QPushButton *m_refreshBtn;
     QPushButton *m_backBtn;
@@ -81,7 +85,6 @@ private:
     QPixmap m_px1;
     QPixmap m_px2;
     QPixmap m_px3;
-    QPixmap *m_t;
 
     QPushButton *m_btn;
 

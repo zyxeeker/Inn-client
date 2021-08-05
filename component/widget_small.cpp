@@ -2,10 +2,7 @@
 // Created by zyx on 2021/8/4.
 //
 
-
-#include <QGraphicsDropShadowEffect>
 #include "widget_small.h"
-
 
 QWidget *ListItem::init() {
     m_w = new QWidget();
@@ -46,7 +43,7 @@ SWidget::SWidget() {
     connect(m_backBtn, &QPushButton::clicked, this, [=]() {
         QPropertyAnimation *animation = new QPropertyAnimation(m_sContent, "geometry");
         animation->setEasingCurve(QEasingCurve::InOutSine);
-        animation->setDuration(130);
+        animation->setDuration(200);
         animation->setStartValue(m_sContent->geometry());
         animation->setEndValue(QRect(0, 250, 150, 150));
         animation->start();
@@ -55,7 +52,7 @@ SWidget::SWidget() {
     connect(m_btn, &QPushButton::clicked, this, [=]() {
         QPropertyAnimation *animation = new QPropertyAnimation(m_sContent, "geometry");
         animation->setEasingCurve(QEasingCurve::InOutSine);
-        animation->setDuration(130);
+        animation->setDuration(200);
         animation->setStartValue(m_sContent->geometry());
         animation->setEndValue(QRect(0, 0, 300, 400));
         animation->start();
@@ -105,17 +102,25 @@ void SWidget::RegSContent() {
     m_backBtn = new QPushButton(m_sContent);
 
     m_refreshBtn->setIcon(QIcon(m_refreshIcon));
-    m_refreshBtn->setGeometry(QRect(220, 10, 25, 25));
+    m_refreshBtn->setMinimumSize(25, 25);
+    m_refreshBtn->setMaximumSize(25, 25);
     m_refreshBtn->setStyleSheet("QPushButton{border-radius:5px;background-color: rgb(10, 132, 255);}"
                                 "QPushButton:hover{background-color: rgb(132, 194, 255);}"
                                 "QPushButton:pressed{background-color: rgb(10, 132, 255);}");
 
     m_backBtn->setObjectName("backBtn");
     m_backBtn->setIcon(QIcon(m_minimizedIcon));
-    m_backBtn->setGeometry(QRect(250, 10, 25, 25));
+//    m_backBtn->setGeometry(QRect(250, 10, 25, 25));
+    m_backBtn->setMinimumSize(25, 25);
+    m_backBtn->setMaximumSize(25, 25);
     m_backBtn->setStyleSheet("QPushButton{border-radius:5px;background-color: rgb(10, 132, 255);}"
                              "QPushButton:hover{background-color: rgb(132, 194, 255);}"
                              "QPushButton:pressed{background-color: rgb(10, 132, 255);}");
+    m_btns = new QHBoxLayout;
+    m_btns->addWidget(m_refreshBtn);
+    m_btns->addWidget(m_backBtn);
+    m_btns->setSpacing(5);
+    m_btns->setContentsMargins(0, 5, 10, 5);
 }
 
 void SWidget::RegList() {
@@ -124,20 +129,26 @@ void SWidget::RegList() {
     m_listContainer->setGeometry(QRect(10, 40, 280, 350));
     m_listContainer->setStyleSheet("#listContainer{border-radius:24px;background-color:black;}");
 
+    m_listLayout = new QVBoxLayout;
+    m_listLayout->addWidget(m_listContainer);
+    m_listLayout->setContentsMargins(5, 0, 5, 10);
+
     m_list = new QListWidget(m_listContainer);
     m_list->setObjectName("list");
     m_list->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_list->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    m_list->setGeometry(QRect(10, 10, 260, 330));
+    m_list->setGeometry(QRect(10, 5, 250, 310));
     m_list->setStyleSheet("#list{background-color:transparent;border:none;}");
-    m_listContainer->setWindowOpacity(0);
-    m_list->setWindowOpacity(0);
 }
 
 void SWidget::RegBk() {
     RegSContent();
     RegBanner();
     RegList();
+    m_layout = new QVBoxLayout(m_sContent);
+    m_layout->addItem(m_btns);
+    m_layout->addItem(m_listLayout);
+    m_sContent->setLayout(m_layout);
     for (int i = 0; i < 50; ++i) {
         ListItem *src = new ListItem(2, ",,,,,,,");
         QListWidgetItem *dst = new QListWidgetItem(m_list, 0);
@@ -154,12 +165,4 @@ void SWidget::load() {
     m_px3 = LoadSvg(":/component/resource/3.svg", 15, 15);
     m_refreshIcon = LoadSvg(":/component/resource/refresh.svg", 15, 15);
     m_minimizedIcon = LoadSvg(":/component/resource/left-small-down.svg", 15, 15);
-
-//    QSvgRenderer r4(QString(":/common/resource/hide.svg"));
-//    m_t = new QPixmap(QSize(15, 15));
-//    QPainter Painter4;
-//    m_t->fill(Qt::transparent);
-//    Painter4.begin(m_t);
-//    r4.render(&Painter4);
-//    Painter4.end();
 }
