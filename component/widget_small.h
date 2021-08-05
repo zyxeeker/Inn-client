@@ -25,19 +25,18 @@ public:
 private:
     int m_num;
     QString m_titleCtx;
-
+    QPixmap m_gtoPx;
     QHBoxLayout *m_layout;
     QWidget *m_w;
     QLabel *m_index;
     QLabel *m_title;
-    QPushButton *m_gto;
+    QLabel *m_gto;
 };
 
 class SWidget : public QWidget {
 public:
     SWidget();
 
-    static QPixmap LoadSvg(QString url, int w, int h);
 private:
     void InitUI();
 
@@ -54,10 +53,12 @@ private:
 private:
     QWidget *m_banner;
     QWidget *m_sContent;
+    QWidget *m_sBanner;
 
     QVBoxLayout *m_layout;
     QHBoxLayout *m_btns;
     QVBoxLayout *m_listLayout;
+    QVBoxLayout *m_ctxBanner;
 
     QPushButton *m_refreshBtn;
     QPushButton *m_backBtn;
@@ -69,6 +70,7 @@ private:
     QListWidget *m_list;
     QListWidgetItem *m_item;
 
+    QLabel *m_titleCtx;
     QLabel *m_bk;
     QLabel *m_icon;
     QLabel *m_title;

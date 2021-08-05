@@ -3,11 +3,13 @@
 //
 
 #include "widget_small.h"
+#include "../model/utils.hpp"
 
 QWidget *ListItem::init() {
+    m_gtoPx = Utils::LoadSvg(":/component/resource/gto.svg", 15, 15);
     m_w = new QWidget();
     m_layout = new QHBoxLayout(m_w);
-    m_gto = new QPushButton(m_w);
+    m_gto = new QLabel(m_w);
     m_index = new QLabel(m_w);
     m_title = new QLabel(m_w);
     m_w->setStyleSheet("border-bottom:1px solid white;");
@@ -19,23 +21,13 @@ QWidget *ListItem::init() {
     m_title->setText(m_titleCtx);
     m_gto->setMinimumSize(20, 20);
     m_gto->setMaximumSize(20, 20);
+    m_gto->setPixmap(m_gtoPx);
+    m_gto->setStyleSheet("border:none;background:transparent;");
     m_layout->addWidget(m_index);
     m_layout->addWidget(m_title);
     m_layout->addWidget(m_gto);
     m_w->setLayout(m_layout);
     return m_w;
-}
-
-QPixmap SWidget::LoadSvg(QString url, int w, int h) {
-    QPixmap *px = new QPixmap(QSize(w, h));
-    px->scaled(15, 15, Qt::IgnoreAspectRatio);
-    QSvgRenderer r(url);
-    QPainter Painter;
-    px->fill(Qt::transparent);
-    Painter.begin(px);
-    r.render(&Painter);
-    Painter.end();
-    return *px;
 }
 
 SWidget::SWidget() {
@@ -91,6 +83,25 @@ void SWidget::RegBanner() {
 
 void SWidget::RegSContent() {
     m_sContent = new QWidget(this);
+    m_sBanner = new QWidget(m_sContent);
+    m_titleCtx = new QLabel(m_sBanner);
+    m_sBanner->setObjectName("title");
+    m_sBanner->setMinimumSize(150, 100);
+    m_sBanner->setMaximumSize(300, 100);
+    m_sBanner->setStyleSheet(
+            "#title{border-top-left-radius:24px;border-top-right-radius:24px;background:url(:/component/resource/weibo_banner.png);}");
+
+    QLabel *name = new QLabel(m_sBanner);
+    name->setText("今天");
+    name->setMaximumHeight(50);
+    name->setMinimumHeight(50);
+    name->setStyleSheet("padding-top:20px;color:white;font-family:'Microsoft YaHei UI';font-size:30px;");
+
+    m_titleCtx->setText("2021-8-5");
+    m_titleCtx->setMaximumHeight(30);
+    m_titleCtx->setMinimumHeight(30);
+    m_titleCtx->setStyleSheet("color:white;font-family:'Microsoft YaHei UI';font-size:15px;");
+
     m_sContent->setObjectName("bk");
     m_sContent->setGeometry(QRect(0, 250, 100, 100));
 #if 0
@@ -117,10 +128,16 @@ void SWidget::RegSContent() {
                              "QPushButton:hover{background-color: rgb(132, 194, 255);}"
                              "QPushButton:pressed{background-color: rgb(10, 132, 255);}");
     m_btns = new QHBoxLayout;
+    m_ctxBanner = new QVBoxLayout;
+    m_btns->addWidget(m_titleCtx);
     m_btns->addWidget(m_refreshBtn);
     m_btns->addWidget(m_backBtn);
     m_btns->setSpacing(5);
-    m_btns->setContentsMargins(0, 5, 10, 5);
+    m_btns->setContentsMargins(10, 5, 10, 0);
+    m_ctxBanner->addWidget(name);
+    m_ctxBanner->addItem(m_btns);
+//    m_ctxBanner->setContentsMargins(5,20,5,5);
+    m_sBanner->setLayout(m_ctxBanner);
 }
 
 void SWidget::RegList() {
@@ -131,7 +148,7 @@ void SWidget::RegList() {
 
     m_listLayout = new QVBoxLayout;
     m_listLayout->addWidget(m_listContainer);
-    m_listLayout->setContentsMargins(5, 0, 5, 10);
+    m_listLayout->setContentsMargins(10, 5, 10, 10);
 
     m_list = new QListWidget(m_listContainer);
     m_list->setObjectName("list");
@@ -146,7 +163,9 @@ void SWidget::RegBk() {
     RegBanner();
     RegList();
     m_layout = new QVBoxLayout(m_sContent);
-    m_layout->addItem(m_btns);
+    m_layout->addWidget(m_sBanner);
+    m_layout->setContentsMargins(0, 0, 0, 0);
+//    m_layout->addItem(m_btns);
     m_layout->addItem(m_listLayout);
     m_sContent->setLayout(m_layout);
     for (int i = 0; i < 50; ++i) {
@@ -159,10 +178,10 @@ void SWidget::RegBk() {
 
 }
 void SWidget::load() {
-    m_px = LoadSvg(":/component/resource/weibo.svg", 80, 80);
-    m_px1 = LoadSvg(":/component/resource/1.svg", 15, 15);
-    m_px2 = LoadSvg(":/component/resource/2.svg", 15, 15);
-    m_px3 = LoadSvg(":/component/resource/3.svg", 15, 15);
-    m_refreshIcon = LoadSvg(":/component/resource/refresh.svg", 15, 15);
-    m_minimizedIcon = LoadSvg(":/component/resource/left-small-down.svg", 15, 15);
+    m_px = Utils::LoadSvg(":/component/resource/weibo.svg", 80, 80);
+    m_px1 = Utils::LoadSvg(":/component/resource/1.svg", 15, 15);
+    m_px2 = Utils::LoadSvg(":/component/resource/2.svg", 15, 15);
+    m_px3 = Utils::LoadSvg(":/component/resource/3.svg", 15, 15);
+    m_refreshIcon = Utils::LoadSvg(":/component/resource/refresh.svg", 15, 15);
+    m_minimizedIcon = Utils::LoadSvg(":/component/resource/left-small-down.svg", 15, 15);
 }

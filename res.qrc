@@ -4,6 +4,8 @@
     <file>resource/exit.png</file>
   </qresource>
   <qresource prefix="component">
+    <file>resource/weibo_banner.png</file>
+    <file>resource/gto.svg</file>
     <file>resource/left-small-down.svg</file>
     <file>resource/refresh.svg</file>
     <file>resource/weibo.svg</file>
