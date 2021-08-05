@@ -12,6 +12,8 @@
 #include <QPushButton>
 #include <QListWidget>
 #include <QHBoxLayout>
+#include <QPropertyAnimation>
+#include <QDebug>
 
 class ListItem : public QWidget {
 public:
@@ -34,6 +36,7 @@ class SWidget : public QWidget {
 public:
     SWidget();
 
+    static QPixmap LoadSvg(QString url, int w, int h);
 private:
     void InitUI();
 
@@ -45,13 +48,7 @@ private:
 
     void RegBk();
 
-    void RegBk_2();
-
     void load();
-
-    void load_1();
-
-private:
 
 private:
     QWidget *m_banner;
@@ -60,6 +57,9 @@ private:
 
     QPushButton *m_refreshBtn;
     QPushButton *m_backBtn;
+
+    QPixmap m_refreshIcon;
+    QPixmap m_minimizedIcon;
 
     QWidget *m_listContainer;
     QListWidget *m_list;
@@ -77,13 +77,17 @@ private:
     QLabel *m_hotTitle3;
 
     QWidget *m_content;
-    QPixmap *m_px;
-    QPixmap *m_px1;
-    QPixmap *m_px2;
-    QPixmap *m_px3;
+    QPixmap m_px;
+    QPixmap m_px1;
+    QPixmap m_px2;
+    QPixmap m_px3;
     QPixmap *m_t;
 
     QPushButton *m_btn;
+
+private slots:
+
+    void on_backBtn_clicked();
 
 };
 

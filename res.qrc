@@ -5,6 +5,9 @@
   </qresource>
   <qresource prefix="component">
     <file>resource/left-small-down.svg</file>
+    <file>resource/refresh.svg</file>
+    <file>resource/weibo.svg</file>
+    <file>resource/left-small-down.svg</file>
     <file>resource/1.svg</file>
     <file>resource/2.svg</file>
     <file>resource/3.svg</file>
