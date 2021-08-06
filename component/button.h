@@ -26,7 +26,7 @@ Q_OBJECT
 class OverviewBtn : public AbstractedButton {
 Q_OBJECT
 public:
-    OverviewBtn(QWidget *parent = nullptr);
+    OverviewBtn(QString url, QString title, QWidget *parent = nullptr);
 
     void Init();
 
@@ -52,7 +52,8 @@ private:
     QPropertyAnimation *m_downAnimation;
     QGraphicsDropShadowEffect *m_effect;
 
-    QString m_titleCtx;
+    QString m_titleCtx = "WB";
+    QString m_iconUrl = ":/component/resource/weibo.svg";
 
 };
 

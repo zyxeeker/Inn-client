@@ -6,7 +6,7 @@
 #include "../model/utils.hpp"
 #include <QDebug>
 
-OverviewBtn::OverviewBtn(QWidget *parent) {
+OverviewBtn::OverviewBtn(QString url, QString title, QWidget *parent) : m_iconUrl(url), m_titleCtx(title) {
     Init();
     InitAnimation();
 }
@@ -23,20 +23,21 @@ void OverviewBtn::Init() {
     m_mainCtx->setGeometry(QRect(10, 10, 150, 150));
     m_mainCtx->setAttribute(Qt::WA_Hover, true);
     m_mainCtx->installEventFilter(this);
+    m_mainCtx->setCursor(Qt::PointingHandCursor);
     m_mainCtx->setObjectName("content");
     m_mainCtx->setMaximumSize(150, 150);
     m_mainCtx->setMinimumSize(150, 150);
     m_mainCtx->setStyleSheet(
             "#content{border-radius:25px;background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(121, 74, 255, 255), stop:0.59887 rgba(154, 75, 255, 255), stop:1 rgba(174, 76, 255, 255));}");
 
-    m_iconPx = Utils::LoadSvg(":/component/resource/weibo.svg", 80, 80);
+    m_iconPx = Utils::LoadSvg(m_iconUrl, 80, 80);
 
     m_icon->setPixmap(m_iconPx);
     m_icon->setAlignment(Qt::AlignCenter);
     m_icon->setMaximumSize(150, 85);
     m_icon->setMinimumSize(150, 85);
 
-    m_title->setText(QString("WB"));
+    m_title->setText(m_titleCtx);
     m_title->setStyleSheet("color:white;font-family:'Microsoft YaHei UI';font-size:18px;");
     m_title->setAlignment(Qt::AlignCenter);
 
@@ -54,11 +55,11 @@ void OverviewBtn::Init() {
 
 void OverviewBtn::InitAnimation() {
     m_upAnimation->setEasingCurve(QEasingCurve::InQuad);
-    m_upAnimation->setDuration(200);
+    m_upAnimation->setDuration(100);
     m_upAnimation->setEndValue(QRect(10, 5, 150, 150));
 
     m_downAnimation->setEasingCurve(QEasingCurve::InQuad);
-    m_downAnimation->setDuration(200);
+    m_downAnimation->setDuration(100);
     m_downAnimation->setEndValue(QRect(10, 10, 150, 150));
 }
 
