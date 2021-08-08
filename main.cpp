@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     p.show();
 #endif
 #if 1
-    ListView lv;
+    WBListView lv;
     lv.show();
 #endif
 

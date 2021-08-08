@@ -16,6 +16,18 @@
 
 class AbstractListItem : public QWidget {
 Q_OBJECT
+public:
+    AbstractListItem(int num, QString title, QWidget *parent = nullptr);
+
+private:
+    int m_num;
+    QWidget *m_body;
+    QString m_titleCtx;
+    QPixmap m_gtoPx;
+    QHBoxLayout *m_layout;
+    QLabel *m_index;
+    QLabel *m_title;
+    QLabel *m_gto;
 };
 
 class AbstractListView : public QListWidget {
@@ -37,30 +49,17 @@ private:
 class ListItem : public AbstractListItem {
 Q_OBJECT
 public:
-    ListItem(int num, QString title) : m_num(num), m_titleCtx(title) { init(); }
-
-    QWidget *init();
+    ListItem(int num, QString title) : AbstractListItem(num, title) {}
 
 private:
-    int m_num;
-    QString m_titleCtx;
-    QPixmap m_gtoPx;
-    QHBoxLayout *m_layout;
-    QWidget *m_w;
-    QLabel *m_index;
-    QLabel *m_title;
-    QLabel *m_gto;
 };
 
-class ListView : public AbstractListView {
+class WBListView : public AbstractListView {
 Q_OBJECT
 public:
-    ListView() { init(); }
+    WBListView() { init(); }
 
     void init();
-
-private:
-
 };
 
 
