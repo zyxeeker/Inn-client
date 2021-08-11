@@ -10,10 +10,25 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-//#include "../model/utils.hpp"
+#include <QPropertyAnimation>
 
-class Popup : public QWidget {
+class AbstractPopup : public QWidget {
 Q_OBJECT
+private:
+    void ShowAnimation();
+
+    void CloseAnimation();
+
+protected:
+
+private:
+    QPropertyAnimation *m_showAnimation;
+
+    QPropertyAnimation *m_closeAnimation;
+
+};
+
+class Popup : public AbstractPopup {
 public:
     Popup();
 
@@ -36,8 +51,8 @@ private:
     QPushButton *m_refreshBtn;
     QPushButton *m_backBtn;
 
-    QPixmap m_refreshIcon;
-    QPixmap m_backIcon;
+    QIcon *m_refreshIcon;
+    QIcon *m_backIcon;
 
     QHBoxLayout *m_hLayout;
     QVBoxLayout *m_vLayout;

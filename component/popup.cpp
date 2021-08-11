@@ -4,9 +4,16 @@
 
 #include "popup.h"
 
+void AbstractPopup::ShowAnimation() {
+    m_showAnimation = new QPropertyAnimation();
+}
+
+void AbstractPopup::CloseAnimation() {
+    m_closeAnimation = new QPropertyAnimation();
+}
+
+
 Popup::Popup() {
-//    m_refreshIcon = Utils::LoadSvg(":/component/resource/refresh.svg", 15, 15);
-//    m_backIcon = Utils::LoadSvg(":/component/resource/left-small-down.svg", 15, 15);
     Init();
 }
 
@@ -20,6 +27,11 @@ void Popup::Init() {
     m_backBtn = new QPushButton(m_banner);
     m_hLayout = new QHBoxLayout;
     m_vLayout = new QVBoxLayout;
+    m_refreshIcon = new QIcon;
+    m_backIcon = new QIcon;
+
+    m_refreshIcon->addFile(":/component/resource/refresh.svg");
+    m_backIcon->addFile(":/component/resource/left-small-down.svg");
 
     m_bk->setGeometry(m_bodyPx, m_bodyPy, 300, 400);
     m_bk->setObjectName("bk");
@@ -47,16 +59,19 @@ void Popup::Init() {
     m_secTitle->setStyleSheet("color:white;font-family:'Microsoft YaHei UI';font-size:13px;");
 
     m_refreshBtn->setIcon(QIcon("m_refreshIcon"));
-    m_refreshBtn->setMinimumSize(25, 25);
-    m_refreshBtn->setMaximumSize(25, 25);
+    m_refreshBtn->setIcon(*m_refreshIcon);
+    m_refreshBtn->setIconSize(QSize(16, 16));
+    m_refreshBtn->setMinimumSize(26, 26);
+    m_refreshBtn->setMaximumSize(26, 26);
     m_refreshBtn->setStyleSheet("QPushButton{border-radius:5px;background-color: rgb(10, 132, 255);}"
                                 "QPushButton:hover{background-color: rgb(132, 194, 255);}"
                                 "QPushButton:pressed{background-color: rgb(10, 132, 255);}");
 
     m_backBtn->setObjectName("backBtn");
-    m_backBtn->setIcon(QIcon(m_backIcon));
-    m_backBtn->setMinimumSize(25, 25);
-    m_backBtn->setMaximumSize(25, 25);
+    m_backBtn->setIcon(*m_backIcon);
+    m_backBtn->setIconSize(QSize(20, 20));
+    m_backBtn->setMinimumSize(26, 26);
+    m_backBtn->setMaximumSize(26, 26);
     m_backBtn->setStyleSheet("QPushButton{border-radius:5px;background-color: rgb(10, 132, 255);}"
                              "QPushButton:hover{background-color: rgb(132, 194, 255);}"
                              "QPushButton:pressed{background-color: rgb(10, 132, 255);}");
@@ -70,6 +85,6 @@ void Popup::Init() {
     m_vLayout->addItem(m_hLayout);
     m_vLayout->setSpacing(0);
     m_vLayout->setContentsMargins(5, 20, 5, 0);
-    m_body->setLayout(m_vLayout);
+    m_banner->setLayout(m_vLayout);
 
 }
