@@ -13,6 +13,7 @@
 #include <QScrollBar>
 #include <QPropertyAnimation>
 #include <QScroller>
+#include "./model/utils.h"
 
 class AbstractListItem : public QWidget {
 Q_OBJECT

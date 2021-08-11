@@ -7,6 +7,8 @@
 
 AbstractListItem::AbstractListItem(int num, QString title, QWidget *parent) : m_num(num), m_titleCtx(title),
                                                                               QWidget(parent) {
+
+    m_gtoPx = Utils::LoadSvg(":/component/resource/gto.svg", 20, 20);
     m_body = new QWidget(this);
     m_layout = new QHBoxLayout(m_body);
     m_gto = new QLabel(m_body);

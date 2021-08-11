@@ -3,7 +3,6 @@
 //
 
 #include "button.h"
-#include "../model/utils.hpp"
 #include <QDebug>
 
 OverviewBtn::OverviewBtn(QString url, QString title, QWidget *parent) : m_iconUrl(url), m_titleCtx(title) {

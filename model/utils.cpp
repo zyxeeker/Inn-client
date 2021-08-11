@@ -1,18 +1,8 @@
 //
-// Created by zyx on 2021/8/5.
+// Created by zyx on 2021/8/11.
 //
 
-#ifndef INNCLIENT_UTILS_HPP
-#define INNCLIENT_UTILS_HPP
-
-#include <QPixmap>
-#include <QPainter>
-#include <QSvgRenderer>
-
-class Utils {
-public:
-    static QPixmap LoadSvg(QString url, int w, int h);
-};
+#include "utils.h"
 
 QPixmap Utils::LoadSvg(QString url, int w, int h) {
     QPixmap *px = new QPixmap(QSize(w, h));
@@ -25,5 +15,3 @@ QPixmap Utils::LoadSvg(QString url, int w, int h) {
     Painter.end();
     return *px;
 }
-
-#endif //INNCLIENT_UTILS_HPP

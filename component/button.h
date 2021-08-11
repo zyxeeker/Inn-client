@@ -13,6 +13,7 @@
 #include <QHBoxLayout>
 #include <QPropertyAnimation>
 #include <QGraphicsDropShadowEffect>
+#include "./model/utils.h"
 
 class AbstractedButton : public QWidget {
 Q_OBJECT
