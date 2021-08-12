@@ -3,18 +3,40 @@
 //
 
 #include "popup.h"
+#include "./model/define.h"
+#include <QDebug>
 
-void AbstractPopup::ShowAnimation() {
+AbstractPopup::AbstractPopup() {
+    connect(this, SIGNAL(Close(QRect)), this, SLOT(ClosePopup(QRect)));
+}
+
+void AbstractPopup::SetAnimation(int st, QRect pos) {
+    switch (st) {
+        case POPUP_SHOW:
+            m_showAnimation->setStartValue(pos);
+        case POPUP_CLOSE:
+            m_closeAnimation->setStartValue(pos);
+    }
+}
+
+void AbstractPopup::InitAnimation() {
     m_showAnimation = new QPropertyAnimation();
-}
-
-void AbstractPopup::CloseAnimation() {
     m_closeAnimation = new QPropertyAnimation();
+    m_showAnimation->setEasingCurve(QEasingCurve::InQuad);
+    m_showAnimation->setDuration(100);
+    m_closeAnimation->setEasingCurve(QEasingCurve::InQuad);
+    m_closeAnimation->setDuration(100);
 }
 
+void AbstractPopup::ClosePopup(QRect pos) {
+    qDebug() << pos;
+}
 
 Popup::Popup() {
     Init();
+    connect(m_backBtn, &QPushButton::clicked, this, [=]() {
+        emit Close(m_body->geometry());
+    });
 }
 
 void Popup::Init() {
@@ -25,6 +47,7 @@ void Popup::Init() {
     m_secTitle = new QLabel(m_banner);
     m_refreshBtn = new QPushButton(m_banner);
     m_backBtn = new QPushButton(m_banner);
+    m_bodyLayout = new QHBoxLayout(m_body);
     m_hLayout = new QHBoxLayout;
     m_vLayout = new QVBoxLayout;
     m_refreshIcon = new QIcon;
@@ -38,7 +61,7 @@ void Popup::Init() {
     m_bk->setStyleSheet("#bk{background:black;}");
 
     m_body->setObjectName("bk");
-    m_body->setGeometry(QRect(0, 250, 149, 149));
+    m_body->setGeometry(QRect(0, 0, 300, 400));
     m_body->setStyleSheet("#bk{border-radius:24px;background-color:rgb(28, 28, 30);}");
 
     m_banner->setObjectName("title");
@@ -86,5 +109,6 @@ void Popup::Init() {
     m_vLayout->setSpacing(0);
     m_vLayout->setContentsMargins(5, 20, 5, 0);
     m_banner->setLayout(m_vLayout);
+    m_bodyLayout->addWidget(m_banner);
 
 }

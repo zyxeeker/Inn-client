@@ -14,12 +14,23 @@
 
 class AbstractPopup : public QWidget {
 Q_OBJECT
-private:
-    void ShowAnimation();
-
-    void CloseAnimation();
+public:
+    AbstractPopup();
 
 protected:
+    void SetAnimation(int st, QRect pos);
+
+private:
+    void InitAnimation();
+
+signals:
+
+    void Close(QRect);
+
+protected slots:
+//    void ShowPopup();
+
+    void ClosePopup(QRect);
 
 private:
     QPropertyAnimation *m_showAnimation;
@@ -29,6 +40,7 @@ private:
 };
 
 class Popup : public AbstractPopup {
+Q_OBJECT
 public:
     Popup();
 
@@ -43,6 +55,7 @@ private:
 
     QWidget *m_bk;
     QWidget *m_body;
+    QWidget *m_content;
     QWidget *m_banner;
 
     QLabel *m_title;
@@ -55,6 +68,7 @@ private:
     QIcon *m_backIcon;
 
     QHBoxLayout *m_hLayout;
+    QHBoxLayout *m_bodyLayout;
     QVBoxLayout *m_vLayout;
 };
 

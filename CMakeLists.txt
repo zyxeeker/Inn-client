@@ -33,7 +33,7 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        component/auth.cpp component/auth.h component/auth.ui res.qrc page/overview.cpp page/overview.h component/button.cpp component/button.h component/popup.cpp component/popup.h component/list.cpp component/list.h model/utils.cpp model/utils.h)
+        component/auth.cpp component/auth.h component/auth.ui res.qrc page/overview.cpp page/overview.h component/button.cpp component/button.h component/popup.cpp component/popup.h component/list.cpp component/list.h model/utils.cpp model/utils.h model/define.h)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(InnClient
