@@ -68,8 +68,9 @@ private:
     QIcon *m_backIcon;
 
     QHBoxLayout *m_hLayout;
-    QHBoxLayout *m_bodyLayout;
     QVBoxLayout *m_vLayout;
+    QVBoxLayout *m_contentLayout;
+    QVBoxLayout *m_bodyLayout;
 };
 
 
