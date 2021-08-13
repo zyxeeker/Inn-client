@@ -101,12 +101,8 @@ void Popup::Init() {
                              "QPushButton:hover{background-color: rgb(132, 194, 255);}"
                              "QPushButton:pressed{background-color: rgb(10, 132, 255);}");
 
-    m_content->setObjectName("content");
-//    m_content->setMinimumSize(300, 300);
-//    m_content->setMaximumSize(300, 300);
-    m_content->setStyleSheet("#content{background:white;padding-left:8px;padding-right:8px;}");
     m_contentLayout->addWidget(m_content);
-    m_contentLayout->setContentsMargins(5, 8, 5, 5);
+    m_contentLayout->setContentsMargins(8, 0, 8, 8);
 
     m_hLayout->addWidget(m_secTitle);
     m_hLayout->addWidget(m_refreshBtn);

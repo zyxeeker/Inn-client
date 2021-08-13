@@ -27,7 +27,7 @@ void OverviewBtn::Init() {
     m_mainCtx->setMaximumSize(150, 150);
     m_mainCtx->setMinimumSize(150, 150);
     m_mainCtx->setStyleSheet(
-            "#content{border-radius:25px;background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(121, 74, 255, 255), stop:0.59887 rgba(154, 75, 255, 255), stop:1 rgba(174, 76, 255, 255));}");
+            "#content{border-radius:8px;background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(121, 74, 255, 255), stop:0.59887 rgba(154, 75, 255, 255), stop:1 rgba(174, 76, 255, 255));}");
 
     m_iconPx = Utils::LoadSvg(m_iconUrl, 80, 80);
 
