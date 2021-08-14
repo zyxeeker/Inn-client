@@ -56,6 +56,9 @@ private:
     QString m_titleCtx = "WB";
     QString m_iconUrl = ":/component/resource/weibo.svg";
 
+signals:
+
+    void OpenPopup();
 };
 
 

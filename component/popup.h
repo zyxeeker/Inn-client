@@ -13,6 +13,7 @@
 #include <QPropertyAnimation>
 #include <QGraphicsDropShadowEffect>
 #include "list.h"
+#include "./model/define.h"
 
 class AbstractPopup : public QWidget {
 Q_OBJECT
@@ -64,6 +65,13 @@ private:
 
     QPropertyAnimation *m_animation;
     QGraphicsDropShadowEffect *m_effect;
+signals:
+
+    void Finish();
+
+public slots:
+
+    void ChangeSt() { ShowStatue(POPUP_CLOSE, m_body->geometry()); };
 };
 
 class WBPopup : public OverviewPopup {

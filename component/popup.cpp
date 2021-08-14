@@ -3,7 +3,6 @@
 //
 
 #include "popup.h"
-#include "./model/define.h"
 #include <QDebug>
 
 OverviewPopup::OverviewPopup(int px, int py) : m_px(px), m_py(py) {
@@ -11,6 +10,9 @@ OverviewPopup::OverviewPopup(int px, int py) : m_px(px), m_py(py) {
     InitAnimation();
     connect(m_backBtn, &QPushButton::clicked, this, [=]() {
         ShowStatue(POPUP_CLOSE, m_body->geometry());
+    });
+    connect(m_animation, &QPropertyAnimation::finished, [=] {
+        emit Finish();
     });
 }
 

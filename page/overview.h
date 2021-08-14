@@ -7,6 +7,8 @@
 
 #include <QWidget>
 #include <QLabel>
+#include "./component/popup.h"
+#include "./component/button.h"
 
 class Overview : public QWidget {
 Q_OBJECT
@@ -22,16 +24,32 @@ private:
 private:
     void RegBanner();
 
+    void SetPopup(/*int px, int py*/);
+
+    void SetBtns();
+
     void SetBannerPosition();
 
 protected:
     void resizeEvent(QResizeEvent *e);
 
 private:
+    WBPopup *m_wbPopup;
+    OverviewBtn *m_wbBtn;
+
+    QWidget *widget;
+    QWidget *m_popupBk;
+    QWidget *m_btn;
+
     QLabel *m_banner;
     QLabel *m_icon;
     QLabel *m_title;
-    QWidget *widget;
+
+    QHBoxLayout *m_popup;
+
+private slots:
+
+    void PopupClose();
 
 };
 

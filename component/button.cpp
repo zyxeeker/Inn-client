@@ -78,6 +78,8 @@ bool OverviewBtn::eventFilter(QObject *obj, QEvent *event) {
             BtnMoveUp();
         if (event->type() == QEvent::HoverLeave)
             BtnBack2Origin();
+        if (event->type() == QEvent::MouseButtonRelease)
+                emit OpenPopup();
     }
     return QObject::eventFilter(obj, event);
 }
