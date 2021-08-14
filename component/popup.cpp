@@ -6,40 +6,15 @@
 #include "./model/define.h"
 #include <QDebug>
 
-AbstractPopup::AbstractPopup() {
-    connect(this, SIGNAL(Close(QRect)), this, SLOT(ClosePopup(QRect)));
-}
-
-void AbstractPopup::SetAnimation(int st, QRect pos) {
-    switch (st) {
-        case POPUP_SHOW:
-            m_showAnimation->setStartValue(pos);
-        case POPUP_CLOSE:
-            m_closeAnimation->setStartValue(pos);
-    }
-}
-
-void AbstractPopup::InitAnimation() {
-    m_showAnimation = new QPropertyAnimation();
-    m_closeAnimation = new QPropertyAnimation();
-    m_showAnimation->setEasingCurve(QEasingCurve::InQuad);
-    m_showAnimation->setDuration(100);
-    m_closeAnimation->setEasingCurve(QEasingCurve::InQuad);
-    m_closeAnimation->setDuration(100);
-}
-
-void AbstractPopup::ClosePopup(QRect pos) {
-    qDebug() << pos;
-}
-
-Popup::Popup() {
+OverviewPopup::OverviewPopup(int px, int py) : m_px(px), m_py(py) {
     Init();
+    InitAnimation();
     connect(m_backBtn, &QPushButton::clicked, this, [=]() {
-        emit Close(m_body->geometry());
+        ShowStatue(POPUP_CLOSE, m_body->geometry());
     });
 }
 
-void Popup::Init() {
+void OverviewPopup::Init() {
     m_bk = new QWidget(this);
     m_body = new QWidget(m_bk);
     m_content = new QWidget(m_body);
@@ -54,18 +29,35 @@ void Popup::Init() {
     m_vLayout = new QVBoxLayout;
     m_refreshIcon = new QIcon;
     m_backIcon = new QIcon;
+    m_effect = new QGraphicsDropShadowEffect;
 
     m_refreshIcon->addFile(":/component/resource/refresh.svg");
     m_backIcon->addFile(":/component/resource/left-small-down.svg");
 
-    m_bk->setGeometry(m_bodyPx, m_bodyPy, 500, 500);
+//    m_bk->setGeometry(0, 0, 500, 500);
     m_bk->setObjectName("bk");
-    m_bk->setStyleSheet("#bk{background:black;}");
+    m_bk->setStyleSheet("#bk{background:transparent;}");
 
     m_body->setObjectName("bk");
-    m_body->setGeometry(QRect(0, 0, 300, 400));
+    m_body->setGeometry(QRect(m_px, m_py, 300, 400));
     m_body->setStyleSheet("#bk{border-radius:8px;background-color:rgb(28, 28, 30);}");
 
+    InitBanner();
+
+    m_contentLayout->addWidget(m_content);
+    m_contentLayout->setContentsMargins(8, 0, 8, 8);
+
+    m_bodyLayout->addWidget(m_banner);
+    m_bodyLayout->addItem(m_contentLayout);
+    m_bodyLayout->setContentsMargins(0, 0, 0, 0);
+
+    m_effect->setOffset(0, 0);
+    m_effect->setColor(QColor(0, 0, 0, 100));
+    m_effect->setBlurRadius(50);
+    m_body->setGraphicsEffect(m_effect);
+}
+
+void OverviewPopup::InitBanner() {
     m_banner->setObjectName("title");
     m_banner->setMinimumSize(150, 80);
     m_banner->setMaximumSize(300, 80);
@@ -100,10 +92,6 @@ void Popup::Init() {
     m_backBtn->setStyleSheet("QPushButton{border-radius:5px;background-color: rgb(10, 132, 255);}"
                              "QPushButton:hover{background-color: rgb(132, 194, 255);}"
                              "QPushButton:pressed{background-color: rgb(10, 132, 255);}");
-
-    m_contentLayout->addWidget(m_content);
-    m_contentLayout->setContentsMargins(8, 0, 8, 8);
-
     m_hLayout->addWidget(m_secTitle);
     m_hLayout->addWidget(m_refreshBtn);
     m_hLayout->addWidget(m_backBtn);
@@ -114,8 +102,42 @@ void Popup::Init() {
     m_vLayout->setSpacing(0);
     m_vLayout->setContentsMargins(5, 8, 5, 5);
     m_banner->setLayout(m_vLayout);
-    m_bodyLayout->addWidget(m_banner);
-    m_bodyLayout->addItem(m_contentLayout);
-    m_bodyLayout->setContentsMargins(0, 0, 0, 0);
+}
 
+void OverviewPopup::InitAnimation() {
+    m_animation = new QPropertyAnimation(m_body, "geometry");
+    m_animation->setEasingCurve(QEasingCurve::InQuad);
+    m_animation->setDuration(100);
+}
+
+void OverviewPopup::ShowStatue(int st, QRect pos) {
+    switch (st) {
+        case POPUP_SHOW:
+            m_animation->setStartValue(m_body->geometry());
+            m_animation->setEndValue(QRect(0, 0, 16, 16));
+            m_animation->start();
+            break;
+        case POPUP_CLOSE:
+            m_animation->setStartValue(m_body->geometry());
+            m_animation->setEndValue(QRect(0, 0, 16, 16));
+            m_animation->start();
+            break;
+    }
+
+}
+
+WBPopup::WBPopup(int px, int py) : OverviewPopup(px, py) {
+    Init();
+}
+
+void WBPopup::Init() {
+    SetContent();
+}
+
+void WBPopup::SetContent() {
+    m_list = new WBListView;
+    m_layout = new QHBoxLayout;
+    m_layout->setContentsMargins(0, 0, 0, 0);
+    m_layout->addWidget(m_list);
+    m_content->setLayout(m_layout);
 }

@@ -11,51 +11,41 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QPropertyAnimation>
+#include <QGraphicsDropShadowEffect>
+#include "list.h"
 
 class AbstractPopup : public QWidget {
 Q_OBJECT
-public:
-    AbstractPopup();
-
 protected:
-    void SetAnimation(int st, QRect pos);
-
-private:
-    void InitAnimation();
-
-signals:
-
-    void Close(QRect);
-
-protected slots:
-//    void ShowPopup();
-
-    void ClosePopup(QRect);
-
-private:
-    QPropertyAnimation *m_showAnimation;
-
-    QPropertyAnimation *m_closeAnimation;
-
+    virtual void ShowStatue(int, QRect) = 0;
 };
 
-class Popup : public AbstractPopup {
+class OverviewPopup : public AbstractPopup {
 Q_OBJECT
 public:
-    Popup();
+    OverviewPopup(int px, int py);
 
 private:
     void Init();
 
+    void InitBanner();
+
+    void InitAnimation();
+
+    void ShowStatue(int, QRect pos) override;
+
+protected:
+    virtual void SetContent() = 0;
+
+protected:
+    QWidget *m_content;
+
 private:
-    int m_bkW;
-    int m_bkH;
-    int m_bodyPx = 0;
-    int m_bodyPy = 0;
+    int m_px = 0;
+    int m_py = 0;
 
     QWidget *m_bk;
     QWidget *m_body;
-    QWidget *m_content;
     QWidget *m_banner;
 
     QLabel *m_title;
@@ -71,6 +61,23 @@ private:
     QVBoxLayout *m_vLayout;
     QVBoxLayout *m_contentLayout;
     QVBoxLayout *m_bodyLayout;
+
+    QPropertyAnimation *m_animation;
+    QGraphicsDropShadowEffect *m_effect;
+};
+
+class WBPopup : public OverviewPopup {
+public:
+    WBPopup(int px, int py);
+
+private:
+    void Init();
+
+    void SetContent() override;
+
+private:
+    WBListView *m_list;
+    QHBoxLayout *m_layout;
 };
 
 
