@@ -21,7 +21,7 @@ AbstractListItem::AbstractListItem(int num, QString title, QWidget *parent) : m_
     m_index->setAlignment(Qt::AlignHCenter);
     m_index->setAlignment(Qt::AlignVCenter);
     m_index->setText(QString::number(m_num));
-    m_index->setStyleSheet("font-family:'Microsoft YaHei UI';font-size:12px;color:rgb(149,149,149);");
+    m_index->setStyleSheet("font-family:'Microsoft YaHei UI';font-size:12px;font-weight:bold;color:rgb(149,149,149);");
     m_title->setMinimumSize(200, 40);
     m_title->setMaximumSize(200, 40);
     m_title->setStyleSheet("color:white;font-family:'Microsoft YaHei UI';font-size:14px;");
@@ -55,11 +55,11 @@ AbstractListView::AbstractListView(QWidget *parent) : QListWidget(parent) {
 void AbstractListView::ScrollAnimation() {
     m_animation = new QPropertyAnimation(this->verticalScrollBar(), "value");
     m_animation->setEasingCurve(QEasingCurve::InOutQuad);
-    m_animation->setDuration(300);
+    m_animation->setDuration(380);
 }
 
 void AbstractListView::wheelEvent(QWheelEvent *e) {
-    int degree = e->delta();
+    int degree = e->angleDelta().y();
     int cur = this->verticalScrollBar()->value();
     if (m_animation->state() == QAbstractAnimation::Stopped) {
         m_animation->setEndValue(cur - degree);
@@ -70,16 +70,15 @@ void AbstractListView::wheelEvent(QWheelEvent *e) {
 
 
 void WBListView::init() {
-    this->setObjectName("list");
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setGeometry(QRect(10, 5, 250, 310));
-    this->setStyleSheet("#list{background:black;border:none;}");
+    this->setStyleSheet("background:transparent;border:none;");
     this->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
     this->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     for (int i = 0; i < 50; ++i) {
-        ListItem *src = new ListItem(22, "歌唱祖国歌唱祖国歌唱祖国歌唱祖国歌唱祖国歌唱祖国");
+        ListItem *src = new ListItem(22, "Age of Empire 2:Definition Edition");
         QListWidgetItem *dst = new QListWidgetItem(this, 0);
         dst->setSizeHint(QSize(500, 40));
         this->setItemWidget(dst, src);

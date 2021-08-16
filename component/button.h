@@ -54,7 +54,7 @@ private:
     QString m_iconUrl = ":/component/resource/weibo.svg";
 
 signals:
-    void OpenPopup(QRect);
+    void OpenPopup();
 };
 
 

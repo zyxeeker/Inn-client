@@ -59,7 +59,7 @@ void OverviewBtn::InitAnimation() {
 
     m_downAnimation->setEasingCurve(QEasingCurve::InQuad);
     m_downAnimation->setDuration(100);
-    m_downAnimation->setEndValue(QRect(10, 10, 150, 150));
+    m_downAnimation->setEndValue(QRect(10, 8, 150, 150));
 }
 
 void OverviewBtn::BtnMoveUp() {
@@ -79,7 +79,7 @@ bool OverviewBtn::eventFilter(QObject *obj, QEvent *event) {
         if (event->type() == QEvent::HoverLeave)
             BtnBack2Origin();
         if (event->type() == QEvent::MouseButtonRelease)
-                emit OpenPopup(this->geometry());
+                emit OpenPopup();
     }
     return QObject::eventFilter(obj, event);
 }
