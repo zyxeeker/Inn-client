@@ -37,12 +37,11 @@ void OverviewPopup::Init() {
     m_refreshIcon->addFile(":/component/resource/refresh.svg");
     m_backIcon->addFile(":/component/resource/left-small-down.svg");
 
-//    m_bk->setGeometry(0, 0, 500, 500);
+    m_bk->setGeometry(0, 0, 400, 500);
     m_bk->setObjectName("bk");
     m_bk->setStyleSheet("#bk{background:transparent;}");
 
     m_body->setObjectName("bk");
-    m_body->setGeometry(QRect(m_px, m_py, 300, 400));
     m_body->setStyleSheet("#bk{border-radius:8px;background-color:rgb(28, 28, 30);}");
 
     InitBanner();
@@ -110,20 +109,21 @@ void OverviewPopup::InitBanner() {
 void OverviewPopup::InitAnimation() {
     m_animation = new QPropertyAnimation(m_body, "geometry");
     m_animation->setEasingCurve(QEasingCurve::InQuad);
-    m_animation->setDuration(100);
+    m_animation->setDuration(220);
 }
 
 void OverviewPopup::ShowStatue(int st, QRect pos) {
     m_popupSt = st;
     switch (st) {
         case POPUP_SHOW:
-            m_animation->setStartValue(m_body->geometry());
-            m_animation->setEndValue(QRect(0, 0, 300, 400));
+            m_bk->setGeometry(pos);
+            m_animation->setStartValue(QRect(50, 350, 0, 0));
+            m_animation->setEndValue(QRect(50, 50, 300, 400));
             m_animation->start();
             break;
         case POPUP_CLOSE:
             m_animation->setStartValue(m_body->geometry());
-            m_animation->setEndValue(QRect(0, 0, 16, 16));
+            m_animation->setEndValue(QRect(50, 350, 0, 0));
             m_animation->start();
             break;
     }

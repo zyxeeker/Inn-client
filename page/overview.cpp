@@ -6,23 +6,13 @@
 
 #include "overview.h"
 #include <QDebug>
-//#include "ui_Overview.h"
 
-
-//Overview::Overview(QWidget *parent) :
-//        QWidget(parent), ui(new Ui::Overview) {
-//    ui->setupUi(this);
-//}
-
-//
-//Overview::~Overview() {
-//    delete ui;
-//}
 
 Overview::Overview(QWidget *parent) {
     InitUI();
-    connect(m_wbBtn, SIGNAL(OpenPopup(QRect)), m_wbPopup, SLOT(ChangeSt(QRect)));
-    connect(m_wbBtn, SIGNAL(OpenPopup(QRect)), this, SLOT(PopupShow()));
+    connect(m_wbBtn, SIGNAL(OpenPopup()), this, SLOT(PopupTrans()));
+    connect(this, SIGNAL(PopupPos(QRect)), m_wbPopup, SLOT(ChangeSt(QRect)));
+    connect(m_wbBtn, SIGNAL(OpenPopup()), this, SLOT(PopupShow()));
     connect(m_wbPopup, SIGNAL(Finish()), this, SLOT(PopupClose()));
 
 }
@@ -86,4 +76,9 @@ void Overview::PopupClose() {
 void Overview::PopupShow() {
     m_popupContainer->show();
     m_popupContainer->raise();
+}
+
+void Overview::PopupTrans() {
+    emit PopupPos(
+            QRect(m_btn->geometry().x() - 50, m_btn->geometry().y() + m_btn->geometry().height() - 450, 400, 500));
 }

@@ -67,10 +67,7 @@ signals:
 
 public slots:
 
-    void ChangeSt(QRect pos) {
-        qDebug() << pos;
-        ShowStatue(POPUP_SHOW, m_body->geometry());
-    };
+    void ChangeSt(QRect pos) { ShowStatue(POPUP_SHOW, pos); }
 };
 
 class WBPopup : public OverviewPopup {

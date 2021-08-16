@@ -49,10 +49,15 @@ private:
 
 private slots:
 
+    void PopupTrans();
+
     void PopupShow();
 
     void PopupClose();
 
+signals:
+
+    void PopupPos(QRect);
 };
 
 
