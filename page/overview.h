@@ -38,7 +38,7 @@ private:
     OverviewBtn *m_wbBtn;
 
     QWidget *widget;
-    QWidget *m_popupBk;
+    QWidget *m_popupContainer;
     QWidget *m_btn;
 
     QLabel *m_banner;
@@ -48,6 +48,8 @@ private:
     QHBoxLayout *m_popup;
 
 private slots:
+
+    void PopupShow();
 
     void PopupClose();
 

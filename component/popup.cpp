@@ -12,7 +12,8 @@ OverviewPopup::OverviewPopup(int px, int py) : m_px(px), m_py(py) {
         ShowStatue(POPUP_CLOSE, m_body->geometry());
     });
     connect(m_animation, &QPropertyAnimation::finished, [=] {
-        emit Finish();
+        if (m_popupSt == POPUP_CLOSE)
+                emit Finish();
     });
 }
 
@@ -113,10 +114,11 @@ void OverviewPopup::InitAnimation() {
 }
 
 void OverviewPopup::ShowStatue(int st, QRect pos) {
+    m_popupSt = st;
     switch (st) {
         case POPUP_SHOW:
             m_animation->setStartValue(m_body->geometry());
-            m_animation->setEndValue(QRect(0, 0, 16, 16));
+            m_animation->setEndValue(QRect(0, 0, 300, 400));
             m_animation->start();
             break;
         case POPUP_CLOSE:

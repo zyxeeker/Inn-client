@@ -14,6 +14,7 @@
 #include <QGraphicsDropShadowEffect>
 #include "list.h"
 #include "./model/define.h"
+#include <QDebug>
 
 class AbstractPopup : public QWidget {
 Q_OBJECT
@@ -44,25 +45,20 @@ protected:
 private:
     int m_px = 0;
     int m_py = 0;
-
+    int m_popupSt;
     QWidget *m_bk;
     QWidget *m_body;
     QWidget *m_banner;
-
     QLabel *m_title;
     QLabel *m_secTitle;
-
     QPushButton *m_refreshBtn;
     QPushButton *m_backBtn;
-
     QIcon *m_refreshIcon;
     QIcon *m_backIcon;
-
     QHBoxLayout *m_hLayout;
     QVBoxLayout *m_vLayout;
     QVBoxLayout *m_contentLayout;
     QVBoxLayout *m_bodyLayout;
-
     QPropertyAnimation *m_animation;
     QGraphicsDropShadowEffect *m_effect;
 signals:
@@ -71,7 +67,10 @@ signals:
 
 public slots:
 
-    void ChangeSt() { ShowStatue(POPUP_CLOSE, m_body->geometry()); };
+    void ChangeSt(QRect pos) {
+        qDebug() << pos;
+        ShowStatue(POPUP_SHOW, m_body->geometry());
+    };
 };
 
 class WBPopup : public OverviewPopup {

@@ -21,7 +21,8 @@
 
 Overview::Overview(QWidget *parent) {
     InitUI();
-    connect(m_wbBtn, SIGNAL(OpenPopup()), m_wbPopup, SLOT(ChangeSt()));
+    connect(m_wbBtn, SIGNAL(OpenPopup(QRect)), m_wbPopup, SLOT(ChangeSt(QRect)));
+    connect(m_wbBtn, SIGNAL(OpenPopup(QRect)), this, SLOT(PopupShow()));
     connect(m_wbPopup, SIGNAL(Finish()), this, SLOT(PopupClose()));
 
 }
@@ -49,13 +50,13 @@ void Overview::RegBanner() {
 }
 
 void Overview::SetPopup(/*int px, int py*/) {
-    m_popupBk = new QWidget(this);
+    m_popupContainer = new QWidget(this);
     m_popup = new QHBoxLayout;
-    m_wbPopup = new WBPopup(20, 50);
+    m_wbPopup = new WBPopup(0, 0);
     m_popup->setContentsMargins(0, 0, 0, 0);
     m_popup->addWidget(m_wbPopup);
-    m_popupBk->setLayout(m_popup);
-    m_popupBk->raise();
+    m_popupContainer->setLayout(m_popup);
+    m_popupContainer->close();
 }
 
 void Overview::SetBtns() {
@@ -71,7 +72,7 @@ void Overview::SetBannerPosition() {
     m_icon->setGeometry(QRect(this->width() / 6, 210, 80, 80));
     m_title->setGeometry(QRect(this->width() / 6, 300, this->width(), 50));
     m_btn->setGeometry(QRect(this->width() / 6, 350, this->width(), 200));
-    m_popupBk->setGeometry(QRect(0, 0, this->width(), this->height()));
+    m_popupContainer->setGeometry(QRect(0, 0, this->width(), this->height()));
 }
 
 void Overview::resizeEvent(QResizeEvent *e) {
@@ -79,5 +80,10 @@ void Overview::resizeEvent(QResizeEvent *e) {
 }
 
 void Overview::PopupClose() {
-    m_popupBk->close();
+    m_popupContainer->close();
+}
+
+void Overview::PopupShow() {
+    m_popupContainer->show();
+    m_popupContainer->raise();
 }

@@ -44,21 +44,17 @@ protected:
 private:
     QWidget *m_mainCtx;
     QVBoxLayout *m_layout;
-
     QLabel *m_title;
     QLabel *m_icon;
     QPixmap m_iconPx;
-
     QPropertyAnimation *m_upAnimation;
     QPropertyAnimation *m_downAnimation;
     QGraphicsDropShadowEffect *m_effect;
-
     QString m_titleCtx = "WB";
     QString m_iconUrl = ":/component/resource/weibo.svg";
 
 signals:
-
-    void OpenPopup();
+    void OpenPopup(QRect);
 };
 
 

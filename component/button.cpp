@@ -79,7 +79,7 @@ bool OverviewBtn::eventFilter(QObject *obj, QEvent *event) {
         if (event->type() == QEvent::HoverLeave)
             BtnBack2Origin();
         if (event->type() == QEvent::MouseButtonRelease)
-                emit OpenPopup();
+                emit OpenPopup(this->geometry());
     }
     return QObject::eventFilter(obj, event);
 }
