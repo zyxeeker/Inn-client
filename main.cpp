@@ -2,10 +2,12 @@
 #include <QApplication>
 #include "component/auth.h"
 #include "page/overview.h"
-#include "component/profile.h"
+//#include "component/profile.h"
 #include "component/button.h"
 #include "component/popup.h"
 #include "component/list.h"
+#include "component/text_editor.h"
+#include "page/chat_room.h"
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
@@ -34,13 +36,20 @@ int main(int argc, char *argv[]) {
     ob.show();
 #endif
 #if 0
-    Popup p;
+    WBPopup p(0,0);
     p.show();
 #endif
-#if 1
+#if 0
     WBListView lv;
     lv.show();
 #endif
-
+#if 0
+    TextEditor t;
+    t.show();
+#endif
+#if 1
+    SingleChatRoom s;
+    s.show();
+#endif
     return a.exec();
 }
