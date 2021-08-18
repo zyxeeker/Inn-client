@@ -63,3 +63,37 @@ void ChatContent::Init() {
     m_contentLayout->addWidget(m_content);
     this->setLayout(m_contentLayout);
 }
+
+ChatContentTimeStamp::ChatContentTimeStamp(int st) {
+    switch (st) {
+        case MSG_READ:
+            m_style = "color: rgb(255, 85, 127);";
+            break;
+        case MSG_UNREAD:
+            m_style = "color: grey;";
+            break;
+    }
+    m_layout = new QHBoxLayout;
+    m_lLine = new QFrame;
+    m_rLine = new QFrame;
+    m_time = new QLabel;
+
+    InitLine(m_rLine);
+    InitLine(m_lLine);
+
+    m_time->setText("2021/8/18");
+    m_time->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+    m_time->setStyleSheet(m_style + "font-family:'Microsoft YaHei UI';font-size:14px;font-weight:medium;");
+
+    m_layout->addWidget(m_lLine);
+    m_layout->addWidget(m_time);
+    m_layout->addWidget(m_rLine);
+    this->setLayout(m_layout);
+}
+
+void ChatContentTimeStamp::InitLine(QFrame *l) {
+    l->setStyleSheet(m_style);
+    l->setFrameShadow(QFrame::Plain);
+    l->setLineWidth(4);
+    l->setFrameShape(QFrame::HLine);
+}

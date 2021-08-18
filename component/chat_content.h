@@ -49,4 +49,19 @@ private:
 
 };
 
+class ChatContentTimeStamp : public QWidget {
+public:
+    ChatContentTimeStamp(int st);
+
+private:
+    void InitLine(QFrame *l);
+
+private:
+    QHBoxLayout *m_layout;
+    QFrame *m_rLine;
+    QFrame *m_lLine;
+    QLabel *m_time;
+    QString m_style;
+};
+
 #endif //INNCLIENT_CHAT_CONTENT_H

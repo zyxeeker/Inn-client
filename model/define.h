@@ -7,5 +7,7 @@
 
 #define POPUP_CLOSE 0
 #define POPUP_SHOW 1
+#define MSG_READ 0
+#define MSG_UNREAD 1
 
 #endif //INNCLIENT_DEFINE_H
