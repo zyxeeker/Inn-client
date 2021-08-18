@@ -10,6 +10,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QTextBrowser>
+#include "./model/define.h"
 
 class AbstractChatContent : public QWidget {
 Q_OBJECT
