@@ -10,25 +10,41 @@ SingleChatRoom::SingleChatRoom() {
 }
 
 void SingleChatRoom::Init() {
-    m_splitter = new QSplitter(this);
-    m_editorLayout = new QHBoxLayout;
-    QHBoxLayout *layout = new QHBoxLayout;
-    m_textEditor = new TextEditor;
-    m_textEditorWidget = new QWidget;
-    m_textViewWidget = new QWidget;
+    m_layout = new QHBoxLayout;
+    m_splitter = new QSplitter;
+    m_chatContentViewArea = new QScrollArea;
+    m_chatContentWidget = new QWidget;
+    m_chatContentLayout = new QVBoxLayout;
+    m_chatInputArea = new QWidget;
+    m_chatInput = new TextEditor;
+    m_chatInputLayout = new QHBoxLayout;
 
-    m_editorLayout->setContentsMargins(0, 0, 0, 0);
-    m_editorLayout->addWidget(m_textEditor);
-    m_textEditorWidget->setLayout(m_editorLayout);
+    AddChatContent();
 
-    m_textViewWidget->setMinimumHeight(200);
-    m_textEditorWidget->setMaximumHeight(500);
-    m_textEditorWidget->setStyleSheet("background:black;");
+    m_chatContentWidget->setLayout(m_chatContentLayout);
+    m_chatContentWidget->setStyleSheet("border:1px solid red;");
+    m_chatContentViewArea->setWidget(m_chatContentWidget);
+
+    m_chatInputLayout->addWidget(m_chatInput);
+    m_chatInputLayout->setContentsMargins(0, 0, 0, 0);
+    m_chatInputArea->setLayout(m_chatInputLayout);
+    m_chatInputArea->setStyleSheet("background:black;");
 
     m_splitter->setOrientation(Qt::Vertical);
-    m_splitter->addWidget(m_textViewWidget);
-    m_splitter->addWidget(m_textEditorWidget);
-    layout->addWidget(m_splitter);
-    layout->setContentsMargins(0, 0, 0, 0);
-    this->setLayout(layout);
+    m_splitter->addWidget(m_chatContentViewArea);
+    m_splitter->addWidget(m_chatInputArea);
+    m_layout->addWidget(m_splitter);
+    m_layout->setContentsMargins(0, 0, 0, 0);
+    this->setLayout(m_layout);
+
+    AddChatContent();
+}
+
+void SingleChatRoom::AddChatContent() {
+    for (int i = 0; i < 50; ++i) {
+        auto *t = new IconChatContent;
+        t->setStyleSheet("border:1px solid red;");
+        m_chatContentLayout->addWidget(t);
+    }
+    m_chatContentWidget->setGeometry(0, 0, m_chatContentViewArea->width(), m_chatContentViewArea->height());
 }

@@ -7,8 +7,11 @@
 
 #include <QWidget>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QSplitter>
+#include <QScrollArea>
 #include "./component/text_editor.h"
+#include "./component/chat_content.h"
 
 class AbstractChatRoom : public QWidget {
 Q_OBJECT
@@ -22,12 +25,19 @@ private:
     void Init();
 
 private:
-    QWidget *m_textEditorWidget;
-    QWidget *m_textViewWidget;
-    TextEditor *m_textEditor;
+    void AddChatContent();
+
+private:
+    QHBoxLayout *m_layout;
     QSplitter *m_splitter;
-    QHBoxLayout *m_viewLayout;
-    QHBoxLayout *m_editorLayout;
+
+    QScrollArea *m_chatContentViewArea;
+    QWidget *m_chatContentWidget;
+    QVBoxLayout *m_chatContentLayout;
+
+    QWidget *m_chatInputArea;
+    TextEditor *m_chatInput;
+    QHBoxLayout *m_chatInputLayout;
 };
 
 
