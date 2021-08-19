@@ -12,18 +12,13 @@ SingleChatRoom::SingleChatRoom() {
 void SingleChatRoom::Init() {
     m_layout = new QHBoxLayout;
     m_splitter = new QSplitter;
-    m_chatContentViewArea = new QScrollArea;
-    m_chatContentWidget = new QWidget;
+    m_chatContentViewArea = new SmoothScrollArea;
     m_chatContentLayout = new QVBoxLayout;
     m_chatInputArea = new QWidget;
     m_chatInput = new TextEditor;
     m_chatInputLayout = new QHBoxLayout;
 
-    AddChatContent();
-
-    m_chatContentWidget->setLayout(m_chatContentLayout);
-    m_chatContentWidget->setStyleSheet("border:1px solid red;");
-    m_chatContentViewArea->setWidget(m_chatContentWidget);
+    m_chatContentViewArea->SetContentLayout(m_chatContentLayout);
 
     m_chatInputLayout->addWidget(m_chatInput);
     m_chatInputLayout->setContentsMargins(0, 0, 0, 0);
@@ -37,14 +32,20 @@ void SingleChatRoom::Init() {
     m_layout->setContentsMargins(0, 0, 0, 0);
     this->setLayout(m_layout);
 
+#if 1
     AddChatContent();
+    AddChatContent();
+    AddChatContent();
+    AddChatContent();
+    AddChatContent();
+    AddChatContent();
+    AddChatContent();
+#endif
+
 }
 
 void SingleChatRoom::AddChatContent() {
-    for (int i = 0; i < 50; ++i) {
-        auto *t = new IconChatContent;
-        t->setStyleSheet("border:1px solid red;");
-        m_chatContentLayout->addWidget(t);
-    }
-    m_chatContentWidget->setGeometry(0, 0, m_chatContentViewArea->width(), m_chatContentViewArea->height());
+    auto *t = new IconChatContent;
+    t->setStyleSheet("border:1px solid red;");
+    m_chatContentLayout->addWidget(t);
 }

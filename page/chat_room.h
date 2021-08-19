@@ -12,6 +12,7 @@
 #include <QScrollArea>
 #include "./component/text_editor.h"
 #include "./component/chat_content.h"
+#include "./component/smooth_scroll_area.h"
 
 class AbstractChatRoom : public QWidget {
 Q_OBJECT
@@ -31,8 +32,7 @@ private:
     QHBoxLayout *m_layout;
     QSplitter *m_splitter;
 
-    QScrollArea *m_chatContentViewArea;
-    QWidget *m_chatContentWidget;
+    SmoothScrollArea *m_chatContentViewArea;
     QVBoxLayout *m_chatContentLayout;
 
     QWidget *m_chatInputArea;
