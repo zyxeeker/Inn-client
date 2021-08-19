@@ -3,6 +3,7 @@
 //
 
 #include "chat_content.h"
+#include <QDebug>
 
 AbstractChatContent::AbstractChatContent() {
     m_contentTime = new QLabel;
@@ -14,7 +15,25 @@ AbstractChatContent::AbstractChatContent() {
     m_contentTime->setStyleSheet("color:white;font-family:'Microsoft YaHei UI';font-size:11px;");
     m_content->setStyleSheet(
             "border-width:0;border-style:outset;color:white;font-family:'Microsoft YaHei UI';font-size:13px;");
-    m_content->setText("AAAAA");
+    m_content->setText(
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    m_content->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_content->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    connect(m_content->document(), SIGNAL(contentsChanged()), this, SLOT(ChangeTextAreaSize()));
+
+}
+
+void AbstractChatContent::ChangeTextAreaSize() {
+    QSize size = m_content->document()->size().toSize();
+    m_content->setFixedHeight(size.height() + 3);
+    this->setMinimumHeight(size.height() + 50);
+    this->setMaximumHeight(size.height() + 50);
+
+    qDebug() << size.height();
+}
+
+void AbstractChatContent::resizeEvent(QResizeEvent *e) {
+    ChangeTextAreaSize();
 }
 
 IconChatContent::IconChatContent() {
@@ -88,6 +107,8 @@ ChatContentTimeStamp::ChatContentTimeStamp(int st) {
     m_layout->addWidget(m_lLine);
     m_layout->addWidget(m_time);
     m_layout->addWidget(m_rLine);
+    this->setMinimumHeight(50);
+    this->setMaximumHeight(50);
     this->setLayout(m_layout);
 }
 

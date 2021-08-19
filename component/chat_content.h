@@ -10,6 +10,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QTextBrowser>
+#include <QResizeEvent>
+#include <QScrollBar>
 #include "./model/define.h"
 
 class AbstractChatContent : public QWidget {
@@ -18,10 +20,16 @@ public:
     AbstractChatContent();
 
 protected:
+    void resizeEvent(QResizeEvent *e);
+
+protected:
     QLabel *m_contentTime;
     QTextBrowser *m_content;
     QHBoxLayout *m_contentLayout;
 
+private slots:
+
+    void ChangeTextAreaSize();
 };
 
 class IconChatContent : public AbstractChatContent {

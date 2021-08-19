@@ -18,6 +18,7 @@ void SingleChatRoom::Init() {
     m_chatInput = new TextEditor;
     m_chatInputLayout = new QHBoxLayout;
 
+    m_chatContentLayout->setAlignment(Qt::AlignTop);
     m_chatContentViewArea->SetContentLayout(m_chatContentLayout);
 
     m_chatInputLayout->addWidget(m_chatInput);
@@ -34,18 +35,22 @@ void SingleChatRoom::Init() {
 
 #if 1
     AddChatContent();
-    AddChatContent();
-    AddChatContent();
-    AddChatContent();
-    AddChatContent();
-    AddChatContent();
-    AddChatContent();
+//    AddChatContent();
+//    AddChatContent();
+//    AddChatContent();
+//    AddChatContent();
+//    AddChatContent();
+//    AddChatContent();
 #endif
 
 }
 
 void SingleChatRoom::AddChatContent() {
+    auto *t1 = new ChatContentTimeStamp(0);
+    auto *t2 = new ChatContent;
     auto *t = new IconChatContent;
-    t->setStyleSheet("border:1px solid red;");
+    m_chatContentLayout->addWidget(t1);
     m_chatContentLayout->addWidget(t);
+    m_chatContentLayout->addWidget(t2);
+
 }

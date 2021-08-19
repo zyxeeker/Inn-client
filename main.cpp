@@ -8,6 +8,7 @@
 #include "component/list.h"
 #include "component/text_editor.h"
 #include "page/chat_room.h"
+#include "component/chat_content.h"
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
@@ -50,6 +51,14 @@ int main(int argc, char *argv[]) {
 #if 1
     SingleChatRoom s;
     s.show();
+#endif
+#if 0
+    //    ChatContent r;
+    //    r.show();
+    //    IconChatContent i;
+    //    i.show();
+    ChatContentTimeStamp t(0);
+    t.show();
 #endif
     return a.exec();
 }
