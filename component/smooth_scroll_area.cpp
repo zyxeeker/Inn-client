@@ -9,6 +9,7 @@ SmoothScrollArea::SmoothScrollArea() {
     m_smoothMoveTimer = new QTimer(this);
     m_lastWheelEvent = nullptr;
     m_content->setStyleSheet("background:black;");
+    this->setWidgetResizable(true);
     this->setWidget(m_content);
     connect(m_smoothMoveTimer, SIGNAL(timeout()), this, SLOT(SmoothMove()));
 
@@ -39,10 +40,6 @@ void SmoothScrollArea::wheelEvent(QWheelEvent *e) {
 
     m_stepsLeftQueue.push_back(qMakePair(delta, m_stepsTotal));
     m_smoothMoveTimer->start(1000 / m_fps);
-}
-
-void SmoothScrollArea::resizeEvent(QResizeEvent *e) {
-    SetContentSize();
 }
 
 void SmoothScrollArea::SmoothMove() {
@@ -79,9 +76,4 @@ double SmoothScrollArea::SubDelta(double delta, int stepsLeft) {
     double m = m_stepsTotal / 2.0;
     double x = abs(m_stepsTotal - stepsLeft - m);
     return 2.0 * delta / m_stepsTotal * (m - x) / m;
-}
-
-void SmoothScrollArea::SetContentSize() {
-//    m_content->setFixedWidth(this->width() - 20);
-    m_content->setGeometry(0, 0, this->width() - 20, this->height());
 }

@@ -24,12 +24,8 @@ public:
 protected:
     virtual void wheelEvent(QWheelEvent *e);
 
-    void resizeEvent(QResizeEvent *e);
-
 private:
     double SubDelta(double delta, int stepsLeft);
-
-    void SetContentSize();
 
 private slots:
 
