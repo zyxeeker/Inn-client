@@ -13,9 +13,21 @@
 #include "./component/text_editor.h"
 #include "./component/chat_content.h"
 #include "./component/smooth_scroll_area.h"
+#include "./component/user.h"
 
 class AbstractChatRoom : public QWidget {
 Q_OBJECT
+public:
+    AbstractChatRoom();
+
+protected:
+    QHBoxLayout *m_layout;
+    QSplitter *m_splitter;
+    QWidget *m_chatInputArea;
+    TextEditor *m_chatInput;
+    QHBoxLayout *m_chatInputLayout;
+    SmoothScrollArea *m_chatContentViewArea;
+    QVBoxLayout *m_chatContentLayout;
 };
 
 class SingleChatRoom : public AbstractChatRoom {
@@ -27,17 +39,17 @@ private:
 
 private:
     void AddChatContent();
+};
+
+class GroupChatRoom : public AbstractChatRoom {
+public:
+    GroupChatRoom();
 
 private:
-    QHBoxLayout *m_layout;
-    QSplitter *m_splitter;
-
-    SmoothScrollArea *m_chatContentViewArea;
-    QVBoxLayout *m_chatContentLayout;
-
-    QWidget *m_chatInputArea;
-    TextEditor *m_chatInput;
-    QHBoxLayout *m_chatInputLayout;
+    QSplitter *m_hSplitter;
+    SmoothScrollArea *m_userListArea;
+    QVBoxLayout *m_listLayout;
+    QHBoxLayout *m_gLayout;
 };
 
 

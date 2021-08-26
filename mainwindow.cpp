@@ -10,8 +10,12 @@ MainWindow::MainWindow(QWidget *parent)
     setAttribute(Qt::WA_TranslucentBackground, true);
     ImportContentBackground();
 #if 1
-    Overview *oo = new Overview;
-    ui->stackedContent->addWidget(oo);
+    Overview *overview = new Overview;
+    GroupChatRoom *groupChatRoom = new GroupChatRoom;
+    SingleChatRoom *singleChatRoom = new SingleChatRoom;
+    ui->stackedContent->addWidget(overview);
+    ui->stackedContent->addWidget(singleChatRoom);
+    ui->stackedContent->addWidget(groupChatRoom);
     qDebug() << ui->stackedContent->currentWidget();
     ui->stackedContent->setCurrentIndex(0);
 //    ui->stackedContent->setCurrentWidget(&oo);
@@ -214,4 +218,16 @@ void MainWindow::on_maximizedBtn_clicked() {
         this->showMaximized();
         SetMax2Min();
     }
+}
+
+void MainWindow::on_homeBtn_clicked() {
+    ui->stackedContent->setCurrentIndex(0);
+}
+
+void MainWindow::on_peopleBtn_clicked() {
+    ui->stackedContent->setCurrentIndex(1);
+}
+
+void MainWindow::on_groupBtn_clicked() {
+    ui->stackedContent->setCurrentIndex(2);
 }

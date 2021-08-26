@@ -7,6 +7,7 @@
 #include <QMouseEvent>
 #include <QtSvg/QSvgRenderer>
 #include "./page/overview.h"
+#include "./page/chat_room.h"
 
 #ifdef Q_OS_WIN
 
@@ -79,8 +80,12 @@ private slots:
     void on_maximizedBtn_clicked();
 
     void on_exitBtn_clicked();
-//
-//    void on_peopleBtn_clicked();
+
+    void on_homeBtn_clicked();
+
+    void on_peopleBtn_clicked();
+
+    void on_groupBtn_clicked();
 
 };
 #endif // MAINWINDOW_H

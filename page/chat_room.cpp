@@ -4,19 +4,14 @@
 
 #include "chat_room.h"
 
-SingleChatRoom::SingleChatRoom() {
-    Init();
-
-}
-
-void SingleChatRoom::Init() {
+AbstractChatRoom::AbstractChatRoom() {
     m_layout = new QHBoxLayout;
     m_splitter = new QSplitter;
-    m_chatContentViewArea = new SmoothScrollArea;
-    m_chatContentLayout = new QVBoxLayout;
     m_chatInputArea = new QWidget;
     m_chatInput = new TextEditor;
     m_chatInputLayout = new QHBoxLayout;
+    m_chatContentViewArea = new SmoothScrollArea;
+    m_chatContentLayout = new QVBoxLayout;
 
     m_chatContentLayout->setAlignment(Qt::AlignTop);
     m_chatContentViewArea->SetContentLayout(m_chatContentLayout);
@@ -24,16 +19,27 @@ void SingleChatRoom::Init() {
     m_chatInputLayout->addWidget(m_chatInput);
     m_chatInputLayout->setContentsMargins(0, 0, 0, 0);
     m_chatInputArea->setLayout(m_chatInputLayout);
-    m_chatInputArea->setStyleSheet("background:black;");
+    m_chatInputArea->setStyleSheet("background:rgb(28,30,39);");
 
     m_splitter->setOrientation(Qt::Vertical);
     m_splitter->addWidget(m_chatContentViewArea);
     m_splitter->addWidget(m_chatInputArea);
+    m_splitter->setHandleWidth(1);
+    m_splitter->setStyleSheet("QSplitter::handle{background-color: rgb(59,59,59);}");
+
     m_layout->addWidget(m_splitter);
     m_layout->setContentsMargins(0, 0, 0, 0);
+}
+
+SingleChatRoom::SingleChatRoom() {
+    Init();
+
+}
+
+void SingleChatRoom::Init() {
     this->setLayout(m_layout);
 
-#if 1
+#if _DEBUG
     AddChatContent();
 //    AddChatContent();
 //    AddChatContent();
@@ -53,4 +59,31 @@ void SingleChatRoom::AddChatContent() {
     m_chatContentLayout->addWidget(t);
     m_chatContentLayout->addWidget(t2);
 
+}
+
+GroupChatRoom::GroupChatRoom() {
+    m_hSplitter = new QSplitter;
+    m_userListArea = new SmoothScrollArea;
+    m_listLayout = new QVBoxLayout;
+    m_gLayout = new QHBoxLayout;
+
+    m_listLayout->setAlignment(Qt::AlignTop);
+    m_userListArea->SetContentLayout(m_listLayout);
+    m_hSplitter->setOrientation(Qt::Horizontal);
+    m_hSplitter->addWidget(m_splitter);
+    m_hSplitter->addWidget(m_userListArea);
+    m_hSplitter->setHandleWidth(1);
+    m_hSplitter->setStyleSheet("QSplitter::handle{background-color: rgb(59,59,59);}");
+
+    m_gLayout->addWidget(m_hSplitter);
+    m_gLayout->setContentsMargins(0, 0, 0, 0);
+    this->setLayout(m_gLayout);
+#if _DEBUG
+    auto *t = new ListUser;
+    auto *t1 = new ListUser;
+    auto *t2 = new ListUser;
+    m_listLayout->addWidget(t);
+    m_listLayout->addWidget(t1);
+    m_listLayout->addWidget(t2);
+#endif
 }
