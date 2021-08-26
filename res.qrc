@@ -38,5 +38,6 @@
     <file>resource/patchNote.png</file>
     <file>resource/checked.png</file>
     <file>resource/bk.jpg</file>
+    <file>resource/copy.svg</file>
   </qresource>
 </RCC>
