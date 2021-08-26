@@ -25,7 +25,7 @@ AbstractListItem::AbstractListItem(int num, QString title, QWidget *parent) : m_
     m_title->setMinimumSize(200, 40);
     m_title->setMaximumSize(200, 40);
     m_title->setStyleSheet("color:white;font-family:'Microsoft YaHei UI';font-size:14px;");
-    m_title->setText(ElideText(m_titleCtx));
+    m_title->setText(Utils::ElideText(m_title, m_titleCtx));
     m_gto->setMinimumSize(20, 20);
     m_gto->setMaximumSize(20, 20);
     m_gto->setPixmap(m_gtoPx);
@@ -35,14 +35,6 @@ AbstractListItem::AbstractListItem(int num, QString title, QWidget *parent) : m_
     m_layout->addWidget(m_gto);
     m_layout->setContentsMargins(10, 0, 10, 0);
     m_body->setLayout(m_layout);
-}
-
-QString AbstractListItem::ElideText(QString strInfo) {
-    QFontMetrics fontMetrics(m_title->font());
-    //如果当前字体下，字符串长度大于指定宽度
-    if (fontMetrics.width(strInfo) > m_title->width())
-        strInfo = QFontMetrics(m_title->font()).elidedText(strInfo, Qt::ElideRight, m_title->width() - 20);
-    return strInfo;
 }
 
 AbstractListView::AbstractListView(QWidget *parent) : QListWidget(parent) {

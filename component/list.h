@@ -20,8 +20,6 @@ Q_OBJECT
 public:
     AbstractListItem(int num, QString title, QWidget *parent = nullptr);
 
-    QString ElideText(QString strInfo);
-
 private:
     int m_num;
     QWidget *m_body;

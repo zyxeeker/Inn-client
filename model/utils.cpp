@@ -15,3 +15,11 @@ QPixmap Utils::LoadSvg(QString url, int w, int h) {
     Painter.end();
     return *px;
 }
+
+QString Utils::ElideText(QLabel *l, QString strInfo) {
+    QFontMetrics fontMetrics(l->font());
+    //如果当前字体下，字符串长度大于指定宽度
+    if (fontMetrics.width(strInfo) > l->width())
+        strInfo = QFontMetrics(l->font()).elidedText(strInfo, Qt::ElideRight, l->width() - 20);
+    return strInfo;
+}

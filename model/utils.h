@@ -8,10 +8,13 @@
 #include <QPixmap>
 #include <QPainter>
 #include <QSvgRenderer>
+#include <QLabel>
 
 class Utils {
 public:
     static QPixmap LoadSvg(QString url, int w, int h);
+
+    static QString ElideText(QLabel *l, QString strInfo);
 };
 
 
