@@ -39,5 +39,8 @@
     <file>resource/checked.png</file>
     <file>resource/bk.jpg</file>
     <file>resource/copy.svg</file>
+    <file>resource/reply.svg</file>
+    <file>resource/thumbs_up.svg</file>
+    <file>resource/high_light.svg</file>
   </qresource>
 </RCC>
