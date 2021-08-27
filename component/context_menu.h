@@ -6,14 +6,19 @@
 #define INNCLIENT_CONTEXT_MENU_H
 
 #include <QWidget>
+#include <QMenu>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QGraphicsDropShadowEffect>
 #include "./model/utils.h"
 
 class AbstractContextMenu : public QWidget {
+Q_OBJECT
 public:
     AbstractContextMenu();
+
+protected:
+    void InitBtn(QPushButton *btn, QString url, QLayout *layout);
 
 protected:
     QWidget *m_body;
@@ -26,14 +31,21 @@ class ChatContentContextMenu : public AbstractContextMenu {
 public:
     ChatContentContextMenu();
 
-private:
-    void InitBtn(QPushButton *btn, QString url);
+protected:
+    QHBoxLayout *m_layout;
 
 private:
-    QHBoxLayout *m_layout;
     QPushButton *m_copyBtn;
+    QPushButton *m_highLightBtn;
+};
+
+class AllChatContentSelectedContextMenu : public ChatContentContextMenu {
+public:
+    AllChatContentSelectedContextMenu();
+
+private:
+    QPushButton *m_thumbUpBtn;
     QPushButton *m_replyBtn;
-    QPushButton *m_agreeBtn;
 };
 
 #endif //INNCLIENT_CONTEXT_MENU_H

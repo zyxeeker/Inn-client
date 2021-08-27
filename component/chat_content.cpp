@@ -5,9 +5,46 @@
 #include "chat_content.h"
 #include <QDebug>
 
+TextBrowser::TextBrowser() {
+    m_menu = new QMenu;
+    m_aWidget = new QWidgetAction(m_menu);
+    m_menuContainer = new QWidget(this);
+    m_menuLayout = new QHBoxLayout;
+    m_allMenu = new ChatContentContextMenu;
+
+    m_menuLayout->setContentsMargins(0, 0, 0, 0);
+    m_menuLayout->addWidget(m_allMenu);
+    m_menuContainer->setLayout(m_menuLayout);
+    m_menuContainer->setMinimumHeight(80);
+    m_menuContainer->setMinimumWidth(120);
+
+    m_aWidget->setDefaultWidget(m_menuContainer);
+    m_menu->setWindowFlags(Qt::FramelessWindowHint);
+    m_menu->setWindowFlag(Qt::Popup, true);
+    m_menu->setAttribute(Qt::WA_TranslucentBackground);
+    m_menu->setStyleSheet("background:transparent;");
+    m_menu->addAction(m_aWidget);
+#ifdef Q_OS_WIN
+    HWND hwnd = reinterpret_cast<HWND>(m_menu->winId());
+    DWORD class_style = ::GetClassLong(hwnd, GCL_STYLE);
+    class_style &= ~CS_DROPSHADOW;
+    ::SetClassLong(hwnd, GCL_STYLE, class_style);
+#endif
+
+}
+
+void TextBrowser::mousePressEvent(QMouseEvent *e) {
+
+}
+
+void TextBrowser::contextMenuEvent(QContextMenuEvent *e) {
+    m_menu->exec(QPoint(cursor().pos().x() - 30, cursor().pos().y() - 30));
+
+}
+
 AbstractChatContent::AbstractChatContent() {
     m_contentTime = new QLabel;
-    m_content = new QTextBrowser;
+    m_content = new TextBrowser;
     m_contentLayout = new QHBoxLayout;
 
     this->setStyleSheet("background:rgb(28,30,39);");
@@ -28,8 +65,6 @@ void AbstractChatContent::ChangeTextAreaSize() {
     m_content->setFixedHeight(size.height() + 3);
     this->setMinimumHeight(size.height() + 50);
     this->setMaximumHeight(size.height() + 50);
-
-    qDebug() << size.height();
 }
 
 void AbstractChatContent::resizeEvent(QResizeEvent *e) {

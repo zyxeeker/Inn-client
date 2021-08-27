@@ -12,7 +12,35 @@
 #include <QTextBrowser>
 #include <QResizeEvent>
 #include <QScrollBar>
+#include <QWidgetAction>
+
+#ifdef Q_OS_WIN
+
+#include <windows.h>
+
+#endif
+
 #include "./model/define.h"
+#include "context_menu.h"
+
+class TextBrowser : public QTextBrowser {
+Q_OBJECT
+public:
+    TextBrowser();
+
+protected:
+    void contextMenuEvent(QContextMenuEvent *e);
+
+    void mousePressEvent(QMouseEvent *e) override;
+
+private:
+    QMenu *m_menu;
+    QWidgetAction *m_aWidget;
+    QPoint m_mousePosition;
+    QWidget *m_menuContainer;
+    QHBoxLayout *m_menuLayout;
+    ChatContentContextMenu *m_allMenu;
+};
 
 class AbstractChatContent : public QWidget {
 Q_OBJECT
@@ -24,7 +52,7 @@ protected:
 
 protected:
     QLabel *m_contentTime;
-    QTextBrowser *m_content;
+    TextBrowser *m_content;
     QHBoxLayout *m_contentLayout;
 
 private slots:
