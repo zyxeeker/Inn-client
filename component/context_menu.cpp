@@ -79,14 +79,14 @@ TextEditContentContextMenu::TextEditContentContextMenu() {
     InitBtn(m_cutBtn, ":/common/resource/cut.svg");
     InitBtn(m_highLightBtn, ":/common/resource/high_light.svg");
     InitBtn(m_copyBtn, ":/common/resource/copy.svg");
-    m_layout->addWidget(m_copyBtn);
+    m_layout->addWidget(m_pasteBtn);
 }
 
 void TextEditContentContextMenu::SetBtnGroup(int st) {
     switch (st) {
         case INPUT_AREA_EMPTY:
             if (m_st != INPUT_AREA_EMPTY) {
-                m_layout->removeWidget(m_pasteBtn);
+                m_layout->removeWidget(m_copyBtn);
                 m_layout->removeWidget(m_highLightBtn);
                 m_layout->removeWidget(m_cutBtn);
                 m_body->adjustSize();
@@ -94,7 +94,7 @@ void TextEditContentContextMenu::SetBtnGroup(int st) {
             m_st = INPUT_AREA_EMPTY;
             break;
         default:
-            m_layout->addWidget(m_pasteBtn);
+            m_layout->addWidget(m_copyBtn);
             m_layout->addWidget(m_cutBtn);
             m_layout->addWidget(m_highLightBtn);
             m_body->adjustSize();

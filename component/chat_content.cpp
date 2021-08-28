@@ -34,7 +34,9 @@ TextBrowser::TextBrowser() {
 }
 
 void TextBrowser::contextMenuEvent(QContextMenuEvent *e) {
-    if (this->textCursor().selectedText() != nullptr)
+    if (this->textCursor().selectedText() == this->document()->toPlainText())
+        m_menuBody->SetBtnGroup(SELECTED_ALL);
+    else if (this->textCursor().selectedText() != nullptr)
         m_menuBody->SetBtnGroup(SELECTED_PART);
     else {
         m_menuBody->SetBtnGroup(SELECTED_ALL);
