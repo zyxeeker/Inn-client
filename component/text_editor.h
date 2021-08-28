@@ -8,6 +8,31 @@
 #include <QWidget>
 #include <QTextEdit>
 #include <QHBoxLayout>
+#include <QWidgetAction>
+
+#ifdef Q_OS_WIN
+
+#include <windows.h>
+
+#endif
+
+#include "context_menu.h"
+
+class TextEdit : public QTextEdit {
+public:
+    TextEdit();
+
+protected:
+    void contextMenuEvent(QContextMenuEvent *e);
+
+private:
+    QMenu *m_menu;
+    QWidgetAction *m_aWidget;
+    QPoint m_mousePosition;
+    QWidget *m_menuContainer;
+    QHBoxLayout *m_menuLayout;
+    TextEditContentContextMenu *m_allMenu;
+};
 
 class TextEditor : public QWidget {
 Q_OBJECT
@@ -21,7 +46,7 @@ private:
 
 private:
     QHBoxLayout *m_layout;
-    QTextEdit *m_editBlock;
+    TextEdit *m_editBlock;
 };
 
 

@@ -10,7 +10,7 @@ TextBrowser::TextBrowser() {
     m_aWidget = new QWidgetAction(m_menu);
     m_menuContainer = new QWidget(this);
     m_menuLayout = new QHBoxLayout;
-    m_allMenu = new ChatContentContextMenu;
+    m_allMenu = new ChatContentSelectedContextMenu;
 
     m_menuLayout->setContentsMargins(0, 0, 0, 0);
     m_menuLayout->addWidget(m_allMenu);
@@ -33,9 +33,7 @@ TextBrowser::TextBrowser() {
 
 }
 
-void TextBrowser::mousePressEvent(QMouseEvent *e) {
 
-}
 
 void TextBrowser::contextMenuEvent(QContextMenuEvent *e) {
     m_menu->exec(QPoint(cursor().pos().x() - 30, cursor().pos().y() - 30));

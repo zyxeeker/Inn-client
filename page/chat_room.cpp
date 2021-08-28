@@ -39,7 +39,7 @@ SingleChatRoom::SingleChatRoom() {
 void SingleChatRoom::Init() {
     this->setLayout(m_layout);
 
-#if _DEBUG
+//#if _DEBUG
     AddChatContent();
 //    AddChatContent();
 //    AddChatContent();
@@ -47,7 +47,7 @@ void SingleChatRoom::Init() {
 //    AddChatContent();
 //    AddChatContent();
 //    AddChatContent();
-#endif
+//#endif
 
 }
 

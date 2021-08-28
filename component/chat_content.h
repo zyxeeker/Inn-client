@@ -31,15 +31,13 @@ public:
 protected:
     void contextMenuEvent(QContextMenuEvent *e);
 
-    void mousePressEvent(QMouseEvent *e) override;
-
 private:
     QMenu *m_menu;
     QWidgetAction *m_aWidget;
     QPoint m_mousePosition;
     QWidget *m_menuContainer;
     QHBoxLayout *m_menuLayout;
-    ChatContentContextMenu *m_allMenu;
+    ChatContentSelectedContextMenu *m_allMenu;
 };
 
 class AbstractChatContent : public QWidget {

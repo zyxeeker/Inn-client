@@ -18,34 +18,54 @@ public:
     AbstractContextMenu();
 
 protected:
-    void InitBtn(QPushButton *btn, QString url, QLayout *layout);
+    void InitBtn(QPushButton *btn, QString url);
 
 protected:
     QWidget *m_body;
+    QHBoxLayout *m_layout;
+
+    QPushButton *m_copyBtn;
+    QPushButton *m_highLightBtn;
 
 private:
     QGraphicsDropShadowEffect *m_effect;
 };
 
-class ChatContentContextMenu : public AbstractContextMenu {
+class ChatContentSelectedContextMenu : public AbstractContextMenu {
 public:
-    ChatContentContextMenu();
+    ChatContentSelectedContextMenu();
 
-protected:
-    QHBoxLayout *m_layout;
-
-private:
-    QPushButton *m_copyBtn;
-    QPushButton *m_highLightBtn;
 };
 
-class AllChatContentSelectedContextMenu : public ChatContentContextMenu {
+class AllChatContentSelectedContextMenu : public ChatContentSelectedContextMenu {
 public:
     AllChatContentSelectedContextMenu();
 
 private:
     QPushButton *m_thumbUpBtn;
     QPushButton *m_replyBtn;
+};
+
+class TextEditContentContextMenu : public AbstractContextMenu {
+public:
+    TextEditContentContextMenu();
+
+protected:
+    QPushButton *m_pasteBtn;
+    QPushButton *m_cutBtn;
+
+};
+
+class TextEditContentSelectedContextMenu : public TextEditContentContextMenu {
+public:
+    TextEditContentSelectedContextMenu();
+
+};
+
+class AllTextEditContentSelectedContextMenu : public TextEditContentContextMenu {
+public:
+    AllTextEditContentSelectedContextMenu();
+
 };
 
 #endif //INNCLIENT_CONTEXT_MENU_H
