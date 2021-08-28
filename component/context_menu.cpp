@@ -31,41 +31,75 @@ void AbstractContextMenu::InitBtn(QPushButton *btn, QString url) {
     btn->setStyleSheet("::hover{background-color:rgb(71,71,74);}");
     btn->setMinimumHeight(28);
     btn->setMinimumWidth(28);
-    m_layout->addWidget(btn);
 }
 
 ChatContentSelectedContextMenu::ChatContentSelectedContextMenu() {
+    m_st = SELECTED_PART;
     m_copyBtn = new QPushButton;
     m_highLightBtn = new QPushButton;
-    InitBtn(m_copyBtn, ":/common/resource/copy.svg");
-    InitBtn(m_highLightBtn, ":/common/resource/high_light.svg");
-}
-
-AllChatContentSelectedContextMenu::AllChatContentSelectedContextMenu() {
     m_thumbUpBtn = new QPushButton;
     m_replyBtn = new QPushButton;
+    InitBtn(m_copyBtn, ":/common/resource/copy.svg");
+    InitBtn(m_highLightBtn, ":/common/resource/high_light.svg");
     InitBtn(m_replyBtn, ":/common/resource/reply.svg");
     InitBtn(m_thumbUpBtn, ":/common/resource/thumbs_up.svg");
+    m_layout->addWidget(m_copyBtn);
+    m_layout->addWidget(m_highLightBtn);
+
+}
+
+void ChatContentSelectedContextMenu::SetBtnGroup(int st) {
+    switch (st) {
+        case SELECTED_ALL:
+            if (m_st == SELECTED_PART) {
+                m_layout->addWidget(m_replyBtn);
+                m_layout->addWidget(m_thumbUpBtn);
+                m_body->adjustSize();
+            }
+            m_st = SELECTED_ALL;
+            break;
+        case SELECTED_PART:
+            if (m_st == SELECTED_ALL) {
+                m_layout->removeWidget(m_replyBtn);
+                m_layout->removeWidget(m_thumbUpBtn);
+                m_body->adjustSize();
+            }
+            m_st = SELECTED_PART;
+            break;
+    }
 }
 
 TextEditContentContextMenu::TextEditContentContextMenu() {
+    m_st = INPUT_AREA_EMPTY;
     m_copyBtn = new QPushButton;
-    InitBtn(m_copyBtn, ":/common/resource/copy.svg");
-}
-
-TextEditContentSelectedContextMenu::TextEditContentSelectedContextMenu() {
-    m_pasteBtn = new QPushButton;
-    m_cutBtn = new QPushButton;
-    InitBtn(m_pasteBtn, ":/common/resource/paste.svg");
-    InitBtn(m_cutBtn, ":/common/resource/cut.svg");
-    InitBtn(m_highLightBtn, ":/common/resource/high_light.svg");
-}
-
-AllTextEditContentSelectedContextMenu::AllTextEditContentSelectedContextMenu() {
     m_pasteBtn = new QPushButton;
     m_cutBtn = new QPushButton;
     m_highLightBtn = new QPushButton;
     InitBtn(m_pasteBtn, ":/common/resource/paste.svg");
     InitBtn(m_cutBtn, ":/common/resource/cut.svg");
     InitBtn(m_highLightBtn, ":/common/resource/high_light.svg");
+    InitBtn(m_copyBtn, ":/common/resource/copy.svg");
+    m_layout->addWidget(m_copyBtn);
+}
+
+void TextEditContentContextMenu::SetBtnGroup(int st) {
+    switch (st) {
+        case INPUT_AREA_EMPTY:
+            if (m_st != INPUT_AREA_EMPTY) {
+                m_layout->removeWidget(m_pasteBtn);
+                m_layout->removeWidget(m_highLightBtn);
+                m_layout->removeWidget(m_cutBtn);
+                m_body->adjustSize();
+            }
+            m_st = INPUT_AREA_EMPTY;
+            break;
+        default:
+            m_layout->addWidget(m_pasteBtn);
+            m_layout->addWidget(m_cutBtn);
+            m_layout->addWidget(m_highLightBtn);
+            m_body->adjustSize();
+            m_st = INPUT_AREA_NOT_EMPTY;
+            break;
+
+    }
 }

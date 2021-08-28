@@ -17,6 +17,7 @@
 #endif
 
 #include "context_menu.h"
+#include "./model/define.h"
 
 class TextEdit : public QTextEdit {
 public:
@@ -28,10 +29,9 @@ protected:
 private:
     QMenu *m_menu;
     QWidgetAction *m_aWidget;
-    QPoint m_mousePosition;
     QWidget *m_menuContainer;
     QHBoxLayout *m_menuLayout;
-    TextEditContentContextMenu *m_allMenu;
+    TextEditContentContextMenu *m_menuBody;
 };
 
 class TextEditor : public QWidget {

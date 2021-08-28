@@ -11,16 +11,20 @@
 #include <QHBoxLayout>
 #include <QGraphicsDropShadowEffect>
 #include "./model/utils.h"
+#include "./model/define.h"
 
 class AbstractContextMenu : public QWidget {
 Q_OBJECT
 public:
     AbstractContextMenu();
 
+    virtual void SetBtnGroup(int st) = 0;
+
 protected:
     void InitBtn(QPushButton *btn, QString url);
 
 protected:
+    int m_st;
     QWidget *m_body;
     QHBoxLayout *m_layout;
 
@@ -35,11 +39,7 @@ class ChatContentSelectedContextMenu : public AbstractContextMenu {
 public:
     ChatContentSelectedContextMenu();
 
-};
-
-class AllChatContentSelectedContextMenu : public ChatContentSelectedContextMenu {
-public:
-    AllChatContentSelectedContextMenu();
+    void SetBtnGroup(int st);
 
 private:
     QPushButton *m_thumbUpBtn;
@@ -50,21 +50,11 @@ class TextEditContentContextMenu : public AbstractContextMenu {
 public:
     TextEditContentContextMenu();
 
+    void SetBtnGroup(int st);
+
 protected:
     QPushButton *m_pasteBtn;
     QPushButton *m_cutBtn;
-
-};
-
-class TextEditContentSelectedContextMenu : public TextEditContentContextMenu {
-public:
-    TextEditContentSelectedContextMenu();
-
-};
-
-class AllTextEditContentSelectedContextMenu : public TextEditContentContextMenu {
-public:
-    AllTextEditContentSelectedContextMenu();
 
 };
 

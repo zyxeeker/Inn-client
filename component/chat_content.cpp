@@ -10,13 +10,13 @@ TextBrowser::TextBrowser() {
     m_aWidget = new QWidgetAction(m_menu);
     m_menuContainer = new QWidget(this);
     m_menuLayout = new QHBoxLayout;
-    m_allMenu = new ChatContentSelectedContextMenu;
+    m_menuBody = new ChatContentSelectedContextMenu;
 
     m_menuLayout->setContentsMargins(0, 0, 0, 0);
-    m_menuLayout->addWidget(m_allMenu);
+    m_menuLayout->addWidget(m_menuBody);
     m_menuContainer->setLayout(m_menuLayout);
     m_menuContainer->setMinimumHeight(80);
-    m_menuContainer->setMinimumWidth(120);
+    m_menuContainer->setMinimumWidth(400);
 
     m_aWidget->setDefaultWidget(m_menuContainer);
     m_menu->setWindowFlags(Qt::FramelessWindowHint);
@@ -33,11 +33,14 @@ TextBrowser::TextBrowser() {
 
 }
 
-
-
 void TextBrowser::contextMenuEvent(QContextMenuEvent *e) {
+    if (this->textCursor().selectedText() != nullptr)
+        m_menuBody->SetBtnGroup(SELECTED_PART);
+    else {
+        m_menuBody->SetBtnGroup(SELECTED_ALL);
+        this->selectAll();
+    }
     m_menu->exec(QPoint(cursor().pos().x() - 30, cursor().pos().y() - 30));
-
 }
 
 AbstractChatContent::AbstractChatContent() {

@@ -37,7 +37,7 @@ private:
     QPoint m_mousePosition;
     QWidget *m_menuContainer;
     QHBoxLayout *m_menuLayout;
-    ChatContentSelectedContextMenu *m_allMenu;
+    ChatContentSelectedContextMenu *m_menuBody;
 };
 
 class AbstractChatContent : public QWidget {
