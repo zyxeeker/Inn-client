@@ -20,6 +20,7 @@
 #include "./model/define.h"
 
 class TextEdit : public QTextEdit {
+Q_OBJECT
 public:
     TextEdit();
 
@@ -32,6 +33,10 @@ private:
     QWidget *m_menuContainer;
     QHBoxLayout *m_menuLayout;
     TextEditContentContextMenu *m_menuBody;
+
+private slots:
+
+    void Operation(int op);
 };
 
 class TextEditor : public QWidget {

@@ -38,6 +38,10 @@ private:
     QWidget *m_menuContainer;
     QHBoxLayout *m_menuLayout;
     ChatContentSelectedContextMenu *m_menuBody;
+
+private slots:
+
+    void Operation(int);
 };
 
 class AbstractChatContent : public QWidget {

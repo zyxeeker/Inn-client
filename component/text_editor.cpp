@@ -23,6 +23,7 @@ TextEdit::TextEdit() {
     m_menu->setAttribute(Qt::WA_TranslucentBackground);
     m_menu->setStyleSheet("background:transparent;");
     m_menu->addAction(m_aWidget);
+    connect(m_menuBody, SIGNAL(Operation(int)), this, SLOT(Operation(int)));
 #ifdef Q_OS_WIN
     HWND hwnd = reinterpret_cast<HWND>(m_menu->winId());
     DWORD class_style = ::GetClassLong(hwnd, GCL_STYLE);
@@ -41,6 +42,20 @@ void TextEdit::contextMenuEvent(QContextMenuEvent *e) {
 
 }
 
+void TextEdit::Operation(int op) {
+    switch (op) {
+        case COPY:
+            this->copy();
+            break;
+        case PASTE:
+            this->paste();
+            break;
+        case CUT:
+            this->cut();
+            break;
+    }
+    m_menu->close();
+}
 
 TextEditor::TextEditor() {
     Init();

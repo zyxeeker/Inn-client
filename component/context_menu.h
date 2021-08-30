@@ -29,10 +29,14 @@ protected:
     QHBoxLayout *m_layout;
 
     QPushButton *m_copyBtn;
-    QPushButton *m_highLightBtn;
+    QPushButton *m_highlightBtn;
 
 private:
     QGraphicsDropShadowEffect *m_effect;
+
+signals:
+
+    void Operation(int);
 };
 
 class ChatContentSelectedContextMenu : public AbstractContextMenu {

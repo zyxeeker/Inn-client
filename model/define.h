@@ -13,5 +13,8 @@
 #define SELECTED_PART 1
 #define INPUT_AREA_EMPTY 0
 #define INPUT_AREA_NOT_EMPTY 1
+#define COPY 0
+#define PASTE 1
+#define CUT 2
 
 #endif //INNCLIENT_DEFINE_H

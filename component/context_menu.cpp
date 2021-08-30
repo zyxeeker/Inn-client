@@ -3,6 +3,7 @@
 //
 
 #include "context_menu.h"
+#include <QDebug>
 
 AbstractContextMenu::AbstractContextMenu() {
     m_body = new QWidget(this);
@@ -36,16 +37,18 @@ void AbstractContextMenu::InitBtn(QPushButton *btn, QString url) {
 ChatContentSelectedContextMenu::ChatContentSelectedContextMenu() {
     m_st = SELECTED_PART;
     m_copyBtn = new QPushButton;
-    m_highLightBtn = new QPushButton;
+    m_highlightBtn = new QPushButton;
     m_thumbUpBtn = new QPushButton;
     m_replyBtn = new QPushButton;
     InitBtn(m_copyBtn, ":/common/resource/copy.svg");
-    InitBtn(m_highLightBtn, ":/common/resource/high_light.svg");
+    InitBtn(m_highlightBtn, ":/common/resource/high_light.svg");
     InitBtn(m_replyBtn, ":/common/resource/reply.svg");
     InitBtn(m_thumbUpBtn, ":/common/resource/thumbs_up.svg");
     m_layout->addWidget(m_copyBtn);
-    m_layout->addWidget(m_highLightBtn);
-
+    m_layout->addWidget(m_highlightBtn);
+    connect(m_copyBtn, &QPushButton::clicked, this, [=]() {
+        emit Operation(COPY);
+    });
 }
 
 void ChatContentSelectedContextMenu::SetBtnGroup(int st) {
@@ -74,12 +77,21 @@ TextEditContentContextMenu::TextEditContentContextMenu() {
     m_copyBtn = new QPushButton;
     m_pasteBtn = new QPushButton;
     m_cutBtn = new QPushButton;
-    m_highLightBtn = new QPushButton;
+    m_highlightBtn = new QPushButton;
     InitBtn(m_pasteBtn, ":/common/resource/paste.svg");
     InitBtn(m_cutBtn, ":/common/resource/cut.svg");
-    InitBtn(m_highLightBtn, ":/common/resource/high_light.svg");
+    InitBtn(m_highlightBtn, ":/common/resource/high_light.svg");
     InitBtn(m_copyBtn, ":/common/resource/copy.svg");
     m_layout->addWidget(m_pasteBtn);
+    connect(m_copyBtn, &QPushButton::clicked, this, [=]() {
+        emit Operation(COPY);
+    });
+    connect(m_pasteBtn, &QPushButton::clicked, this, [=]() {
+        emit Operation(PASTE);
+    });
+    connect(m_cutBtn, &QPushButton::clicked, this, [=]() {
+        emit Operation(CUT);
+    });
 }
 
 void TextEditContentContextMenu::SetBtnGroup(int st) {
@@ -87,7 +99,7 @@ void TextEditContentContextMenu::SetBtnGroup(int st) {
         case INPUT_AREA_EMPTY:
             if (m_st != INPUT_AREA_EMPTY) {
                 m_layout->removeWidget(m_copyBtn);
-                m_layout->removeWidget(m_highLightBtn);
+                m_layout->removeWidget(m_highlightBtn);
                 m_layout->removeWidget(m_cutBtn);
                 m_body->adjustSize();
             }
@@ -96,7 +108,7 @@ void TextEditContentContextMenu::SetBtnGroup(int st) {
         default:
             m_layout->addWidget(m_copyBtn);
             m_layout->addWidget(m_cutBtn);
-            m_layout->addWidget(m_highLightBtn);
+            m_layout->addWidget(m_highlightBtn);
             m_body->adjustSize();
             m_st = INPUT_AREA_NOT_EMPTY;
             break;
