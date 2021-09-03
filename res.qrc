@@ -32,17 +32,18 @@
     <file>resource/hide.svg</file>
     <file>resource/close.svg</file>
     <file>resource/max.svg</file>
-      <file>resource/min.svg</file>
-      <file>resource/bk_2.png</file>
-      <file>resource/content_bk.svg</file>
-      <file>resource/patchNote.png</file>
-      <file>resource/checked.png</file>
-      <file>resource/bk.jpg</file>
-      <file>resource/copy.svg</file>
-      <file>resource/reply.svg</file>
-      <file>resource/thumbs_up.svg</file>
-      <file>resource/high_light.svg</file>
-      <file>resource/paste.svg</file>
-      <file>resource/cut.svg</file>
+    <file>resource/min.svg</file>
+    <file>resource/bk_2.png</file>
+    <file>resource/content_bk.svg</file>
+    <file>resource/patchNote.png</file>
+    <file>resource/checked.png</file>
+    <file>resource/bk.jpg</file>
+    <file>resource/copy.svg</file>
+    <file>resource/reply.svg</file>
+    <file>resource/thumbs_up.svg</file>
+    <file>resource/high_light.svg</file>
+    <file>resource/paste.svg</file>
+    <file>resource/cut.svg</file>
+    <file>resource/more.svg</file>
   </qresource>
 </RCC>
