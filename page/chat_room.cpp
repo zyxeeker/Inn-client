@@ -66,16 +66,33 @@ GroupChatRoom::GroupChatRoom() {
     m_userListArea = new SmoothScrollArea;
     m_listLayout = new QVBoxLayout;
     m_gLayout = new QHBoxLayout;
+    m_navigationLayout = new QVBoxLayout;
+    m_navigation = new SmoothScrollArea;
+    m_leftSide = new QWidget;
+    m_sideLayout = new QVBoxLayout;
+    m_cPanel = new ControlPanel("");
+
+    m_navigationLayout->setAlignment(Qt::AlignTop);
+    m_navigation->setLayout(m_navigationLayout);
+//    m_navigation->setStyleSheet("background:white;");
+    m_sideLayout->addWidget(m_navigation);
+    m_sideLayout->addWidget(m_cPanel);
+    m_sideLayout->setSpacing(0);
+    m_sideLayout->setContentsMargins(0, 0, 0, 0);
+//    m_leftSide->setMaximumWidth(180);
+    m_leftSide->setMinimumWidth(180);
+    m_leftSide->setLayout(m_sideLayout);
 
     m_listLayout->setAlignment(Qt::AlignTop);
     m_userListArea->SetContentLayout(m_listLayout);
     m_hSplitter->setOrientation(Qt::Horizontal);
+    m_hSplitter->addWidget(m_leftSide);
     m_hSplitter->addWidget(m_splitter);
     m_hSplitter->addWidget(m_userListArea);
     m_hSplitter->setHandleWidth(1);
     m_hSplitter->setStyleSheet("QSplitter::handle{background-color: rgb(59,59,59);}");
-
     m_gLayout->addWidget(m_hSplitter);
+    m_gLayout->setSpacing(0);
     m_gLayout->setContentsMargins(0, 0, 0, 0);
     this->setLayout(m_gLayout);
 #if _DEBUG

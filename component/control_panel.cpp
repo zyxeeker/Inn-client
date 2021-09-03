@@ -12,9 +12,10 @@ ControlPanel::ControlPanel(QString name) {
     m_layout = new QHBoxLayout;
     m_userLayout = new QVBoxLayout;
 
-    m_userIcon->setMinimumSize(50, 50);
-    m_userIcon->setMaximumSize(50, 50);
-    m_userIcon->setStyleSheet("border-radius:25px;background:white;");
+    this->setObjectName("bk");
+    m_userIcon->setMinimumSize(40, 40);
+    m_userIcon->setMaximumSize(40, 40);
+    m_userIcon->setStyleSheet("border-radius:20px;background:white;");
     m_userName->setText("TEST TEST TEST");
     m_userName->setStyleSheet("color:white;font-family:'Microsoft YaHei UI';font-size:14px;font-weight:medium;");
     m_userStatue->setText("OUTLINE");
@@ -34,7 +35,7 @@ ControlPanel::ControlPanel(QString name) {
     m_layout->addWidget(m_userIcon);
     m_layout->addLayout(m_userLayout);
     m_layout->addWidget(m_moreBtn);
-    m_layout->setContentsMargins(5, 5, 5, 5);
+    m_layout->setContentsMargins(10, 5, 10, 5);
     this->setLayout(m_layout);
-    this->setStyleSheet("background:rgb(36, 36, 36);");
+    this->setStyleSheet("#bk{border-top:1px solid rgb(59,59,59);background:rgb(36, 36, 36);}");
 }

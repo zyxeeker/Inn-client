@@ -14,6 +14,7 @@
 #include "./component/chat_content.h"
 #include "./component/smooth_scroll_area.h"
 #include "./component/user.h"
+#include "./component/control_panel.h"
 
 class AbstractChatRoom : public QWidget {
 Q_OBJECT
@@ -46,9 +47,14 @@ public:
     GroupChatRoom();
 
 private:
+    ControlPanel *m_cPanel;
     QSplitter *m_hSplitter;
     SmoothScrollArea *m_userListArea;
     QVBoxLayout *m_listLayout;
+    SmoothScrollArea *m_navigation;
+    QVBoxLayout *m_navigationLayout;
+    QWidget *m_leftSide;
+    QVBoxLayout *m_sideLayout;
     QHBoxLayout *m_gLayout;
 };
 
