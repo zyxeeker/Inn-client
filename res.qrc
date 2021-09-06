@@ -46,4 +46,9 @@
     <file>resource/cut.svg</file>
     <file>resource/more.svg</file>
   </qresource>
+  <qresource prefix="user">
+    <file>resource/online.svg</file>
+    <file>resource/busy.svg</file>
+    <file>resource/sleep.svg</file>
+  </qresource>
 </RCC>

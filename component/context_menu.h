@@ -28,8 +28,8 @@ protected:
     QWidget *m_body;
     QHBoxLayout *m_layout;
 
-    QPushButton *m_copyBtn;
-    QPushButton *m_highlightBtn;
+    QPushButton *m_copyBtn = nullptr;
+    QPushButton *m_highlightBtn = nullptr;
 
 private:
     QGraphicsDropShadowEffect *m_effect;
@@ -59,6 +59,24 @@ public:
 protected:
     QPushButton *m_pasteBtn;
     QPushButton *m_cutBtn;
+
+};
+
+class ControlPanelContextMenu : public QWidget {
+Q_OBJECT
+public:
+    ControlPanelContextMenu();
+
+private:
+    void InitBtn(QPushButton *btn, QString url, QString name);
+
+private:
+    QPushButton *m_onlineBtn;
+    QPushButton *m_busyBtn;
+    QPushButton *m_sleepBtn;
+    QVBoxLayout *m_layout;
+    QWidget *m_body;
+    QGraphicsDropShadowEffect *m_effect;
 
 };
 

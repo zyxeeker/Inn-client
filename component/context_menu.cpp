@@ -115,3 +115,42 @@ void TextEditContentContextMenu::SetBtnGroup(int st) {
 
     }
 }
+
+ControlPanelContextMenu::ControlPanelContextMenu() {
+    m_onlineBtn = new QPushButton;
+    m_busyBtn = new QPushButton;
+    m_sleepBtn = new QPushButton;
+    m_layout = new QVBoxLayout;
+    m_effect = new QGraphicsDropShadowEffect;
+    m_body = new QWidget(this);
+
+    InitBtn(m_onlineBtn, ":/user/resource/online.svg", "  在线");
+    InitBtn(m_busyBtn, ":/user/resource/busy.svg", "  忙碌");
+    InitBtn(m_sleepBtn, ":/user/resource/sleep.svg", "  离开");
+
+    m_effect->setOffset(0, 0);
+    m_effect->setColor(QColor(0, 0, 0, 150));
+    m_effect->setBlurRadius(50);
+    m_body->setStyleSheet("background-color:rgb(53,53,56);border-radius:3px;");
+    m_body->setGraphicsEffect(m_effect);
+    m_body->move(30, 30);
+    m_body->setLayout(m_layout);
+    m_body->setMinimumSize(80, 86);
+    m_body->setMaximumSize(80, 86);
+    m_layout->setContentsMargins(2, 2, 2, 2);
+    m_layout->setSpacing(2);
+}
+
+void ControlPanelContextMenu::InitBtn(QPushButton *btn, QString url, QString name) {
+    QIcon icon;
+    icon.addFile(url);
+    btn->setIcon(icon);
+    btn->setCursor(Qt::PointingHandCursor);
+    btn->setIconSize(QSize(18, 18));
+    btn->setStyleSheet(
+            "QPushButton{color:white;font-family:'Microsoft YaHei UI';font-size:13px;}QPushButton::hover{background-color:rgb(71,71,74);}");
+    btn->setMinimumHeight(26);
+    btn->setCursor(Qt::PointingHandCursor);
+    btn->setText(name);
+    m_layout->addWidget(btn);
+}

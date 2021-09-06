@@ -36,6 +36,37 @@ ControlPanel::ControlPanel(QString name) {
     m_layout->addLayout(m_userLayout);
     m_layout->addWidget(m_moreBtn);
     m_layout->setContentsMargins(10, 5, 10, 5);
+    InitMenu();
+    connect(m_moreBtn, &QPushButton::clicked, [=]() {
+        m_menu->exec(QPoint(QPoint(m_moreBtn->mapToGlobal(QPoint(0, 0)).x(),
+                                   m_moreBtn->mapToGlobal(QPoint(0, 0)).y() - 90)));
+    });
     this->setLayout(m_layout);
     this->setStyleSheet("#bk{border-top:1px solid rgb(59,59,59);background:rgb(36, 36, 36);}");
+}
+
+void ControlPanel::InitMenu() {
+    m_menu = new QMenu;
+    m_aWidget = new QWidgetAction(m_menu);
+    m_menuContainer = new QWidget(this);
+    m_menuLayout = new QHBoxLayout;
+    m_menuBody = new ControlPanelContextMenu;
+    m_menuLayout->setContentsMargins(0, 0, 0, 0);
+    m_menuLayout->addWidget(m_menuBody);
+    m_menuContainer->setLayout(m_menuLayout);
+    m_menuContainer->setMinimumHeight(150);
+    m_menuContainer->setMinimumWidth(200);
+
+    m_aWidget->setDefaultWidget(m_menuContainer);
+    m_menu->setWindowFlags(Qt::FramelessWindowHint);
+    m_menu->setWindowFlag(Qt::Popup, true);
+    m_menu->setAttribute(Qt::WA_TranslucentBackground);
+    m_menu->setStyleSheet("background:transparent;");
+    m_menu->addAction(m_aWidget);
+#ifdef Q_OS_WIN
+    HWND hwnd = reinterpret_cast<HWND>(m_menu->winId());
+    DWORD class_style = ::GetClassLong(hwnd, GCL_STYLE);
+    class_style &= ~CS_DROPSHADOW;
+    ::SetClassLong(hwnd, GCL_STYLE, class_style);
+#endif
 }
