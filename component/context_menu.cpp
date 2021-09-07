@@ -128,6 +128,16 @@ ControlPanelContextMenu::ControlPanelContextMenu() {
     InitBtn(m_busyBtn, ":/user/resource/busy.svg", "  忙碌");
     InitBtn(m_sleepBtn, ":/user/resource/sleep.svg", "  离开");
 
+    connect(m_onlineBtn, &QPushButton::clicked, this, [=]() {
+        emit StatueChanged(ONLINE);
+    });
+    connect(m_busyBtn, &QPushButton::clicked, this, [=]() {
+        emit StatueChanged(BUSY);
+    });
+    connect(m_sleepBtn, &QPushButton::clicked, this, [=]() {
+        emit StatueChanged(SLEEP);
+    });
+
     m_effect->setOffset(0, 0);
     m_effect->setColor(QColor(0, 0, 0, 150));
     m_effect->setBlurRadius(50);
@@ -148,7 +158,7 @@ void ControlPanelContextMenu::InitBtn(QPushButton *btn, QString url, QString nam
     btn->setCursor(Qt::PointingHandCursor);
     btn->setIconSize(QSize(18, 18));
     btn->setStyleSheet(
-            "QPushButton{color:white;font-family:'Microsoft YaHei UI';font-size:13px;}QPushButton::hover{background-color:rgb(71,71,74);}");
+            "QPushButton{color:rgb(216,216,216);font-family:'Microsoft YaHei UI';font-size:13px;}QPushButton::hover{background-color:rgb(71,71,74);}");
     btn->setMinimumHeight(26);
     btn->setCursor(Qt::PointingHandCursor);
     btn->setText(name);

@@ -19,8 +19,10 @@
 #endif
 
 #include "context_menu.h"
+#include "./model/define.h"
 
 class ControlPanel : public QWidget {
+Q_OBJECT
 public:
     ControlPanel(QString name);
 
@@ -34,13 +36,17 @@ private:
     QPushButton *m_moreBtn;
     QHBoxLayout *m_layout;
     QVBoxLayout *m_userLayout;
+    QWidget *m_container;
+    QHBoxLayout *m_containerLayout;
 
     QMenu *m_menu;
     QWidgetAction *m_aWidget;
     QWidget *m_menuContainer;
     QHBoxLayout *m_menuLayout;
     ControlPanelContextMenu *m_menuBody;
+private slots:
 
+    void StatueChanged(int);
 };
 
 

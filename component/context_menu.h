@@ -77,7 +77,9 @@ private:
     QVBoxLayout *m_layout;
     QWidget *m_body;
     QGraphicsDropShadowEffect *m_effect;
+signals:
 
+    void StatueChanged(int);
 };
 
 #endif //INNCLIENT_CONTEXT_MENU_H

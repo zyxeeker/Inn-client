@@ -11,8 +11,9 @@ ControlPanel::ControlPanel(QString name) {
     m_moreBtn = new QPushButton;
     m_layout = new QHBoxLayout;
     m_userLayout = new QVBoxLayout;
+    m_container = new QWidget;
+    m_containerLayout = new QHBoxLayout;
 
-    this->setObjectName("bk");
     m_userIcon->setMinimumSize(40, 40);
     m_userIcon->setMaximumSize(40, 40);
     m_userIcon->setStyleSheet("border-radius:20px;background:white;");
@@ -37,12 +38,17 @@ ControlPanel::ControlPanel(QString name) {
     m_layout->addWidget(m_moreBtn);
     m_layout->setContentsMargins(10, 5, 10, 5);
     InitMenu();
+    m_container->setObjectName("bk");
+    m_container->setLayout(m_layout);
+    m_container->setStyleSheet("#bk{border-top:1px solid rgb(59,59,59);background:rgb(36, 36, 36);}");
+    m_containerLayout->addWidget(m_container);
+    m_containerLayout->setContentsMargins(0, 0, 0, 0);
+    this->setLayout(m_containerLayout);
     connect(m_moreBtn, &QPushButton::clicked, [=]() {
         m_menu->exec(QPoint(QPoint(m_moreBtn->mapToGlobal(QPoint(0, 0)).x(),
                                    m_moreBtn->mapToGlobal(QPoint(0, 0)).y() - 90)));
     });
-    this->setLayout(m_layout);
-    this->setStyleSheet("#bk{border-top:1px solid rgb(59,59,59);background:rgb(36, 36, 36);}");
+    connect(m_menuBody, SIGNAL(StatueChanged(int)), this, SLOT(StatueChanged(int)));
 }
 
 void ControlPanel::InitMenu() {
@@ -69,4 +75,19 @@ void ControlPanel::InitMenu() {
     class_style &= ~CS_DROPSHADOW;
     ::SetClassLong(hwnd, GCL_STYLE, class_style);
 #endif
+}
+
+void ControlPanel::StatueChanged(int st) {
+    switch (st) {
+        case ONLINE:
+            m_userStatue->setText("OUTLINE");
+            break;
+        case BUSY:
+            m_userStatue->setText("BUSY");
+            break;
+        case SLEEP:
+            m_userStatue->setText("SLEEP");
+            break;
+    }
+    m_menu->close();
 }

@@ -13,8 +13,17 @@
 #define SELECTED_PART 1
 #define INPUT_AREA_EMPTY 0
 #define INPUT_AREA_NOT_EMPTY 1
-#define COPY 0
-#define PASTE 1
-#define CUT 2
+
+enum TEXT_OPS {
+    COPY,
+    PASTE,
+    CUT
+};
+
+enum USER_ST {
+    ONLINE,
+    BUSY,
+    SLEEP
+};
 
 #endif //INNCLIENT_DEFINE_H
