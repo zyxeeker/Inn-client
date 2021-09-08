@@ -216,7 +216,7 @@ background-color:rgb(65, 65, 65);
              </property>
              <property name="icon">
               <iconset resource="../res.qrc">
-               <normaloff>:/main/resource/hide.png</normaloff>:/main/resource/hide.png</iconset>
+               <normaloff>:/common/resource/hide.svg</normaloff>:/common/resource/hide.svg</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -260,7 +260,7 @@ background-color:rgb(205, 45, 75);
              </property>
              <property name="icon">
               <iconset resource="../res.qrc">
-               <normaloff>:/main/resource/close_2.png</normaloff>:/main/resource/close_2.png</iconset>
+               <normaloff>:/common/resource/close.svg</normaloff>:/common/resource/close.svg</iconset>
              </property>
              <property name="iconSize">
               <size>
