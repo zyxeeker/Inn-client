@@ -48,7 +48,7 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        component/auth.cpp component/auth.h component/auth.ui res.qrc page/overview.cpp page/overview.h component/button.cpp component/button.h component/popup.cpp component/popup.h component/list.cpp component/list.h model/utils.cpp model/utils.h model/define.h page/chat_room.cpp page/chat_room.h component/text_editor.cpp component/text_editor.h component/chat_content.cpp component/chat_content.h component/smooth_scroll_area.cpp component/smooth_scroll_area.h component/user.cpp component/user.h component/context_menu.cpp component/context_menu.h component/control_panel.cpp component/control_panel.h service/auth_core_service.cpp service/auth_core_service.h service/net_conn_service.cpp service/net_conn_service.h)
+        component/auth.cpp component/auth.h component/auth.ui res.qrc page/overview.cpp page/overview.h component/button.cpp component/button.h component/popup.cpp component/popup.h component/list.cpp component/list.h model/utils.cpp model/utils.h model/define.h page/chat_room.cpp page/chat_room.h component/text_editor.cpp component/text_editor.h component/chat_content.cpp component/chat_content.h component/smooth_scroll_area.cpp component/smooth_scroll_area.h component/user.cpp component/user.h component/context_menu.cpp component/context_menu.h component/control_panel.cpp component/control_panel.h service/net_conn_service.cpp service/net_conn_service.h)
 
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
