@@ -26,4 +26,9 @@ enum USER_ST {
     SLEEP
 };
 
+enum REQ_OP {
+    INN_LOGIN_REQ,
+    INN_REG_REQ,
+};
+
 #endif //INNCLIENT_DEFINE_H

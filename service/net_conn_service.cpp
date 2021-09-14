@@ -36,10 +36,13 @@ void Inn::NetConnService::onReceiveData() {
     qDebug() << m_buffer->data();
 }
 
-int Inn::AuthService::LoginReq(std::string user, std::string pwd) {
-
-}
-
-int Inn::AuthService::RegReq(std::string user, std::string pwd) {
-
+int Inn::NetConnService::Req(REQ_OP req, std::string user, std::string pwd) {
+    switch (req) {
+        case INN_LOGIN_REQ:
+            Send("LOGIN " + user + " " + pwd);
+            break;
+        case INN_REG_REQ:
+            Send("REG " + user + " " + pwd);
+            break;
+    }
 }
