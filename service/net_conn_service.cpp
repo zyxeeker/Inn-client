@@ -11,11 +11,13 @@ Inn::NetConnService::NetConnService(QString ad, uint16_t port) : m_address(ad), 
         m_socket->waitForConnected(1000);
     if (m_socket->state() == QAbstractSocket::UnconnectedState)
         qDebug() << "error";
+
     connect(m_socket, &QTcpSocket::readyRead, this, &NetConnService::onReceiveData);
 }
 
 void Inn::NetConnService::Send(std::string pkt) {
     m_socket->write(pkt.c_str());
+    m_socket->flush();
 }
 
 QTcpSocket *Inn::NetConnService::GetSocket() const {
@@ -36,13 +38,24 @@ void Inn::NetConnService::onReceiveData() {
     qDebug() << m_buffer->data();
 }
 
-int Inn::NetConnService::Req(REQ_OP req, std::string user, std::string pwd) {
+int Inn::NetConnService::Req(REQ_OP req) {
     switch (req) {
         case INN_LOGIN_REQ:
-            Send("LOGIN " + user + " " + pwd);
+            Send("LOGIN " + m_user + " " + m_pwd);
             break;
         case INN_REG_REQ:
-            Send("REG " + user + " " + pwd);
+            Send("REG " + m_user + " " + m_pwd);
+            break;
+        case INN_HEART_BEAT:
+            break;
+        case INN_LOGOUT_REQ:
+            Send("LOGOUT " + m_user);
             break;
     }
+    return 0;
+}
+
+void Inn::NetConnService::SetUserInfo(std::string user, std::string pwd) {
+    m_user = user;
+    m_pwd = pwd;
 }

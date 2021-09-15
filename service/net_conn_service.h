@@ -15,13 +15,16 @@ namespace Inn {
     class NetConnService : public QTcpSocket {
     public:
         NetConnService(QString ad, uint16_t port);
-        int Req(REQ_OP req, std::string user, std::string pwd);
+        int Req(REQ_OP req);
         QTcpSocket *GetSocket() const;
+        void SetUserInfo(std::string user, std::string pwd);
     private:
         void Send(std::string pkt);
 //        std::string ProcessData();
         void Disconnect();
     private:
+        std::string m_user;
+        std::string m_pwd;
         QString m_address;
         uint16_t m_port;
         QTcpSocket *m_socket;

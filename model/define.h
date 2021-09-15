@@ -29,6 +29,8 @@ enum USER_ST {
 enum REQ_OP {
     INN_LOGIN_REQ,
     INN_REG_REQ,
+    INN_LOGOUT_REQ,
+    INN_HEART_BEAT
 };
 
 #endif //INNCLIENT_DEFINE_H
