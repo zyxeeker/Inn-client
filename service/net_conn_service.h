@@ -9,6 +9,7 @@
 #include <QHostAddress>
 #include <string>
 #include <QDebug>
+#include <QTimer>
 #include "model/define.h"
 
 namespace Inn {
@@ -19,6 +20,8 @@ namespace Inn {
         QTcpSocket *GetSocket() const;
         void SetUserInfo(std::string user, std::string pwd);
     private:
+        void HBTimerService(HB_OP op);
+        void ReconnectService(RECONNECT_OP op);
         void Send(std::string pkt);
 //        std::string ProcessData();
         void Disconnect();
@@ -28,9 +31,12 @@ namespace Inn {
         QString m_address;
         uint16_t m_port;
         QTcpSocket *m_socket;
-        QByteArray *m_buffer;
+        QTimer *m_hbTimer;
+        QTimer *m_reconnectTimer;
     private slots:
         void onReceiveData();
+        void HBOp();
+        void Reconnect();
     };
 }
 

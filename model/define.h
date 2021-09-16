@@ -27,10 +27,32 @@ enum USER_ST {
 };
 
 enum REQ_OP {
-    INN_LOGIN_REQ,
-    INN_REG_REQ,
-    INN_LOGOUT_REQ,
-    INN_HEART_BEAT
+    LOGIN_REQ,
+    REG_REQ,
+    LOGOUT_REQ,
+    HEART_BEAT
+};
+
+enum REQ_RESULT {
+    HEART_BEAT_COPY = -1,
+    LOGIN_SUC = 0,
+    LOGIN_WRONG = 1,
+    REG_SUC = 2,
+    REG_WRONG = 3,
+    LOGOUT_SUC = 4,
+    LOGOUT_FAIL = 5
+};
+
+enum HB_OP {
+    TIMER_INIT,
+    TIMER_START,
+    TIMER_STOP
+};
+
+enum RECONNECT_OP {
+    RECONNECT_INIT,
+    RECONNECT_START,
+    RECONNECT_STOP
 };
 
 #endif //INNCLIENT_DEFINE_H
