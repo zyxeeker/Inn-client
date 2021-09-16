@@ -9,9 +9,14 @@ Inn::NetConnService::NetConnService(QString ad, uint16_t port) : m_address(ad), 
     m_hbTimer = new QTimer;
     m_reconnectTimer = new QTimer;
     m_socket->connectToHost(m_address, m_port);
+    if (m_socket->state() != QAbstractSocket::ConnectedState) {
+        ReconnectService(RECONNECT_INIT);
+        ReconnectService(RECONNECT_START);
+    }
     connect(m_socket, &QTcpSocket::connected, this, [=]() {
         if (m_reconnectTimer->isActive())
             ReconnectService(RECONNECT_STOP);
+        m_connSt = SERVER_CONNECTED;
         qDebug() << "connected";
     });
     connect(m_socket, &QTcpSocket::disconnected, this, [=]() {
@@ -19,6 +24,7 @@ Inn::NetConnService::NetConnService(QString ad, uint16_t port) : m_address(ad), 
             HBTimerService(TIMER_STOP);
         ReconnectService(RECONNECT_INIT);
         ReconnectService(RECONNECT_START);
+        m_connSt = SERVER_DISCONNECTED;
         qDebug() << "disconnected";
     });
     connect(m_socket, &QTcpSocket::readyRead, this, &NetConnService::onReceiveData);
@@ -30,6 +36,7 @@ void Inn::NetConnService::Send(std::string pkt) {
 }
 
 QTcpSocket *Inn::NetConnService::GetSocket() const {
+//    qDebug()<<m_socket->state();
     return m_socket;
 }
 
@@ -43,8 +50,8 @@ void Inn::NetConnService::Disconnect() {
 //}
 
 void Inn::NetConnService::onReceiveData() {
-    m_buffer = new QByteArray(m_socket->readAll());
-    qDebug() << m_buffer->data();
+//    m_buffer = new QByteArray(m_socket->readAll());
+//    qDebug() << m_buffer->data()
 }
 
 int Inn::NetConnService::Req(REQ_OP req) {
@@ -88,11 +95,11 @@ void Inn::NetConnService::HBTimerService(HB_OP op) {
             break;
     }
 }
-
+// TODO Adjust interval time
 void Inn::NetConnService::ReconnectService(RECONNECT_OP op) {
     switch (op) {
         case RECONNECT_INIT: {
-            m_reconnectTimer->setInterval(5000);
+            m_reconnectTimer->setInterval(3000);
             m_reconnectTimer->setTimerType(Qt::CoarseTimer);
             connect(m_reconnectTimer, &QTimer::timeout, this, &NetConnService::Reconnect);
             break;
@@ -112,6 +119,8 @@ void Inn::NetConnService::HBOp() {
 }
 
 void Inn::NetConnService::Reconnect() {
+    m_connSt = SERVER_RECONNECTED;
     qDebug() << "Re...";
+    m_socket->abort();
     m_socket->connectToHost(m_address, m_port);
 }

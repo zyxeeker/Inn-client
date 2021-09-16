@@ -33,6 +33,8 @@ namespace Inn {
         QTcpSocket *m_socket;
         QTimer *m_hbTimer;
         QTimer *m_reconnectTimer;
+        // TODO Add a function to return connection state
+        CONNECTION_STATE m_connSt = SERVER_UNCONNECTED;
     private slots:
         void onReceiveData();
         void HBOp();
