@@ -18,6 +18,7 @@
 #include "service/net_conn_service.h"
 
 class Auth : public QWidget {
+    Q_OBJECT
 public:
     Auth(Inn::NetConnService *service = nullptr);
 private:
@@ -66,7 +67,9 @@ private:
     QSpacerItem *m_bVSpacer;
     QSpacerItem *m_fSpacer;
     QSpacerItem *m_regSpacer;
-
+private slots:
+    void onReceiveUserInfo();
+    void onReceiveReqResult(REQ_RESULT);
 };
 
 

@@ -50,8 +50,8 @@ void Inn::NetConnService::Disconnect() {
 //}
 
 void Inn::NetConnService::onReceiveData() {
-//    m_buffer = new QByteArray(m_socket->readAll());
-//    qDebug() << m_buffer->data()
+    m_buffer = new QByteArray(m_socket->readAll());
+    emit ReqResult(Inn::PacketParseService::ParsePacket(m_buffer));
 }
 
 int Inn::NetConnService::Req(REQ_OP req) {

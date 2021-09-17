@@ -4,10 +4,12 @@
 
 #include "auth.h"
 
-Auth::Auth(Inn::NetConnService *service) {
+Auth::Auth(Inn::NetConnService *service) : m_netService(service) {
     InitUi();
     setWindowFlag(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground, true);
+    connect(m_loginBtn, &QPushButton::clicked, this, &Auth::onReceiveUserInfo);
+    connect(m_netService, &Inn::NetConnService::ReqResult, this, &Auth::onReceiveReqResult);
 }
 
 void Auth::InitUi() {
@@ -47,7 +49,8 @@ void Auth::InitUi() {
     this->setMaximumSize(700, 500);
     this->setMinimumSize(700, 500);
     this->setObjectName("bk");
-    this->setStyleSheet("#bk{background:black;}");
+    this->setStyleSheet("#bk{background:black;}QWidget:focus{outline: none;}");
+
     m_mainLayout->addWidget(m_title);
     m_mainLayout->addWidget(m_content);
     m_mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -166,6 +169,9 @@ void Auth::InitContent() {
     m_pwd->setMaximumHeight(35);
     m_pwd->setMinimumHeight(35);
     m_pwd->setEchoMode(QLineEdit::Password);
+    m_notification->setMaximumHeight(20);
+    m_notification->setMinimumHeight(20);
+    m_notification->setStyleSheet(pLabelStyle);
     m_exitBtn->setStyleSheet(
             "QPushButton{border-radius:2px;border-top-right-radius:5px;"
             "border-top-left-radius:15px;border-bottom-left-radius:5px;border-bottom-right-radius:5px;"
@@ -227,4 +233,19 @@ void Auth::mouseMoveEvent(QMouseEvent *e) {
 
 void Auth::mouseReleaseEvent(QMouseEvent *e) {
     m_mousePress = false;
+}
+
+void Auth::onReceiveUserInfo() {
+    QString pUser = m_user->text();
+    QString pPwd = m_pwd->text();
+    if (pUser.isEmpty() || pPwd.isEmpty())
+        m_notification->setText("ERROR!User and pwd is NULL!");
+    else {
+        m_netService->SetUserInfo(pUser.toStdString(), pPwd.toStdString());
+        m_netService->Req(LOGIN_REQ);
+    }
+}
+
+void Auth::onReceiveReqResult(REQ_RESULT result) {
+    qDebug() << result;
 }

@@ -10,10 +10,13 @@
 #include <string>
 #include <QDebug>
 #include <QTimer>
+#include <QByteArray>
 #include "model/define.h"
+#include "service/packet_parse_service.h"
 
 namespace Inn {
     class NetConnService : public QTcpSocket {
+    Q_OBJECT
     public:
         NetConnService(QString ad, uint16_t port);
         int Req(REQ_OP req);
@@ -33,8 +36,11 @@ namespace Inn {
         QTcpSocket *m_socket;
         QTimer *m_hbTimer;
         QTimer *m_reconnectTimer;
+        QByteArray *m_buffer;
         // TODO Add a function to return connection state
         CONNECTION_STATE m_connSt = SERVER_UNCONNECTED;
+    signals:
+        void ReqResult(REQ_RESULT);
     private slots:
         void onReceiveData();
         void HBOp();
