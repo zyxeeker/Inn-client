@@ -14,6 +14,7 @@
 #include <QCheckBox>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QMoveEvent>
 #include "service/net_conn_service.h"
 
 class Auth : public QWidget {
@@ -23,8 +24,18 @@ private:
     void InitUi();
     void InitTitle();
     void InitContent();
+protected:
+    void mousePressEvent(QMouseEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
 private:
     Inn::NetConnService *m_netService;
+    const int m_titleXMin = 0;
+    const int m_titleYMin = 0;
+    const int m_titleXMax = 700;
+    const int m_titleYMax = 30;
+    bool m_mousePress;
+    QPoint m_mousePosition;
     QLineEdit *m_user;
     QLineEdit *m_pwd;
     QLabel *m_uLabel;

@@ -6,6 +6,8 @@
 
 Auth::Auth(Inn::NetConnService *service) {
     InitUi();
+    setWindowFlag(Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground, true);
 }
 
 void Auth::InitUi() {
@@ -80,7 +82,7 @@ void Auth::InitTitle() {
                               "QPushButton:hover {background-color:rgba(205, 45, 75, 240);color:white;}"
                               "QPushButton:pressed {background-color:rgb(205, 45, 75);}");
     m_titleLabel->setText("Inn");
-    m_titleLabel->setStyleSheet("color:lightgray;");
+    m_titleLabel->setStyleSheet("font-family:'Microsoft YaHei UI';font-size:13px;color:lightgray;");
 
     pCloseIcon.addFile(":/common/resource/close.svg");
     m_closeBtn->setIcon(pCloseIcon);
@@ -203,4 +205,26 @@ void Auth::InitContent() {
     m_forgetBtn->setText("Forget?");
     m_forgetBtn->setCursor(Qt::PointingHandCursor);
 
+}
+
+void Auth::mousePressEvent(QMouseEvent *e) {
+    if (e->button() == Qt::LeftButton) {
+        m_mousePosition = e->pos();
+        if (m_mousePosition.x() <= m_titleXMin) return;
+        if (m_mousePosition.x() >= m_titleXMax) return;
+        if (m_mousePosition.y() <= m_titleYMin) return;
+        if (m_mousePosition.y() >= m_titleYMax) return;
+        m_mousePress = true;
+    }
+}
+
+void Auth::mouseMoveEvent(QMouseEvent *e) {
+    if (m_mousePress) {
+        QPoint position = e->globalPos();
+        this->move(position - m_mousePosition);
+    }
+}
+
+void Auth::mouseReleaseEvent(QMouseEvent *e) {
+    m_mousePress = false;
 }
