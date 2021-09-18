@@ -4,12 +4,19 @@
 
 #include "auth.h"
 
+#define LOGIN_DATA_IS_EMPTY "User/password is empty!"
+#define LOGIN_RESULT_SUC "Login success!"
+#define LOGIN_RESULT_FAIL "Login failed!"
+
 Auth::Auth(Inn::NetConnService *service) : m_netService(service) {
     InitUi();
     setWindowFlag(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground, true);
     connect(m_loginBtn, &QPushButton::clicked, this, &Auth::onReceiveUserInfo);
     connect(m_netService, &Inn::NetConnService::ReqResult, this, &Auth::onReceiveReqResult);
+    connect(m_exitBtn, &QPushButton::clicked, m_netService, &Inn::NetConnService::ClientQuit);
+    connect(m_exitBtn, &QPushButton::clicked, this, &QWidget::close);
+    connect(m_minBtn, &QPushButton::clicked, this, &QWidget::showMinimized);
 }
 
 void Auth::InitUi() {
@@ -239,13 +246,16 @@ void Auth::onReceiveUserInfo() {
     QString pUser = m_user->text();
     QString pPwd = m_pwd->text();
     if (pUser.isEmpty() || pPwd.isEmpty())
-        m_notification->setText("ERROR!User and pwd is NULL!");
+        m_notification->setText(LOGIN_DATA_IS_EMPTY);
     else {
         m_netService->SetUserInfo(pUser.toStdString(), pPwd.toStdString());
-        m_netService->Req(LOGIN_REQ);
+        m_netService->Req(NET_SERVICE::LOGIN_REQ);
     }
 }
 
-void Auth::onReceiveReqResult(REQ_RESULT result) {
-    qDebug() << result;
+void Auth::onReceiveReqResult(NET_SERVICE::REQ_RESULT result) {
+    if (result == NET_SERVICE::LOGIN_FAIL)
+        m_notification->setText(LOGIN_RESULT_FAIL);
+    else
+        m_notification->setText(LOGIN_RESULT_SUC);
 }

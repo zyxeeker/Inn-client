@@ -67,9 +67,11 @@ private:
     QSpacerItem *m_bVSpacer;
     QSpacerItem *m_fSpacer;
     QSpacerItem *m_regSpacer;
+signals:
+    void ClientQuit();
 private slots:
     void onReceiveUserInfo();
-    void onReceiveReqResult(REQ_RESULT);
+    void onReceiveReqResult(NET_SERVICE::REQ_RESULT);
 };
 
 

@@ -13,20 +13,20 @@
 #include <QByteArray>
 #include "model/define.h"
 #include "service/packet_parse_service.h"
+#include "service/logger_service.h"
 
 namespace Inn {
     class NetConnService : public QTcpSocket {
     Q_OBJECT
     public:
         NetConnService(QString ad, uint16_t port);
-        int Req(REQ_OP req);
+        int Req(NET_SERVICE::REQ_OP req);
         QTcpSocket *GetSocket() const;
         void SetUserInfo(std::string user, std::string pwd);
     private:
-        void HBTimerService(HB_OP op);
-        void ReconnectService(RECONNECT_OP op);
+        void HBTimerService(NET_SERVICE::HB_OP op);
+        void ReconnectService(NET_SERVICE::RECONNECT_OP op);
         void Send(std::string pkt);
-//        std::string ProcessData();
         void Disconnect();
     private:
         std::string m_user;
@@ -38,9 +38,11 @@ namespace Inn {
         QTimer *m_reconnectTimer;
         QByteArray *m_buffer;
         // TODO Add a function to return connection state
-        CONNECTION_STATE m_connSt = SERVER_UNCONNECTED;
+        NET_SERVICE::CONNECTION_STATE m_connSt = NET_SERVICE::SERVER_UNCONNECTED;
     signals:
-        void ReqResult(REQ_RESULT);
+        void ReqResult(NET_SERVICE::REQ_RESULT);
+    public slots:
+        void ClientQuit();
     private slots:
         void onReceiveData();
         void HBOp();

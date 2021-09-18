@@ -12,7 +12,7 @@
 namespace Inn {
     class PacketParseService {
     public:
-        static REQ_RESULT ParsePacket(const QByteArray *m_buffer);
+        static NET_SERVICE::REQ_RESULT ParsePacket(const QByteArray *m_buffer);
     };
 }
 

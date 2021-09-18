@@ -14,6 +14,15 @@
 #define INPUT_AREA_EMPTY 0
 #define INPUT_AREA_NOT_EMPTY 1
 
+enum LOG_LEVEL {
+    INN_UNKNOWN,
+    INN_DEBUG,
+    INN_INFO,
+    INN_WARN,
+    INN_ERROR,
+    INN_FATAL
+};
+
 enum TEXT_OPS {
     COPY,
     PASTE,
@@ -26,48 +35,38 @@ enum USER_ST {
     SLEEP
 };
 
-enum REQ_OP {
-    LOGIN_REQ,
-    REG_REQ,
-    LOGOUT_REQ,
-    HEART_BEAT
-};
-
-enum REQ_RESULT {
-    HEART_BEAT_COPY = -1,
-    LOGIN_SUC = 0,
-    LOGIN_WRONG = 1,
-    REG_SUC = 2,
-    REG_WRONG = 3,
-    LOGOUT_SUC = 4,
-    LOGOUT_FAIL = 5
-};
-
-enum HB_OP {
-    TIMER_INIT,
-    TIMER_START,
-    TIMER_STOP
-};
-
-enum RECONNECT_OP {
-    RECONNECT_INIT,
-    RECONNECT_START,
-    RECONNECT_STOP
-};
-
-//enum SERVICE_STATE{
-//    INN_SERVICE_RUNNING,
-//    INN_SERVICE_STOPPED,
-//    INN_SERVICE_ERROR,
-//    INN_SERVICE_START_FAIL,
-//    INN_SERVICE_START_SUC
-//};
-
-enum CONNECTION_STATE {
-    SERVER_UNCONNECTED,
-    SERVER_DISCONNECTED,
-    SERVER_CONNECTED,
-    SERVER_RECONNECTED
+struct NET_SERVICE {
+    enum REQ_OP {
+        LOGIN_REQ,
+        REG_REQ,
+        LOGOUT_REQ,
+        HEART_BEAT
+    };
+    enum HB_OP {
+        TIMER_INIT,
+        TIMER_START,
+        TIMER_STOP
+    };
+    enum RECONNECT_OP {
+        RECONNECT_INIT,
+        RECONNECT_START,
+        RECONNECT_STOP
+    };
+    enum REQ_RESULT {
+        HEART_BEAT_COPY = -1,
+        LOGIN_SUC = 0,
+        LOGIN_FAIL = 1,
+        REG_SUC = 2,
+        REG_WRONG = 3,
+        LOGOUT_SUC = 4,
+        LOGOUT_FAIL = 5
+    };
+    enum CONNECTION_STATE {
+        SERVER_UNCONNECTED,
+        SERVER_DISCONNECTED,
+        SERVER_CONNECTED,
+        SERVER_RECONNECTED
+    };
 };
 
 #endif //INNCLIENT_DEFINE_H
