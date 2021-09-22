@@ -1,13 +1,18 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+//
+// Created by zyx on 2021/9/22.
+//
+
+#ifndef INNCLIENT_MAINWINDOW_H
+#define INNCLIENT_MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QPixmap>
-#include <QPainter>
-#include <QMouseEvent>
-#include <QtSvg/QSvgRenderer>
-#include "./page/overview.h"
-#include "./page/chat_room.h"
+#include <QStackedWidget>
+#include <QPushButton>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QWidget>
+#include <QLabel>
+#include <QIcon>
 
 #ifdef Q_OS_WIN
 
@@ -20,72 +25,50 @@
 #define GET_Y_LPARAM(lParam) ((int)(short)HIWORD(lParam))
 
 #endif
-
-
 #endif
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
+
+enum SIZE_STATE {
+    MAX, MIN
+};
 
 class MainWindow : public QMainWindow {
-Q_OBJECT
-
 public:
-    MainWindow(QWidget *parent = nullptr);
-
-    ~MainWindow();
-
+    MainWindow();
+private:
+    void InitUI();
+    void InitTitle();
+    void InitContent();
+    void InitBtn(QPushButton *b, int s1, int s2, QString s, QString url, QString ourl = nullptr);
+private:
+//    void SetContentBackground();
+//    void ImportContentBackground();
+    void SwitchSizeBtn(SIZE_STATE s);
 protected:
-    void resizeEvent(QResizeEvent *e);
-
-#if 0
-    void mouseMoveEvent(QMouseEvent *e);
-
-    void mousePressEvent(QMouseEvent *e);
-
-    void mouseReleaseEvent(QMouseEvent *e);
-
-    void mouseDoubleClickEvent(QMouseEvent *e);
-#endif
-
-    //    eventType, message, result
     bool nativeEvent(const QByteArray &et, void *m, long *r);
-
 private:
-    Ui::MainWindow *ui;
-    QPixmap *m_px;
-
-    const int m_titleXMin = 0;
-    const int m_titleYMin = 0;
-    int m_titleXMax = 800;
-    const int m_titleYMax = 20;
-
-    bool m_mousePress;
+    QLabel *m_titleName;
+    QWidget *m_centerWidget;
+    QWidget *m_title;
+    QWidget *m_content;
+    QVBoxLayout *m_main;
+    QHBoxLayout *m_titleLayout;
+    QVBoxLayout *m_navLayout;
+    QHBoxLayout *m_contentLayout;
+    QPushButton *m_homeBtn;
+    QPushButton *m_singleChatBtn;
+    QPushButton *m_groupChatBtn;
+    QPushButton *m_streamBtn;
+    QPushButton *m_settingBtn;
+    QPushButton *m_exitBtn;
+    QPushButton *m_closeBtn;
+    QPushButton *m_minBtn;
+    QPushButton *m_maxBtn;
+    QSpacerItem *m_titleSpacer;
+    QSpacerItem *m_uNavSpacer;
+    QSpacerItem *m_dNavSpacer;
+    QStackedWidget *m_stackedContent;
     bool m_maximized = false;
-    QPoint m_mousePosition;
-
-private:
-    void SetContentBackground();
-
-    void ImportContentBackground();
-
-    void SetMax2Min();
-
-    void SetMin2Max();
-
-private slots:
-
-    void on_minimizedBtn_clicked();
-
-    void on_maximizedBtn_clicked();
-
-    void on_exitBtn_clicked();
-
-    void on_homeBtn_clicked();
-
-    void on_peopleBtn_clicked();
-
-    void on_groupBtn_clicked();
-
 };
-#endif // MAINWINDOW_H
+
+
+#endif //INNCLIENT_MAINWINDOW_H

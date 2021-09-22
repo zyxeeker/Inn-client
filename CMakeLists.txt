@@ -45,10 +45,10 @@ endif ()
 
 set(PROJECT_SOURCES
         main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
-        res.qrc page/overview.cpp page/overview.h component/button.cpp component/button.h component/popup.cpp component/popup.h component/list.cpp component/list.h model/utils.cpp model/utils.h model/define.h page/chat_room.cpp page/chat_room.h component/text_editor.cpp component/text_editor.h component/chat_content.cpp component/chat_content.h component/smooth_scroll_area.cpp component/smooth_scroll_area.h component/user.cpp component/user.h component/context_menu.cpp component/context_menu.h component/control_panel.cpp component/control_panel.h service/net_conn_service.cpp service/net_conn_service.h service/packet_parse_service.cpp service/packet_parse_service.h auth.cpp auth.h service/logger_service.cpp service/logger_service.h)
+        #        mainwindow.cpp
+        #        mainwindow.h
+        #        mainwindow.ui
+        res.qrc page/overview.cpp page/overview.h component/button.cpp component/button.h component/popup.cpp component/popup.h component/list.cpp component/list.h model/utils.cpp model/utils.h model/define.h page/chat_room.cpp page/chat_room.h component/text_editor.cpp component/text_editor.h component/chat_content.cpp component/chat_content.h component/smooth_scroll_area.cpp component/smooth_scroll_area.h component/user.cpp component/user.h component/context_menu.cpp component/context_menu.h component/control_panel.cpp component/control_panel.h service/net_conn_service.cpp service/net_conn_service.h service/packet_parse_service.cpp service/packet_parse_service.h auth.cpp auth.h service/logger_service.cpp service/logger_service.h mainwindow.cpp mainwindow.h)
 
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
