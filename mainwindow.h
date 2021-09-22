@@ -13,6 +13,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QIcon>
+#include <QSystemTrayIcon>
 
 #ifdef Q_OS_WIN
 
@@ -33,15 +34,13 @@ enum SIZE_STATE {
 
 class MainWindow : public QMainWindow {
 public:
-    MainWindow();
+    MainWindow(QSystemTrayIcon *t);
 private:
     void InitUI();
     void InitTitle();
     void InitContent();
     void InitBtn(QPushButton *b, int s1, int s2, QString s, QString url, QString ourl = nullptr);
 private:
-//    void SetContentBackground();
-//    void ImportContentBackground();
     void SwitchSizeBtn(SIZE_STATE s);
 protected:
     bool nativeEvent(const QByteArray &et, void *m, long *r);
@@ -68,6 +67,9 @@ private:
     QSpacerItem *m_dNavSpacer;
     QStackedWidget *m_stackedContent;
     bool m_maximized = false;
+    QSystemTrayIcon *m_tray;
+private slots:
+    void onReceiveTrayAction(QSystemTrayIcon::ActivationReason reason);
 };
 
 

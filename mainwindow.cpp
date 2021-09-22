@@ -17,7 +17,7 @@
                     "QPushButton:hover {background-color:rgb(195, 44, 73);}"\
                     "QPushButton:pressed {background-color:rgb(205, 45, 75);}"
 
-MainWindow::MainWindow() {
+MainWindow::MainWindow(QSystemTrayIcon *t) : m_tray(t) {
     m_titleName = new QLabel;
     m_centerWidget = new QWidget;
     m_title = new QWidget;
@@ -68,8 +68,9 @@ void MainWindow::InitUI() {
         m_maximized ? this->showNormal() : this->showMaximized();
     });
     connect(m_closeBtn, &QPushButton::clicked, this, [=]() {
-        this->close();
+        this->hide();
     });
+    connect(m_tray, &QSystemTrayIcon::activated, this, &MainWindow::onReceiveTrayAction);
 }
 
 void MainWindow::InitTitle() {
@@ -234,5 +235,17 @@ void MainWindow::SwitchSizeBtn(SIZE_STATE s) {
             m_maxBtn->setIcon(QIcon(":/common/resource/min.svg"));
             break;
         }
+    }
+}
+
+void MainWindow::onReceiveTrayAction(QSystemTrayIcon::ActivationReason reason) {
+    switch (reason) {
+        case QSystemTrayIcon::Trigger:
+            break;
+        case QSystemTrayIcon::DoubleClick:
+            this->show();
+            break;
+        default:
+            break;
     }
 }

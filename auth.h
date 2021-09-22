@@ -15,12 +15,13 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QMoveEvent>
+#include <QSystemTrayIcon>
 #include "service/net_conn_service.h"
 
 class Auth : public QWidget {
     Q_OBJECT
 public:
-    Auth(Inn::NetConnService *service = nullptr);
+    Auth(QSystemTrayIcon *t, Inn::NetConnService *service = nullptr);
 private:
     void InitUi();
     void InitTitle();
@@ -67,11 +68,13 @@ private:
     QSpacerItem *m_bVSpacer;
     QSpacerItem *m_fSpacer;
     QSpacerItem *m_regSpacer;
+    QSystemTrayIcon *m_tray;
 signals:
     void ClientQuit();
 private slots:
     void onReceiveUserInfo();
     void onReceiveReqResult(NET_SERVICE::REQ_RESULT);
+    void onReceiveTrayAction(QSystemTrayIcon::ActivationReason reason);
 };
 
 

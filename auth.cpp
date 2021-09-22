@@ -8,18 +8,7 @@
 #define LOGIN_RESULT_SUC "Login success!"
 #define LOGIN_RESULT_FAIL "Login failed!"
 
-Auth::Auth(Inn::NetConnService *service) : m_netService(service) {
-    InitUi();
-    setWindowFlag(Qt::FramelessWindowHint);
-    setAttribute(Qt::WA_TranslucentBackground, true);
-    connect(m_loginBtn, &QPushButton::clicked, this, &Auth::onReceiveUserInfo);
-    connect(m_netService, &Inn::NetConnService::ReqResult, this, &Auth::onReceiveReqResult);
-    connect(m_exitBtn, &QPushButton::clicked, m_netService, &Inn::NetConnService::ClientQuit);
-    connect(m_exitBtn, &QPushButton::clicked, this, &QWidget::close);
-    connect(m_minBtn, &QPushButton::clicked, this, &QWidget::showMinimized);
-}
-
-void Auth::InitUi() {
+Auth::Auth(QSystemTrayIcon *t, Inn::NetConnService *service) : m_tray(t), m_netService(service) {
     m_user = new QLineEdit;
     m_pwd = new QLineEdit;
     m_uLabel = new QLabel;
@@ -50,20 +39,29 @@ void Auth::InitUi() {
     m_bVSpacer = new QSpacerItem(0, 120, QSizePolicy::Expanding, QSizePolicy::Minimum);
     m_fSpacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     m_regSpacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    InitUi();
+    setWindowFlag(Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground, true);
+}
 
-
+void Auth::InitUi() {
     this->setLayout(m_mainLayout);
     this->setMaximumSize(700, 500);
     this->setMinimumSize(700, 500);
     this->setObjectName("bk");
     this->setStyleSheet("#bk{background:black;}QWidget:focus{outline: none;}");
-
     m_mainLayout->addWidget(m_title);
     m_mainLayout->addWidget(m_content);
     m_mainLayout->setContentsMargins(0, 0, 0, 0);
     m_mainLayout->setSpacing(0);
     InitTitle();
     InitContent();
+    connect(m_loginBtn, &QPushButton::clicked, this, &Auth::onReceiveUserInfo);
+    connect(m_netService, &Inn::NetConnService::ReqResult, this, &Auth::onReceiveReqResult);
+    connect(m_exitBtn, &QPushButton::clicked, m_netService, &Inn::NetConnService::ClientQuit);
+    connect(m_exitBtn, &QPushButton::clicked, this, &QWidget::close);
+    connect(m_minBtn, &QPushButton::clicked, this, &QWidget::showMinimized);
+    connect(m_tray, &QSystemTrayIcon::activated, this, &Auth::onReceiveTrayAction);
 }
 
 void Auth::InitTitle() {
@@ -258,4 +256,16 @@ void Auth::onReceiveReqResult(NET_SERVICE::REQ_RESULT result) {
         m_notification->setText(LOGIN_RESULT_FAIL);
     else
         m_notification->setText(LOGIN_RESULT_SUC);
+}
+
+void Auth::onReceiveTrayAction(QSystemTrayIcon::ActivationReason reason) {
+    switch (reason) {
+        case QSystemTrayIcon::Trigger:
+            break;
+        case QSystemTrayIcon::DoubleClick:
+            this->show();
+            break;
+        default:
+            break;
+    }
 }
