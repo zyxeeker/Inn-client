@@ -14,13 +14,13 @@ int main(int argc, char *argv[]) {
     tray->setToolTip(QObject::trUtf8("测试系统托盘图标"));
     //在系统托盘显示此对象
     tray->show();
+    Inn::NetConnService *netConnService = new Inn::NetConnService("192.168.2.202", 9006);
+//    Auth auth(netConnService, tray);
+//    auth.isHidden();
+//    auth.show();
+    MainWindow m(netConnService, tray);
+//    m.show();
 #if _DEBUG
-    Inn::NetConnService *netConnService;
-    netConnService = new Inn::NetConnService("192.168.2.202", 9006);
-    Auth auth(tray, netConnService);
-    auth.show();
-    MainWindow m(tray);
-    m.show();
 #else
     //    Auth auth;
     //    auth.show();

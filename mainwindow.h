@@ -14,6 +14,8 @@
 #include <QLabel>
 #include <QIcon>
 #include <QSystemTrayIcon>
+#include "auth.h"
+#include "service/net_conn_service.h"
 
 #ifdef Q_OS_WIN
 
@@ -24,7 +26,6 @@
 #endif
 #ifndef GET_Y_LPARAM
 #define GET_Y_LPARAM(lParam) ((int)(short)HIWORD(lParam))
-
 #endif
 #endif
 
@@ -34,7 +35,7 @@ enum SIZE_STATE {
 
 class MainWindow : public QMainWindow {
 public:
-    MainWindow(QSystemTrayIcon *t);
+    MainWindow(Inn::NetConnService *s, QSystemTrayIcon *t);
 private:
     void InitUI();
     void InitTitle();
@@ -68,6 +69,8 @@ private:
     QStackedWidget *m_stackedContent;
     bool m_maximized = false;
     QSystemTrayIcon *m_tray;
+    Inn::NetConnService *m_netService;
+    Auth *m_auth;
 private slots:
     void onReceiveTrayAction(QSystemTrayIcon::ActivationReason reason);
 };

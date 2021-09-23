@@ -8,7 +8,7 @@
 #define LOGIN_RESULT_SUC "Login success!"
 #define LOGIN_RESULT_FAIL "Login failed!"
 
-Auth::Auth(QSystemTrayIcon *t, Inn::NetConnService *service) : m_tray(t), m_netService(service) {
+Auth::Auth(Inn::NetConnService *s, QSystemTrayIcon *t) : m_tray(t), m_netService(s) {
     m_user = new QLineEdit;
     m_pwd = new QLineEdit;
     m_uLabel = new QLabel;
@@ -254,8 +254,10 @@ void Auth::onReceiveUserInfo() {
 void Auth::onReceiveReqResult(NET_SERVICE::REQ_RESULT result) {
     if (result == NET_SERVICE::LOGIN_FAIL)
         m_notification->setText(LOGIN_RESULT_FAIL);
-    else
+    else if (result == NET_SERVICE::LOGIN_SUC) {
         m_notification->setText(LOGIN_RESULT_SUC);
+        emit LoginSuccess();
+    }
 }
 
 void Auth::onReceiveTrayAction(QSystemTrayIcon::ActivationReason reason) {

@@ -17,7 +17,7 @@
                     "QPushButton:hover {background-color:rgb(195, 44, 73);}"\
                     "QPushButton:pressed {background-color:rgb(205, 45, 75);}"
 
-MainWindow::MainWindow(QSystemTrayIcon *t) : m_tray(t) {
+MainWindow::MainWindow(Inn::NetConnService *s, QSystemTrayIcon *t) : m_netService(s), m_tray(t) {
     m_titleName = new QLabel;
     m_centerWidget = new QWidget;
     m_title = new QWidget;
@@ -40,8 +40,9 @@ MainWindow::MainWindow(QSystemTrayIcon *t) : m_tray(t) {
     m_titleSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
     m_uNavSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     m_dNavSpacer = new QSpacerItem(20, 30, QSizePolicy::Minimum, QSizePolicy::Preferred);
+    m_auth = new Auth(m_netService, m_tray);
+    m_auth->show();
     InitUI();
-    this->setAttribute(Qt::WA_TranslucentBackground, true);
 #ifdef Q_OS_WIN
     HWND hwnd = reinterpret_cast<HWND>(winId());
     DWORD style = GetWindowLong(hwnd, GWL_STYLE);
@@ -52,6 +53,7 @@ MainWindow::MainWindow(QSystemTrayIcon *t) : m_tray(t) {
 void MainWindow::InitUI() {
     this->setMinimumSize(800, 600);
     this->setCentralWidget(m_centerWidget);
+    this->setAttribute(Qt::WA_TranslucentBackground, true);
     m_centerWidget->setLayout(m_main);
     m_centerWidget->setObjectName("content");
     m_centerWidget->setStyleSheet("#content{background-color:rgb(23, 23, 23);}");
@@ -71,6 +73,15 @@ void MainWindow::InitUI() {
         this->hide();
     });
     connect(m_tray, &QSystemTrayIcon::activated, this, &MainWindow::onReceiveTrayAction);
+    connect(m_auth, &Auth::LoginSuccess, this, [=]() {
+        m_auth->close();
+        this->show();
+        m_netService->Req(NET_SERVICE::HEART_BEAT);
+    });
+    connect(m_exitBtn, &QPushButton::clicked, this, [=]() {
+        this->close();
+        m_tray->deleteLater();
+    });
 }
 
 void MainWindow::InitTitle() {
