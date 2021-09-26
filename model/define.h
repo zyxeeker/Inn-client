@@ -35,6 +35,11 @@ enum USER_ST {
     SLEEP
 };
 
+enum Q_CONN_OP {
+    CONNECT,
+    DISCONNECT
+};
+
 struct NET_SERVICE {
     enum REQ_OP {
         LOGIN_REQ,
@@ -66,6 +71,13 @@ struct NET_SERVICE {
         SERVER_DISCONNECTED,
         SERVER_CONNECTED,
         SERVER_RECONNECTED
+    };
+};
+
+struct CORE_SERVICE {
+    enum GUI_STATE {
+        MAIN_WINDOW,
+        AUTH_WINDOW
     };
 };
 

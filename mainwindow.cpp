@@ -17,7 +17,7 @@
                     "QPushButton:hover {background-color:rgb(195, 44, 73);}"\
                     "QPushButton:pressed {background-color:rgb(205, 45, 75);}"
 
-MainWindow::MainWindow(Inn::NetConnService *s, QSystemTrayIcon *t) : m_netService(s), m_tray(t) {
+MainWindow::MainWindow(Inn::NetConnService *s) : m_netService(s) {
     m_titleName = new QLabel;
     m_centerWidget = new QWidget;
     m_title = new QWidget;
@@ -40,8 +40,6 @@ MainWindow::MainWindow(Inn::NetConnService *s, QSystemTrayIcon *t) : m_netServic
     m_titleSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
     m_uNavSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     m_dNavSpacer = new QSpacerItem(20, 30, QSizePolicy::Minimum, QSizePolicy::Preferred);
-    m_auth = new Auth(m_netService, m_tray);
-    m_auth->show();
     InitUI();
 #ifdef Q_OS_WIN
     HWND hwnd = reinterpret_cast<HWND>(winId());
@@ -54,6 +52,7 @@ void MainWindow::InitUI() {
     this->setMinimumSize(800, 600);
     this->setCentralWidget(m_centerWidget);
     this->setAttribute(Qt::WA_TranslucentBackground, true);
+    this->setAttribute(Qt::WA_DeleteOnClose, true);
     m_centerWidget->setLayout(m_main);
     m_centerWidget->setObjectName("content");
     m_centerWidget->setStyleSheet("#content{background-color:rgb(23, 23, 23);}");
@@ -72,15 +71,8 @@ void MainWindow::InitUI() {
     connect(m_closeBtn, &QPushButton::clicked, this, [=]() {
         this->hide();
     });
-    connect(m_tray, &QSystemTrayIcon::activated, this, &MainWindow::onReceiveTrayAction);
-    connect(m_auth, &Auth::LoginSuccess, this, [=]() {
-        m_auth->close();
-        this->show();
-        m_netService->Req(NET_SERVICE::HEART_BEAT);
-    });
     connect(m_exitBtn, &QPushButton::clicked, this, [=]() {
-        this->close();
-        m_tray->deleteLater();
+        emit UserLogout();
     });
 }
 
@@ -246,17 +238,5 @@ void MainWindow::SwitchSizeBtn(SIZE_STATE s) {
             m_maxBtn->setIcon(QIcon(":/common/resource/min.svg"));
             break;
         }
-    }
-}
-
-void MainWindow::onReceiveTrayAction(QSystemTrayIcon::ActivationReason reason) {
-    switch (reason) {
-        case QSystemTrayIcon::Trigger:
-            break;
-        case QSystemTrayIcon::DoubleClick:
-            this->show();
-            break;
-        default:
-            break;
     }
 }

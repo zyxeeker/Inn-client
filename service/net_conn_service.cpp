@@ -128,7 +128,3 @@ void Inn::NetConnService::Reconnect() {
     m_socket->abort();
     m_socket->connectToHost(m_address, m_port);
 }
-
-void Inn::NetConnService::ClientQuit() {
-    Disconnect();
-}

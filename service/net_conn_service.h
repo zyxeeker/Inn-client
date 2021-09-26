@@ -23,11 +23,11 @@ namespace Inn {
         int Req(NET_SERVICE::REQ_OP req);
         QTcpSocket *GetSocket() const;
         void SetUserInfo(std::string user, std::string pwd);
+        void Disconnect();
     private:
         void HBTimerService(NET_SERVICE::HB_OP op);
         void ReconnectService(NET_SERVICE::RECONNECT_OP op);
         void Send(std::string pkt);
-        void Disconnect();
     private:
         std::string m_user;
         std::string m_pwd;
@@ -41,8 +41,6 @@ namespace Inn {
         NET_SERVICE::CONNECTION_STATE m_connSt = NET_SERVICE::SERVER_UNCONNECTED;
     signals:
         void ReqResult(NET_SERVICE::REQ_RESULT);
-    public slots:
-        void ClientQuit();
     private slots:
         void onReceiveData();
         void HBOp();

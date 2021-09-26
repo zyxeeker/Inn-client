@@ -8,7 +8,7 @@
 #define LOGIN_RESULT_SUC "Login success!"
 #define LOGIN_RESULT_FAIL "Login failed!"
 
-Auth::Auth(Inn::NetConnService *s, QSystemTrayIcon *t) : m_tray(t), m_netService(s) {
+Auth::Auth(Inn::NetConnService *s) : m_netService(s) {
     m_user = new QLineEdit;
     m_pwd = new QLineEdit;
     m_uLabel = new QLabel;
@@ -17,7 +17,7 @@ Auth::Auth(Inn::NetConnService *s, QSystemTrayIcon *t) : m_tray(t), m_netService
     m_titleLabel = new QLabel;
     m_notification = new QLabel;
     m_loginBtn = new QPushButton;
-    m_exitBtn = new QPushButton;
+    m_quitBtn = new QPushButton;
     m_registerBtn = new QPushButton;
     m_forgetBtn = new QPushButton;
     m_remember = new QCheckBox;
@@ -58,10 +58,14 @@ void Auth::InitUi() {
     InitContent();
     connect(m_loginBtn, &QPushButton::clicked, this, &Auth::onReceiveUserInfo);
     connect(m_netService, &Inn::NetConnService::ReqResult, this, &Auth::onReceiveReqResult);
-    connect(m_exitBtn, &QPushButton::clicked, m_netService, &Inn::NetConnService::ClientQuit);
-    connect(m_exitBtn, &QPushButton::clicked, this, &QWidget::close);
+    connect(m_quitBtn, &QPushButton::clicked, [=]() {
+        this->close();
+        emit ClientQuit();
+    });
     connect(m_minBtn, &QPushButton::clicked, this, &QWidget::showMinimized);
-    connect(m_tray, &QSystemTrayIcon::activated, this, &Auth::onReceiveTrayAction);
+    connect(m_closeBtn, &QPushButton::clicked, this, [=]() {
+        this->hide();
+    });
 }
 
 void Auth::InitTitle() {
@@ -150,7 +154,7 @@ void Auth::InitContent() {
                                                            "QCheckBox::indicator:checked{background:rgb(251, 174, 60);"
                                                            "image: url(:/common/resource/checked.png);}");
 
-    m_layout_1->addWidget(m_exitBtn);
+    m_layout_1->addWidget(m_quitBtn);
     m_layout_1->addWidget(m_loginBtn);
 
     m_slogan->setMaximumHeight(30);
@@ -177,19 +181,19 @@ void Auth::InitContent() {
     m_notification->setMaximumHeight(20);
     m_notification->setMinimumHeight(20);
     m_notification->setStyleSheet(pLabelStyle);
-    m_exitBtn->setStyleSheet(
+    m_quitBtn->setStyleSheet(
             "QPushButton{border-radius:2px;border-top-right-radius:5px;"
             "border-top-left-radius:15px;border-bottom-left-radius:5px;border-bottom-right-radius:5px;"
             "background-color:#A7233A;}"
             "QPushButton:hover {background-color:rgb(205, 45, 75);color:white;}"
             "QPushButton:pressed {background-color:rgb(205, 45, 75);}"
             "QPushButton:disabled {background-color:gray;color:lightgray;}");
-    m_exitBtn->setMinimumSize(35, 35);
-    m_exitBtn->setMaximumSize(35, 35);
+    m_quitBtn->setMinimumSize(35, 35);
+    m_quitBtn->setMaximumSize(35, 35);
     pExitIcon.addFile(":/auth/resource/exit.png");
-    m_exitBtn->setIconSize(QSize(15, 15));
-    m_exitBtn->setIcon(pExitIcon);
-    m_exitBtn->setCursor(Qt::PointingHandCursor);
+    m_quitBtn->setIconSize(QSize(15, 15));
+    m_quitBtn->setIcon(pExitIcon);
+    m_quitBtn->setCursor(Qt::PointingHandCursor);
     m_loginBtn->setStyleSheet(
             "QPushButton{color:white;font-family:'Microsoft YaHei UI';font-size:12px;"
             "border-top-right-radius:15px;border-top-left-radius:5px;border-bottom-left-radius:5px;"
@@ -256,18 +260,7 @@ void Auth::onReceiveReqResult(NET_SERVICE::REQ_RESULT result) {
         m_notification->setText(LOGIN_RESULT_FAIL);
     else if (result == NET_SERVICE::LOGIN_SUC) {
         m_notification->setText(LOGIN_RESULT_SUC);
+        m_pwd->clear();
         emit LoginSuccess();
-    }
-}
-
-void Auth::onReceiveTrayAction(QSystemTrayIcon::ActivationReason reason) {
-    switch (reason) {
-        case QSystemTrayIcon::Trigger:
-            break;
-        case QSystemTrayIcon::DoubleClick:
-            this->show();
-            break;
-        default:
-            break;
     }
 }

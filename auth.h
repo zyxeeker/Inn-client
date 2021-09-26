@@ -21,7 +21,7 @@
 class Auth : public QWidget {
     Q_OBJECT
 public:
-    Auth(Inn::NetConnService *s, QSystemTrayIcon *t);
+    Auth(Inn::NetConnService *s);
 private:
     void InitUi();
     void InitTitle();
@@ -46,7 +46,7 @@ private:
     QLabel *m_slogan;
     QLabel *m_notification;
     QPushButton *m_loginBtn;
-    QPushButton *m_exitBtn;
+    QPushButton *m_quitBtn;
     QPushButton *m_minBtn;
     QPushButton *m_closeBtn;
     QPushButton *m_registerBtn;
@@ -68,14 +68,12 @@ private:
     QSpacerItem *m_bVSpacer;
     QSpacerItem *m_fSpacer;
     QSpacerItem *m_regSpacer;
-    QSystemTrayIcon *m_tray;
 signals:
     void ClientQuit();
     void LoginSuccess();
 private slots:
     void onReceiveUserInfo();
     void onReceiveReqResult(NET_SERVICE::REQ_RESULT);
-    void onReceiveTrayAction(QSystemTrayIcon::ActivationReason reason);
 };
 
 

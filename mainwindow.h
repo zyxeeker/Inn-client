@@ -34,8 +34,9 @@ enum SIZE_STATE {
 };
 
 class MainWindow : public QMainWindow {
+    Q_OBJECT
 public:
-    MainWindow(Inn::NetConnService *s, QSystemTrayIcon *t);
+    MainWindow(Inn::NetConnService *s);
 private:
     void InitUI();
     void InitTitle();
@@ -68,11 +69,10 @@ private:
     QSpacerItem *m_dNavSpacer;
     QStackedWidget *m_stackedContent;
     bool m_maximized = false;
-    QSystemTrayIcon *m_tray;
+    bool m_loginSt = false;
     Inn::NetConnService *m_netService;
-    Auth *m_auth;
-private slots:
-    void onReceiveTrayAction(QSystemTrayIcon::ActivationReason reason);
+signals:
+    void UserLogout();
 };
 
 
