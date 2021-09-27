@@ -71,6 +71,9 @@ private:
     bool m_maximized = false;
     bool m_loginSt = false;
     Inn::NetConnService *m_netService;
+    QPoint m_pos;
+    RECT m_frame;
+    RECT m_winRect;
 signals:
     void UserLogout();
 };

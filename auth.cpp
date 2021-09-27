@@ -69,8 +69,6 @@ void Auth::InitUi() {
 }
 
 void Auth::InitTitle() {
-    QIcon pCloseIcon;
-    QIcon pMinIcon;
     m_title->setObjectName("title");
     m_title->setMaximumSize(700, 30);
     m_title->setMinimumSize(700, 30);
@@ -96,12 +94,10 @@ void Auth::InitTitle() {
     m_titleLabel->setText("Inn");
     m_titleLabel->setStyleSheet("font-family:'Microsoft YaHei UI';font-size:13px;color:lightgray;");
 
-    pCloseIcon.addFile(":/common/resource/close.svg");
-    m_closeBtn->setIcon(pCloseIcon);
+    m_closeBtn->setIcon(QIcon(QPixmap(":/common/resource/close.svg")));
     m_closeBtn->setIconSize(QSize(15, 15));
 
-    pMinIcon.addFile(":/common/resource/hide.svg");
-    m_minBtn->setIcon(pMinIcon);
+    m_minBtn->setIcon(QIcon(QPixmap(":/common/resource/hide.svg")));
     m_minBtn->setIconSize(QSize(15, 15));
 
     m_closeBtn->setCursor(Qt::PointingHandCursor);
@@ -109,7 +105,6 @@ void Auth::InitTitle() {
 }
 
 void Auth::InitContent() {
-    QIcon pExitIcon;
     QString pLabelStyle = "color:white;font-family:'Microsoft YaHei UI';font-size:12px;";
     QString pStyleSheet = "QLineEdit{" + pLabelStyle +
                           "font-size:14px;border-radius:2px;padding:5px;border:1px solid rgb(48, 48, 48);"
@@ -190,9 +185,8 @@ void Auth::InitContent() {
             "QPushButton:disabled {background-color:gray;color:lightgray;}");
     m_quitBtn->setMinimumSize(35, 35);
     m_quitBtn->setMaximumSize(35, 35);
-    pExitIcon.addFile(":/auth/resource/exit.png");
     m_quitBtn->setIconSize(QSize(15, 15));
-    m_quitBtn->setIcon(pExitIcon);
+    m_quitBtn->setIcon(QIcon(QPixmap(":/auth/resource/exit.png")));
     m_quitBtn->setCursor(Qt::PointingHandCursor);
     m_loginBtn->setStyleSheet(
             "QPushButton{color:white;font-family:'Microsoft YaHei UI';font-size:12px;"
@@ -259,7 +253,6 @@ void Auth::onReceiveReqResult(NET_SERVICE::REQ_RESULT result) {
     if (result == NET_SERVICE::LOGIN_FAIL)
         m_notification->setText(LOGIN_RESULT_FAIL);
     else if (result == NET_SERVICE::LOGIN_SUC) {
-        m_notification->setText(LOGIN_RESULT_SUC);
         m_pwd->clear();
         emit LoginSuccess();
     }

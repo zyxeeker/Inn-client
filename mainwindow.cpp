@@ -42,7 +42,7 @@ MainWindow::MainWindow(Inn::NetConnService *s) : m_netService(s) {
     m_dNavSpacer = new QSpacerItem(20, 30, QSizePolicy::Minimum, QSizePolicy::Preferred);
     InitUI();
 #ifdef Q_OS_WIN
-    HWND hwnd = reinterpret_cast<HWND>(winId());
+    HWND hwnd = reinterpret_cast<HWND>(this->winId());
     DWORD style = GetWindowLong(hwnd, GWL_STYLE);
     SetWindowLongPtr(hwnd, GWL_STYLE, style | WS_MAXIMIZEBOX | WS_THICKFRAME | WS_CAPTION);
 #endif
@@ -53,7 +53,6 @@ void MainWindow::InitUI() {
     this->setCentralWidget(m_centerWidget);
     this->setAttribute(Qt::WA_TranslucentBackground, true);
     this->setAttribute(Qt::WA_DeleteOnClose, true);
-    m_centerWidget->setLayout(m_main);
     m_centerWidget->setObjectName("content");
     m_centerWidget->setStyleSheet("#content{background-color:rgb(23, 23, 23);}");
     m_main->addWidget(m_title);
@@ -77,7 +76,6 @@ void MainWindow::InitUI() {
 }
 
 void MainWindow::InitTitle() {
-    m_title->setLayout(m_titleLayout);
     m_title->setMinimumSize(800, 25);
     m_title->setMaximumHeight(25);
     m_title->setStyleSheet("background:black;");
@@ -91,19 +89,20 @@ void MainWindow::InitTitle() {
     m_titleName->setText("Inn");
     m_titleName->setStyleSheet("font-family:'Microsoft YaHei UI';font-size:13px;color:lightgray;");
     InitBtn(m_minBtn, 25, 15, TITLE_STYLE_1, ":/common/resource/hide.svg");
-    InitBtn(m_maxBtn, 25, 15, TITLE_STYLE_1, ":/common/resource/max.svg");
+    InitBtn(m_maxBtn, 25, 15, TITLE_STYLE_1, ":/common/resource/min.svg", ":/common/resource/max.svg");
     InitBtn(m_closeBtn, 25, 15, TITLE_STYLE_2, ":/common/resource/close.svg");
+    m_maxBtn->setCheckable(true);
 }
 
 void MainWindow::InitContent() {
-    m_content->setLayout(m_contentLayout);
     m_contentLayout->setSpacing(0);
     m_contentLayout->setContentsMargins(0, 0, 0, 0);
-    m_contentLayout->addLayout(m_navLayout);
+    m_contentLayout->addWidget(m_navigation);
     m_contentLayout->addWidget(m_stackedContent);
     m_navLayout->addWidget(m_homeBtn);
     m_navLayout->addWidget(m_singleChatBtn);
     m_navLayout->addWidget(m_groupChatBtn);
+    m_navLayout->addWidget(m_streamBtn);
     m_navLayout->addWidget(m_settingBtn);
     m_navLayout->addItem(m_uNavSpacer);
     m_navLayout->addWidget(m_exitBtn);
@@ -125,16 +124,17 @@ void MainWindow::InitContent() {
 
 void MainWindow::InitBtn(QPushButton *b, int s1, int s2, QString s, QString url, QString ourl) {
     QIcon pIcon;
-    pIcon.addFile(url, QSize(), QIcon::Normal, QIcon::Off);
-    if (!ourl.isEmpty())
-        pIcon.addFile(ourl, QSize(), QIcon::Active, QIcon::On);
+    pIcon.addPixmap(QPixmap(url), QIcon::Normal, QIcon::Off);
+    if (!ourl.isEmpty()) {
+        pIcon.addPixmap(QPixmap(ourl), QIcon::Active, QIcon::On);
+        b->setCheckable(true);
+        b->setAutoExclusive(true);
+    }
     b->setMinimumSize(s1, s1);
     b->setMaximumSize(s1, s1);
     b->setIcon(pIcon);
     b->setIconSize(QSize(s2, s2));
     b->setStyleSheet(s);
-    b->setCheckable(true);
-    b->setAutoExclusive(true);
 }
 
 bool MainWindow::nativeEvent(const QByteArray &et, void *m, long *r) {
@@ -148,57 +148,42 @@ bool MainWindow::nativeEvent(const QByteArray &et, void *m, long *r) {
         case WM_NCHITTEST: {
             *r = 0;
             const LONG border_width = 4;
-            RECT winrect;
-            GetWindowRect(HWND(winId()), &winrect);
+            GetWindowRect(HWND(this->winId()), &m_winRect);
             long x = GET_X_LPARAM(msg->lParam);
             long y = GET_Y_LPARAM(msg->lParam);
             bool resizeWidth = minimumWidth() != maximumWidth();
             bool resizeHeight = minimumHeight() != maximumHeight();
-
             if (resizeWidth) {
-                //left border
-                if (x >= winrect.left && x < winrect.left + border_width) *r = HTLEFT;
-                //right border
-                if (x < winrect.right && x >= winrect.right - border_width) *r = HTRIGHT;
+                if (x >= m_winRect.left && x < m_winRect.left + border_width) *r = HTLEFT;
+                if (x < m_winRect.right && x >= m_winRect.right - border_width) *r = HTRIGHT;
             }
             if (resizeHeight) {
-                //bottom border
-                if (y < winrect.bottom && y >= winrect.bottom - border_width) *r = HTBOTTOM;
-                //top border
-                if (y >= winrect.top && y < winrect.top + border_width) *r = HTTOP;
+                if (y < m_winRect.bottom && y >= m_winRect.bottom - border_width) *r = HTBOTTOM;
+                if (y >= m_winRect.top && y < m_winRect.top + border_width) *r = HTTOP;
             }
             if (resizeWidth && resizeHeight) {
-                //bottom left corner
-                if (x >= winrect.left && x < winrect.left + border_width && y < winrect.bottom &&
-                    y >= winrect.bottom - border_width)
+                if (x >= m_winRect.left && x < m_winRect.left + border_width && y < m_winRect.bottom &&
+                    y >= m_winRect.bottom - border_width)
                     *r = HTBOTTOMLEFT;
-                //bottom right corner
-                if (x < winrect.right && x >= winrect.right - border_width && y < winrect.bottom &&
-                    y >= winrect.bottom - border_width)
+                if (x < m_winRect.right && x >= m_winRect.right - border_width && y < m_winRect.bottom &&
+                    y >= m_winRect.bottom - border_width)
                     *r = HTBOTTOMRIGHT;
-                //top left corner
-                if (x >= winrect.left && x < winrect.left + border_width && y >= winrect.top &&
-                    y < winrect.top + border_width)
+                if (x >= m_winRect.left && x < m_winRect.left + border_width && y >= m_winRect.top &&
+                    y < m_winRect.top + border_width)
                     *r = HTTOPLEFT;
-                //top right corner
-                if (x < winrect.right && x >= winrect.right - border_width && y >= winrect.top &&
-                    y < winrect.top + border_width)
+                if (x < m_winRect.right && x >= m_winRect.right - border_width && y >= m_winRect.top &&
+                    y < m_winRect.top + border_width)
                     *r = HTTOPRIGHT;
             }
             if (0 != *r) return true;
-            //*result still equals 0, that means the cursor locate OUTSIDE the frame area
-            //but it may locate in titlebar area
             if (!m_title) return false;
-            //support highdpi
-//            double dpr = this->devicePixelRatioF();
-            QPoint pos = m_title->mapFromGlobal(QPoint(x, y));
-            if (!m_title->rect().contains(pos)) return false;
-            QWidget *child = m_title->childAt(pos);
-            if (!child) {
+            m_pos = m_title->mapFromGlobal(QPoint(x, y));
+            if (!m_title->rect().contains(m_pos)) return false;
+            if (!m_title->childAt(m_pos)) {
                 *r = HTCAPTION;
                 return true;
             } else {
-                if (child == m_titleName) {
+                if (m_title->childAt(m_pos) == m_titleName) {
                     *r = HTCAPTION;
                     return true;
                 }
@@ -207,12 +192,10 @@ bool MainWindow::nativeEvent(const QByteArray &et, void *m, long *r) {
         }
         case WM_GETMINMAXINFO: {
             if (::IsZoomed(msg->hwnd)) {
-                RECT frame = {0, 0, 0, 0};
-                AdjustWindowRectEx(&frame, WS_OVERLAPPEDWINDOW, FALSE, 0);
-                //record frame area data
-//                double dpr = this->devicePixelRatioF();
-                this->setContentsMargins(abs(frame.left), abs(frame.bottom),
-                                         abs(frame.right), abs(frame.bottom));
+                m_frame = {0, 0, 0, 0};
+                AdjustWindowRectEx(&m_frame, WS_OVERLAPPEDWINDOW, FALSE, 0);
+                this->setContentsMargins(abs(m_frame.left), abs(m_frame.bottom),
+                                         abs(m_frame.right), abs(m_frame.bottom));
                 SwitchSizeBtn(MAX);
             } else {
                 this->setContentsMargins(0, 0, 0, 0);
@@ -220,22 +203,21 @@ bool MainWindow::nativeEvent(const QByteArray &et, void *m, long *r) {
             }
             return false;
         }
-        default:
-            return QMainWindow::nativeEvent(et, m, r);
     }
 #endif
+    return false;
 }
 
 void MainWindow::SwitchSizeBtn(SIZE_STATE s) {
     switch (s) {
         case MIN: {
             m_maximized = false;
-            m_maxBtn->setIcon(QIcon(":/common/resource/max.svg"));
+            m_maxBtn->setChecked(true);
             break;
         }
         case MAX: {
             m_maximized = true;
-            m_maxBtn->setIcon(QIcon(":/common/resource/min.svg"));
+            m_maxBtn->setChecked(false);
             break;
         }
     }
