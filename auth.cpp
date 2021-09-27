@@ -9,30 +9,30 @@
 #define LOGIN_RESULT_FAIL "Login failed!"
 
 Auth::Auth(Inn::NetConnService *s) : m_netService(s) {
-    m_user = new QLineEdit;
-    m_pwd = new QLineEdit;
-    m_uLabel = new QLabel;
-    m_pLabel = new QLabel;
-    m_slogan = new QLabel;
-    m_titleLabel = new QLabel;
-    m_notification = new QLabel;
-    m_loginBtn = new QPushButton;
-    m_quitBtn = new QPushButton;
-    m_registerBtn = new QPushButton;
-    m_forgetBtn = new QPushButton;
-    m_remember = new QCheckBox;
-    m_title = new QWidget;
-    m_content = new QWidget;
-    m_minBtn = new QPushButton;
-    m_closeBtn = new QPushButton;
-    m_titleLayout = new QHBoxLayout;
-    m_forgetLayout = new QHBoxLayout;
-    m_regLayout = new QHBoxLayout;
-    m_mainLayout = new QVBoxLayout;
-    m_layout = new QVBoxLayout;
-    m_layout_1 = new QHBoxLayout;
-    m_contentLayout = new QHBoxLayout;
-    m_rLayout = new QVBoxLayout;
+    m_title = new QWidget(this);
+    m_content = new QWidget(this);
+    m_user = new QLineEdit(m_content);
+    m_pwd = new QLineEdit(m_content);
+    m_uLabel = new QLabel(m_content);
+    m_pLabel = new QLabel(m_content);
+    m_slogan = new QLabel(m_content);
+    m_titleLabel = new QLabel(m_content);
+    m_notification = new QLabel(m_content);
+    m_loginBtn = new QPushButton(m_content);
+    m_quitBtn = new QPushButton(m_content);
+    m_registerBtn = new QPushButton(m_content);
+    m_forgetBtn = new QPushButton(m_content);
+    m_remember = new QCheckBox(m_content);
+    m_minBtn = new QPushButton(m_title);
+    m_closeBtn = new QPushButton(m_title);
+    m_titleLayout = new QHBoxLayout(m_title);
+    m_forgetLayout = new QHBoxLayout();
+    m_regLayout = new QHBoxLayout();
+    m_mainLayout = new QVBoxLayout(this);
+    m_layout = new QVBoxLayout();
+    m_layout_1 = new QHBoxLayout();
+    m_contentLayout = new QHBoxLayout(m_content);
+    m_rLayout = new QVBoxLayout();
     m_lHSpacer = new QSpacerItem(430, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
     m_tVSpacer = new QSpacerItem(0, 120, QSizePolicy::Minimum, QSizePolicy::Maximum);
     m_rHSpacer = new QSpacerItem(35, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
@@ -45,7 +45,6 @@ Auth::Auth(Inn::NetConnService *s) : m_netService(s) {
 }
 
 void Auth::InitUi() {
-    this->setLayout(m_mainLayout);
     this->setMaximumSize(700, 500);
     this->setMinimumSize(700, 500);
     this->setObjectName("bk");
@@ -74,7 +73,6 @@ void Auth::InitTitle() {
     m_title->setMinimumSize(700, 30);
     m_title->setStyleSheet("#title{background-color: rgb(36, 36, 36);"
                            "border-top-right-radius:2px;border-top-left-radius:2px;}");
-    m_title->setLayout(m_titleLayout);
     m_titleLayout->setContentsMargins(5, 0, 0, 0);
     m_titleLayout->setSpacing(0);
     m_titleLayout->addWidget(m_titleLabel);
@@ -120,7 +118,6 @@ void Auth::InitContent() {
                              "border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;}");
     m_content->setMaximumSize(700, 500);
     m_content->setMinimumSize(700, 500);
-    m_content->setLayout(m_contentLayout);
 
     m_contentLayout->addItem(m_lHSpacer);
     m_contentLayout->addLayout(m_layout);

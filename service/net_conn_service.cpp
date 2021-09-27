@@ -43,6 +43,10 @@ QTcpSocket *Inn::NetConnService::GetSocket() const {
     return m_socket;
 }
 
+std::string Inn::NetConnService::GetUser() const {
+    return m_user;
+}
+
 void Inn::NetConnService::Disconnect() {
 #if _DEBUG
     LOGD("Client Quiting...");

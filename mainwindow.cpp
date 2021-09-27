@@ -2,6 +2,8 @@
 // Created by zyx on 2021/9/22.
 //
 
+#include "service/logger_service.h"
+
 #include "mainwindow.h"
 
 #define TITLE_STYLE_1 "QPushButton{border-radius:none;background-color:rgba(65, 65, 65, 120);}"\
@@ -18,28 +20,29 @@
                     "QPushButton:pressed {background-color:rgb(205, 45, 75);}"
 
 MainWindow::MainWindow(Inn::NetConnService *s) : m_netService(s) {
-    m_titleName = new QLabel;
-    m_centerWidget = new QWidget;
-    m_title = new QWidget;
-    m_content = new QWidget;
-    m_main = new QVBoxLayout;
-    m_titleLayout = new QHBoxLayout;
-    m_navLayout = new QVBoxLayout;
-    m_contentLayout = new QHBoxLayout;
-    m_homeBtn = new QPushButton;
-    m_singleChatBtn = new QPushButton;
-    m_groupChatBtn = new QPushButton;
-    m_streamBtn = new QPushButton;
-    m_settingBtn = new QPushButton;
-    m_settingBtn = new QPushButton;
-    m_exitBtn = new QPushButton;
-    m_closeBtn = new QPushButton;
-    m_minBtn = new QPushButton;
-    m_maxBtn = new QPushButton;
-    m_stackedContent = new QStackedWidget;
+    m_centerWidget = new QWidget(this);
+    m_main = new QVBoxLayout(m_centerWidget);
+    m_title = new QWidget(m_centerWidget);
+    m_titleLayout = new QHBoxLayout(m_title);
+    m_content = new QWidget(m_centerWidget);
+    m_contentLayout = new QHBoxLayout(m_content);
+    m_navigation = new QWidget(m_content);
+    m_navLayout = new QVBoxLayout(m_navigation);
+    m_titleName = new QLabel(m_title);
+    m_homeBtn = new QPushButton(m_navigation);
+    m_singleChatBtn = new QPushButton(m_navigation);
+    m_groupChatBtn = new QPushButton(m_navigation);
+    m_streamBtn = new QPushButton(m_navigation);
+    m_settingBtn = new QPushButton(m_navigation);
+    m_exitBtn = new QPushButton(m_navigation);
+    m_closeBtn = new QPushButton(m_title);
+    m_minBtn = new QPushButton(m_title);
+    m_maxBtn = new QPushButton(m_title);
+    m_stackedContent = new QStackedWidget(m_content);
     m_titleSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
     m_uNavSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     m_dNavSpacer = new QSpacerItem(20, 30, QSizePolicy::Minimum, QSizePolicy::Preferred);
+    m_overview = new Overview(m_netService->GetUser(), m_stackedContent);
     InitUI();
 #ifdef Q_OS_WIN
     HWND hwnd = reinterpret_cast<HWND>(this->winId());
@@ -119,7 +122,7 @@ void MainWindow::InitContent() {
     m_stackedContent->setObjectName("stackedContent");
     m_stackedContent->setStyleSheet(
             "#stackedContent{margin-top:5px;border-top-left-radius:5px;background-color: rgb(0, 17, 34);}");
-
+    m_stackedContent->addWidget(m_overview);
 }
 
 void MainWindow::InitBtn(QPushButton *b, int s1, int s2, QString s, QString url, QString ourl) {

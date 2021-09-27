@@ -16,6 +16,8 @@
 #include <QSystemTrayIcon>
 #include "auth.h"
 #include "service/net_conn_service.h"
+#include "page/overview.h"
+#include "page/chat_room.h"
 
 #ifdef Q_OS_WIN
 
@@ -47,14 +49,15 @@ private:
 protected:
     bool nativeEvent(const QByteArray &et, void *m, long *r);
 private:
-    QLabel *m_titleName;
     QWidget *m_centerWidget;
-    QWidget *m_title;
-    QWidget *m_content;
     QVBoxLayout *m_main;
+    QWidget *m_title;
     QHBoxLayout *m_titleLayout;
-    QVBoxLayout *m_navLayout;
+    QWidget *m_content;
     QHBoxLayout *m_contentLayout;
+    QWidget *m_navigation;
+    QVBoxLayout *m_navLayout;
+    QLabel *m_titleName;
     QPushButton *m_homeBtn;
     QPushButton *m_singleChatBtn;
     QPushButton *m_groupChatBtn;
@@ -69,8 +72,8 @@ private:
     QSpacerItem *m_dNavSpacer;
     QStackedWidget *m_stackedContent;
     bool m_maximized = false;
-    bool m_loginSt = false;
     Inn::NetConnService *m_netService;
+    Overview *m_overview;
     QPoint m_pos;
     RECT m_frame;
     RECT m_winRect;

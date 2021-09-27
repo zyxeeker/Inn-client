@@ -22,6 +22,7 @@ namespace Inn {
         NetConnService(QString ad, uint16_t port);
         int Req(NET_SERVICE::REQ_OP req);
         QTcpSocket *GetSocket() const;
+        std::string GetUser() const;
         void SetUserInfo(std::string user, std::string pwd);
         void Disconnect();
     private:

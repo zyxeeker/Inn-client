@@ -14,50 +14,19 @@ class Overview : public QWidget {
 Q_OBJECT
 
 public:
-    explicit Overview(QWidget *parent = nullptr);
-
-//    ~Overview() override;
-
+    explicit Overview(std::string u, QWidget *parent = nullptr);
 private:
     void InitUI();
-
 private:
     void RegBanner();
-
-    void SetPopup(/*int px, int py*/);
-
-    void SetBtns();
-
     void SetBannerPosition();
-
 protected:
     void resizeEvent(QResizeEvent *e);
-
 private:
-    WBPopup *m_wbPopup;
-    OverviewBtn *m_wbBtn;
-
-    QWidget *widget;
-    QWidget *m_popupContainer;
-    QWidget *m_btn;
-
+    std::string m_user;
     QLabel *m_banner;
     QLabel *m_icon;
     QLabel *m_title;
-
-    QHBoxLayout *m_popup;
-
-private slots:
-
-    void PopupTrans();
-
-    void PopupShow();
-
-    void PopupClose();
-
-signals:
-
-    void PopupPos(QRect);
 };
 
 
