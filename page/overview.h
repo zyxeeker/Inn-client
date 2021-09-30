@@ -7,6 +7,9 @@
 
 #include <QWidget>
 #include <QLabel>
+#include <QPushButton>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
 #include "./component/popup.h"
 #include "./component/button.h"
 
@@ -15,18 +18,25 @@ Q_OBJECT
 
 public:
     explicit Overview(std::string u, QWidget *parent = nullptr);
+    ~Overview();
 private:
     void InitUI();
 private:
+    void RegYYService();
     void RegBanner();
     void SetBannerPosition();
 protected:
     void resizeEvent(QResizeEvent *e);
 private:
     std::string m_user;
-    QLabel *m_banner;
-    QLabel *m_icon;
     QLabel *m_title;
+    QPushButton *m_yY;
+    QNetworkAccessManager *m_netAM;
+    QNetworkRequest m_netRq;
+    QSslConfiguration m_sslConf;
+private slots:
+    void test(QNetworkReply *);
+    void YYRefresh();
 };
 
 

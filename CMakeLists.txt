@@ -11,6 +11,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(OPENSSL_DIR ${CMAKE_SOURCE_DIR}/3rdparty/openssl)
+
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
 # Check https://doc.qt.io/qt/deployment-android.html for more information.
 # They need to be set before the find_package( ...) calls below.
@@ -89,6 +91,13 @@ set_target_properties(InnClient PROPERTIES
         MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
         )
 
-if(QT_VERSION_MAJOR EQUAL 6)
+if (QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(InnClient)
-endif()
+endif ()
+
+file(GLOB_RECURSE INN_DEPEND_DLLS
+        ${OPENSSL_DIR}/libcrypto-1_1-x64.dll
+        ${OPENSSL_DIR}/libssl-1_1-x64.dll
+        )
+
+file(COPY ${INN_DEPEND_DLLS} DESTINATION .)
