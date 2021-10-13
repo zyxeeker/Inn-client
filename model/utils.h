@@ -9,12 +9,13 @@
 #include <QPainter>
 #include <QSvgRenderer>
 #include <QLabel>
+#include <QPushButton>
 
 class Utils {
 public:
     static QPixmap LoadSvg(QString url, int w, int h);
-
     static QString ElideText(QLabel *l, QString strInfo);
+    static void InitBtn(QPushButton *b, int s1, int s2, QString s, QString url, QString ourl = nullptr);
 };
 
 

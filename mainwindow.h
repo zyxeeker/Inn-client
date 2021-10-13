@@ -19,66 +19,46 @@
 #include "page/overview.h"
 #include "page/chat_room.h"
 
-#ifdef Q_OS_WIN
+#include "cef/handler.h"
+#include <include/cef_request_context.h>
+#include "component/borderless_window.h"
+#include "component/title_bar.h"
+#include "component/navigation.h"
+#include "model/define.h"
 
-#include <windows.h>
-
-#ifndef GET_X_LPARAM
-#define GET_X_LPARAM(lParam) ((int)(short)LOWORD(lParam))
-#endif
-#ifndef GET_Y_LPARAM
-#define GET_Y_LPARAM(lParam) ((int)(short)HIWORD(lParam))
-#endif
-#endif
-
-enum SIZE_STATE {
-    MAX, MIN
-};
-
-class MainWindow : public QMainWindow {
-    Q_OBJECT
+class MainWindow : public BorderlessWindow {
+Q_OBJECT
 public:
-    MainWindow(Inn::NetConnService *s);
-private:
-    void InitUI();
-    void InitTitle();
-    void InitContent();
-    void InitBtn(QPushButton *b, int s1, int s2, QString s, QString url, QString ourl = nullptr);
-private:
-    void SwitchSizeBtn(SIZE_STATE s);
+    MainWindow(Inn::NetConnService *s, QWidget *parent = nullptr);
+    bool HitArea(const QPoint &gPos) override;
 protected:
-    bool nativeEvent(const QByteArray &et, void *m, long *r);
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 private:
-    QWidget *m_centerWidget;
-    QVBoxLayout *m_main;
-    QWidget *m_title;
-    QHBoxLayout *m_titleLayout;
+    void InitUi();
+    void InitTitleBar();
+private:
+    AbstractTitleBar *m_bar;
+    Navigation *m_nav;
     QWidget *m_content;
+    QWidget *m_centerWidget;
+    QWidget *m_title;
+
+    QVBoxLayout *m_titleLayout;
+    QVBoxLayout *m_centerLayout;
     QHBoxLayout *m_contentLayout;
-    QWidget *m_navigation;
-    QVBoxLayout *m_navLayout;
-    QLabel *m_titleName;
-    QPushButton *m_homeBtn;
-    QPushButton *m_singleChatBtn;
-    QPushButton *m_groupChatBtn;
-    QPushButton *m_streamBtn;
-    QPushButton *m_settingBtn;
-    QPushButton *m_exitBtn;
-    QPushButton *m_closeBtn;
-    QPushButton *m_minBtn;
-    QPushButton *m_maxBtn;
-    QSpacerItem *m_titleSpacer;
-    QSpacerItem *m_uNavSpacer;
-    QSpacerItem *m_dNavSpacer;
     QStackedWidget *m_stackedContent;
-    bool m_maximized = false;
-    Inn::NetConnService *m_netService;
+
     Overview *m_overview;
-    QPoint m_pos;
-    RECT m_frame;
-    RECT m_winRect;
+    GroupChatRoom *m_chatRoom;
+    CefRefPtr<Handler> simple_handler_;
+    Inn::NetConnService *m_netService;
+public slots:
+    void SwitchNav(NAVIGATION);
+    void SwitchWindow(WINDOW_STATE);
 signals:
     void UserLogout();
+
 };
 
 

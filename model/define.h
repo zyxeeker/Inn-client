@@ -81,4 +81,19 @@ struct CORE_SERVICE {
     };
 };
 
+enum WINDOW_STATE {
+    WINDOW_CLOSE,
+    WINDOW_NORMAL,
+    WINDOW_MAX,
+    WINDOW_MIN
+};
+
+enum NAVIGATION {
+    HOME,
+    GROUP,
+    STREAM,
+    SETTING,
+    EXIT
+};
+
 #endif //INNCLIENT_DEFINE_H

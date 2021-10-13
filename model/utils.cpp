@@ -23,3 +23,18 @@ QString Utils::ElideText(QLabel *l, QString strInfo) {
         strInfo = QFontMetrics(l->font()).elidedText(strInfo, Qt::ElideRight, l->width() - 20);
     return strInfo;
 }
+
+void Utils::InitBtn(QPushButton *b, int s1, int s2, QString s, QString url, QString ourl) {
+    QIcon pIcon;
+    pIcon.addPixmap(QPixmap(url), QIcon::Normal, QIcon::Off);
+    if (!ourl.isEmpty()) {
+        pIcon.addPixmap(QPixmap(ourl), QIcon::Active, QIcon::On);
+        b->setCheckable(true);
+        b->setAutoExclusive(true);
+    }
+    b->setMinimumSize(s1, s1);
+    b->setMaximumSize(s1, s1);
+    b->setIcon(pIcon);
+    b->setIconSize(QSize(s2, s2));
+    b->setStyleSheet(s);
+}

@@ -15,6 +15,8 @@
 #include "./component/smooth_scroll_area.h"
 #include "./component/user.h"
 #include "./component/control_panel.h"
+#include "cef/_app.h"
+
 
 class AbstractChatRoom : public QWidget {
 Q_OBJECT
@@ -45,6 +47,7 @@ private:
 class GroupChatRoom : public AbstractChatRoom {
 public:
     GroupChatRoom();
+    QWidget *GetWTest();
 
 private:
     ControlPanel *m_cPanel;
@@ -54,8 +57,11 @@ private:
     SmoothScrollArea *m_navigation;
     QVBoxLayout *m_navigationLayout;
     QWidget *m_leftSide;
+    QWidget *m_ceftest;
     QVBoxLayout *m_sideLayout;
     QHBoxLayout *m_gLayout;
+    AppTest *ap;
+//    CefRefPtr<SimpleHandler> simple_handler_; // 这里是新增的CefRefPtr<SimpleHandler>成员
 };
 
 
