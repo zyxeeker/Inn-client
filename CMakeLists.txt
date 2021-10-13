@@ -82,7 +82,7 @@ else()
 endif ()
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/app.manifest ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.manifest)
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/InnClient.manifest ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.manifest)
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND mt.exe -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\${PROJECT_NAME}.manifest\" -inputresource:\"$<TARGET_FILE:${PROJECT_NAME}>\" -outputresource:\"$<TARGET_FILE:${PROJECT_NAME}>\")
 
