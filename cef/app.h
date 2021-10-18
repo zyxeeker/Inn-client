@@ -7,22 +7,22 @@
 
 #include <include/cef_app.h>
 #include <include/wrapper/cef_helpers.h>
-#include "handler.h"
+#include "cef_handler.h"
 
-class App : public CefApp, public CefBrowserProcessHandler {
+class App : public CefApp, public CefBrowserProcessHandler, public CefRenderProcessHandler {
 public:
-    App();
-
     // CefApp methods:
     virtual void
     OnBeforeCommandLineProcessing(const CefString &process_type, CefRefPtr<CefCommandLine> command_line) override;
-
-    virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() override {
+    CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() override {
         return this;
     }
-
-    // CefBrowserProcessHandler methods:
-    virtual void OnContextInitialized() override;
+    CefRefPtr<CefRenderProcessHandler> GetRenderProcessHandler() override {
+        return this;
+    }
+//    窗口bind值或者函数
+    void OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame,
+                          CefRefPtr<CefV8Context> context) override;
 
 private:
     // Include the default reference counting implementation.
