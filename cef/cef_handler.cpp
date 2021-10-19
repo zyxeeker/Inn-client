@@ -4,10 +4,13 @@
 
 #include "cef_handler.h"
 #include <QApplication>
+#include <include/cef_task.h>
+#include <include/wrapper/cef_closure_task.h>
+#include <include/wrapper/cef_helpers.h>
+#include <QDebug>
 
 void CefHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
     m_delegate->BrowserCreated(browser);
-    return;
 }
 
 void CefHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
@@ -25,5 +28,6 @@ bool CefHandler::OnPreKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent 
 }
 
 bool CefHandler::OnKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent &event, MSG *os_event) {
+    m_delegate->BrowserKeyEvent(browser, event, os_event);
     return false;
 }

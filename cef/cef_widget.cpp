@@ -78,5 +78,7 @@ bool CefWidget::BrowserPreKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEv
 }
 
 bool CefWidget::BrowserKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent &event, MSG *os_event) {
+    if (event.modifiers == EVENTFLAG_NONE && event.windows_key_code == VK_F12 && event.type == KEYEVENT_RAWKEYDOWN)
+            emit OpenDevTools();
     return false;
 }

@@ -18,7 +18,7 @@ CefString AppSettings::locales_directory_path;
 
 CefString AppSettings::user_agent = "Mozilla/5.0(Windows NT 6.1;WOW64) "
                                     "AppleWebKit/537.36(KHTML,like Gecko) "
-                                    "Chrome/94.0.4606.61 Safari/537.36 "
+                                    "Chrome/89.0.4240.183 Safari/537.36 "
                                     "Inn/1.0.0b";
 
 CefString AppSettings::cache_path;
@@ -33,7 +33,7 @@ int AppSettings::persist_user_preferences = 1;
 
 CefString AppSettings::locale;
 
-uint AppSettings::remote_debugging_port = 12233;
+uint AppSettings::remote_debugging_port = 12355;
 
 cef_color_t AppSettings::background_color;
 
