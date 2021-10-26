@@ -1,7 +1,7 @@
 <template>
-    <n-page-header subtitle="TEST-ID-20211025" @back="handleBack">
+    <n-page-header subtitle="TEST-ID-20211026">
         <template #title>
-            <a href="" style="text-decoration: none; color: inherit;">TEST</a>
+            <a href="" style="text-decoration: none; color: inherit;">{{ $route.params.title }}</a>
         </template>
         <template #header>
             <n-breadcrumb>
@@ -12,7 +12,11 @@
             </n-breadcrumb>
         </template>
         <template #avatar>
-            <n-avatar src="https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg"/>
+            <n-avatar :style="{color: 'black',backgroundColor: 'transparent'}">
+                <n-icon>
+                    <Signature/>
+                </n-icon>
+            </n-avatar>
         </template>
         <template #extra>
             <n-space>
@@ -27,16 +31,12 @@
 
 <script>
 import {defineComponent} from 'vue'
-import {useMessage} from 'naive-ui'
+import {Signature} from "@vicons/fa"
 
 export default defineComponent({
     name: "MainHeader",
     setup() {
-        const message = useMessage()
         return {
-            handleBack() {
-                message.info('[onBack]')
-            },
             options: [
                 {
                     label: 'TEST',
@@ -52,6 +52,9 @@ export default defineComponent({
                 }
             ]
         }
+    },
+    components: {
+        Signature
     }
 })
 </script>
