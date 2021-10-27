@@ -35,7 +35,8 @@ const menuOptions = [
                     to: {
                         name: 'toContentHeader',
                         params: {
-                            title: '大厅'
+                            title: '大厅',
+                            des: '欢迎来到大厅！'
                         }
                     }
                 },
@@ -52,7 +53,8 @@ const menuOptions = [
                     to: {
                         name: 'toContentHeader',
                         params: {
-                            title: 'TEST'
+                            title: 'TEST',
+                            des: '欢迎来到TEST！'
                         }
                     }
                 },

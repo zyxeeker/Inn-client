@@ -1,7 +1,7 @@
 <template>
     <div style="height:100%;width:100%;">
         <n-layout-header style="height:100px;padding: 12px;" bordered>
-            <n-page-header subtitle="TEST-ID-20211025">
+            <n-page-header subtitle="TEST-ID-20211027">
                 <template #title>
                     <a href="" style="text-decoration: none; color: inherit;">{{ $route.params.title }}</a>
                 </template>
@@ -35,18 +35,8 @@
                   :native-scrollbar="false"
                   ref="container"
         >
-            <n-h2>TEST</n-h2>
-            <n-h2>TEST</n-h2>
-            <n-h2>TEST</n-h2>
-            <n-h2>TEST</n-h2>
-            <n-h2>TEST</n-h2>
-            <n-h2>TEST</n-h2>
-            <n-h2>TEST</n-h2>
-            <n-h2>TEST</n-h2>
-            <n-h2>TEST</n-h2>
-            <n-h2>TEST</n-h2>
-            <n-h2>TEST</n-h2>
-            <n-h2>TEST</n-h2>
+            <Title/>
+            <Content/>
         </n-layout>
     </div>
 </template>
@@ -54,6 +44,8 @@
 <script>
 import {defineComponent} from 'vue'
 import {Signature} from "@vicons/fa"
+import Title from "@/components/view/Title";
+import Content from "@/components/view/Content";
 
 export default defineComponent({
     name: "Main",
@@ -76,6 +68,8 @@ export default defineComponent({
         }
     },
     components: {
+        Content,
+        Title,
         Signature
     }
 })

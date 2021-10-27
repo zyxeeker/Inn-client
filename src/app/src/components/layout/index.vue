@@ -8,9 +8,9 @@
                 <router-view name="Main" v-slot="{Component}">
                     <transition enter-active-class="animate__animated animate__bounceInDown"
                                 leave-active-class="animate__animated animate__bounceOutDown" mode="out-in">
-                        <keep-alive exclude="Home,Main">
+<!--                        <keep-alive exclude="Home,Main">-->
                             <component :is="Component"/>
-                        </keep-alive>
+                        <!--                        </keep-alive>-->
                     </transition>
                 </router-view>
             </n-layout>
