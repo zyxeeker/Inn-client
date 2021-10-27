@@ -4,8 +4,15 @@
         </n-layout-header>
         <n-layout position="absolute" style="top: 30px;" has-sider>
             <Sider></Sider>
-            <n-layout content-style="padding: 0px;">
-                <router-view name="Main"></router-view>
+            <n-layout content-style="display:flex;flex-direction: column;overflow:hidden;">
+                <router-view name="Main" v-slot="{Component}">
+                    <transition enter-active-class="animate__animated animate__bounceInDown"
+                                leave-active-class="animate__animated animate__bounceOutDown" mode="out-in">
+                        <keep-alive exclude="Home,Main">
+                            <component :is="Component"/>
+                        </keep-alive>
+                    </transition>
+                </router-view>
             </n-layout>
             <n-layout-footer position="absolute" style="height: 64px; padding: 24px;" bordered>
             </n-layout-footer>
