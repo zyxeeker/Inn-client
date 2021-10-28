@@ -9,7 +9,7 @@
             </n-h4>
         </div>
         <n-space justify="start">
-            <n-p>
+            <n-p :style="{paddingRight:'30px'}">
                 {{ content }}
             </n-p>
         </n-space>

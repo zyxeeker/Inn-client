@@ -1,76 +1,56 @@
 <template>
-    <div style="height:100%;width:100%;">
+    <div style="height:100%;width:100%;display: flex;flex-direction: column;">
         <n-layout-header style="height:100px;padding: 12px;" bordered>
-            <n-page-header subtitle="TEST-ID-20211027">
-                <template #title>
-                    <a href="" style="text-decoration: none; color: inherit;">{{ $route.params.title }}</a>
-                </template>
-                <template #header>
-                    <n-breadcrumb>
-                        <n-breadcrumb-item>TEST</n-breadcrumb-item>
-                        <n-breadcrumb-item>TEST</n-breadcrumb-item>
-                        <n-breadcrumb-item>TEST</n-breadcrumb-item>
-                        <n-breadcrumb-item>TEST</n-breadcrumb-item>
-                    </n-breadcrumb>
-                </template>
-                <template #avatar>
-                    <n-avatar :style="{color: 'black',backgroundColor: 'transparent'}">
-                        <n-icon>
-                            <Signature/>
-                        </n-icon>
-                    </n-avatar>
-                </template>
-                <template #extra>
-                    <n-space>
-                        <n-button>TEST</n-button>
-                        <n-dropdown :options="options" placement="bottom-start">
-                            <n-button :bordered="false" style="padding: 0 4px">···</n-button>
-                        </n-dropdown>
-                    </n-space>
-                </template>
-            </n-page-header>
+            <MainHeader/>
         </n-layout-header>
-        <n-layout position="absolute"
-                  style="top: 100px;bottom:68px;padding-left: 20px;"
-                  :native-scrollbar="false"
-                  ref="container"
+        <n-layout
+            style="padding-left: 20px;"
+            :native-scrollbar="false"
         >
             <Title/>
-            <Content/>
+            <template v-for="item in lists" :key="item.id">
+                <Content :user="item.user" :content="item.msg" class="animate__animated animate__bounceInRight"/>
+            </template>
         </n-layout>
+        <n-layout-footer style="background: transparent">
+            <TextArea @input-msg="test"/>
+        </n-layout-footer>
     </div>
 </template>
 
 <script>
 import {defineComponent} from 'vue'
-import {Signature} from "@vicons/fa"
 import Title from "@/components/view/Title";
 import Content from "@/components/view/Content";
+import TextArea from "@/components/view/TextArea";
+import MainHeader from "@/components/layout/components/Main/Header";
 
 export default defineComponent({
     name: "Main",
-    setup() {
+    data() {
         return {
-            options: [
-                {
-                    label: 'TEST',
-                    key: '1'
-                },
-                {
-                    label: 'TEST',
-                    key: '2'
-                },
-                {
-                    label: 'TEST',
-                    key: '3'
-                }
-            ]
+            lists: [
+                {id: 1, user: 'user1', msg: 'TESTTTTTTTTETSTSTE'},
+                {id: 2, user: 'user2', msg: 'TESTTTTTTTTETSTSTE'},
+                {id: 3, user: 'user3', msg: 'TESTTTTTTTTETSTSTE'},
+            ],
+            nextTodoId: 4
         }
     },
     components: {
+        MainHeader,
         Content,
         Title,
-        Signature
+        TextArea
+    },
+    methods: {
+        test(data) {
+            this.lists.push({
+                id: ++this.nextTodoId,
+                user: 'sa',
+                msg: data
+            })
+        }
     }
 })
 </script>
