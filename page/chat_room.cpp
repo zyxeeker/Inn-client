@@ -65,6 +65,7 @@ GroupChatRoom::GroupChatRoom() {
 //    m_leftSide->setMaximumWidth(180);
     m_leftSide->setMinimumWidth(180);
     m_leftSide->setLayout(m_sideLayout);
+    m_appLayout->setContentsMargins(0, 0, 0, 0);
 
     m_listLayout->setAlignment(Qt::AlignTop);
     m_userListArea->SetContentLayout(m_listLayout);

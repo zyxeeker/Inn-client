@@ -43,7 +43,7 @@ bool BorderlessWindow::nativeEvent(const QByteArray &eventType, void *message, l
 //                    int offset = UtilQt::isWindows10() ? 8 : 4;
                     int offset = 8;
                     bcRect.left = bRect.left + offset;
-                    bcRect.top = bRect.top + 0;
+                    bcRect.top = bRect.top;
                     bcRect.right = bRect.right - offset;
                     bcRect.bottom = bRect.bottom - offset;
                 }

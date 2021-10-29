@@ -19,7 +19,7 @@
 #include "page/overview.h"
 #include "page/chat_room.h"
 
-#include "cef/handler.h"
+#include "cef/cef_handler.h"
 #include <include/cef_request_context.h>
 #include "component/borderless_window.h"
 #include "component/title_bar.h"
@@ -29,7 +29,7 @@
 class MainWindow : public BorderlessWindow {
 Q_OBJECT
 public:
-    MainWindow(Inn::NetConnService *s, QWidget *parent = nullptr);
+    MainWindow(Inn::NetConnService *s = nullptr, QWidget *parent = nullptr);
     bool HitArea(const QPoint &gPos) override;
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -51,7 +51,7 @@ private:
 
     Overview *m_overview;
     GroupChatRoom *m_chatRoom;
-    CefRefPtr<Handler> simple_handler_;
+//    CefRefPtr<CefClientHandler> simple_handler_;
     Inn::NetConnService *m_netService;
 public slots:
     void SwitchNav(NAVIGATION);
