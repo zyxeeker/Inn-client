@@ -17,6 +17,9 @@ struct Delegate {
     virtual bool BrowserPreKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent &event, MSG *os_event,
                                     bool *is_keyboard_shortcut) = 0;
     virtual bool BrowserKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent &event, MSG *os_event) = 0;
+    virtual bool
+    BrowserMessageEvent(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefProcessId source_process,
+                        CefRefPtr<CefProcessMessage> message) = 0;
 };
 
 class CefHandler
@@ -36,6 +39,10 @@ public:
     bool OnPreKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent &event, MSG *os_event,
                        bool *is_keyboard_shortcut) override;
     bool OnKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent &event, MSG *os_event) override;
+
+    // IPC
+    bool OnProcessMessageReceived(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefProcessId source_process,
+                                  CefRefPtr<CefProcessMessage> message) override;
 private:
     Delegate *m_delegate;
 IMPLEMENT_REFCOUNTING(CefHandler);

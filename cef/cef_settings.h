@@ -35,7 +35,7 @@ public:
     static int persist_session_cookies;
     static int persist_user_preferences;
     static CefString locale;
-    static uint remote_debugging_port;
+    static int remote_debugging_port;
     static cef_color_t background_color;
     static CefString accept_language_list;
 };

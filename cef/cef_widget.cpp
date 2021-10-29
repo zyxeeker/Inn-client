@@ -14,6 +14,7 @@
 #include <WinUser.h>
 #include <include/wrapper/cef_helpers.h>
 
+static int mp = 0;
 
 CefWidget::CefWidget(QWidget *parent) : QWidget(parent) {
     std::string url = "www.google.com";
@@ -36,7 +37,8 @@ bool CefWidget::CreateBrowser(const CefRect &rect, const CefBrowserSettings &set
                               CefRefPtr<CefDictionaryValue> extra_info, CefRefPtr<CefRequestContext> request_context) {
     RECT pRect = {rect.x, rect.y, rect.x + rect.width, rect.y + rect.height};
     m_info.SetAsChild((CefWindowHandle) m_window->winId(), pRect);
-    return CefBrowserHost::CreateBrowser(m_info, m_handler, "chrome://version", settings,
+    return CefBrowserHost::CreateBrowser(m_info, m_handler, "file:///D:/program/Inn-client/src/app/dist/index.html",
+                                         settings,
                                          extra_info, request_context);
 }
 
@@ -87,6 +89,16 @@ bool CefWidget::BrowserKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent
     if (event.modifiers == EVENTFLAG_NONE && event.windows_key_code == VK_F12 && event.type == KEYEVENT_RAWKEYDOWN)
             emit OpenDevTools();
     return false;
+}
+
+bool CefWidget::BrowserMessageEvent(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame,
+                                    CefProcessId source_process, CefRefPtr<CefProcessMessage> message) {
+#if 1
+    qInfo() << QString(message->GetName().ToString().c_str());
+#endif
+}
+
+void CefWidget::SendData() {
 }
 
 CefDevTools::CefDevTools(CefRefPtr<CefBrowser> browser) : m_targetBrowser(browser) {

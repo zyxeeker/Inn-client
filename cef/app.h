@@ -7,7 +7,9 @@
 
 #include <include/cef_app.h>
 #include <include/wrapper/cef_helpers.h>
+#include <include/cef_frame.h>
 #include "cef_handler.h"
+#include "cef_v8_handler.h"
 
 class App : public CefApp, public CefBrowserProcessHandler, public CefRenderProcessHandler {
 public:
@@ -25,6 +27,7 @@ public:
                           CefRefPtr<CefV8Context> context) override;
 
 private:
+    CefRefPtr<CefV8Handler> m_v8Handler;
     // Include the default reference counting implementation.
 IMPLEMENT_REFCOUNTING(App);
 

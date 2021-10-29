@@ -13,7 +13,6 @@
 #include <QMenu>
 #include <QVBoxLayout>
 
-
 class CefWidget : public QWidget, public Delegate {
 Q_OBJECT
 public:
@@ -29,6 +28,9 @@ public:
     bool BrowserPreKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent &event, MSG *os_event,
                             bool *is_keyboard_shortcut) override;
     bool BrowserKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent &event, MSG *os_event) override;
+//    PIC
+    bool BrowserMessageEvent(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefProcessId source_process,
+                             CefRefPtr<CefProcessMessage> message) override;
 
     CefRefPtr<CefBrowser> GetInstance() { return m_browser; }
 protected:
@@ -52,6 +54,8 @@ private:
     QRect m_rect;
     CefWindowHandle m_winHandle;
     bool m_createMark = false;
+public slots:
+    void SendData();
 signals:
     void OpenDevTools();
 };
@@ -70,6 +74,9 @@ public:
     bool BrowserPreKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent &event, MSG *os_event,
                             bool *is_keyboard_shortcut) { return false; }
     bool BrowserKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent &event, MSG *os_event) { return false; }
+//    IPC
+    bool BrowserMessageEvent(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefProcessId source_process,
+                             CefRefPtr<CefProcessMessage> message) override { return false; }
 protected:
     void resizeEvent(QResizeEvent *event) override;
 private:

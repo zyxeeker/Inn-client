@@ -31,3 +31,9 @@ bool CefHandler::OnKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent &ev
     m_delegate->BrowserKeyEvent(browser, event, os_event);
     return false;
 }
+
+bool CefHandler::OnProcessMessageReceived(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame,
+                                          CefProcessId source_process, CefRefPtr<CefProcessMessage> message) {
+    m_delegate->BrowserMessageEvent(browser, frame, source_process, message);
+    return true;
+}

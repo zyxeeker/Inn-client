@@ -23,9 +23,20 @@ void App::OnBeforeCommandLineProcessing(const CefString &process_type, CefRefPtr
 
 void App::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context) {
     // The var type can accept all object or variable
-    CefRefPtr<CefV8Value> window = context->GetGlobal();
+    CefRefPtr<CefV8Value> pWindow = context->GetGlobal();
 
     // bind value into window[or you can bind value into window sub node]
-    CefRefPtr<CefV8Value> strValue = CefV8Value::CreateString("say yes");
-    window->SetValue("val", strValue, V8_PROPERTY_ATTRIBUTE_NONE);
+    m_v8Handler = new AppV8Handler(browser);
+
+//    pWindow->SetValue("MsgHandler",
+//                     CefV8Value::CreateFunction("MsgHandler", m_V8Handler),
+//                     V8_PROPERTY_ATTRIBUTE_NONE);
+    CefRefPtr<CefV8Value> func = CefV8Value::CreateFunction("MsgHandler", m_v8Handler);
+    pWindow->SetValue("MsgHandler", func, V8_PROPERTY_ATTRIBUTE_NONE);
+
+//    CefRefPtr<CefV8Value> strValue = CefV8Value::CreateString("say yes");
+//    pWindow->SetValue("val", strValue, V8_PROPERTY_ATTRIBUTE_NONE);
+//    CefRefPtr<CefFrame> pFrame = browser->GetMainFrame();
+//    frame->ExecuteJavaScript("alert('asasas');",frame->GetURL(), 0);
+
 }

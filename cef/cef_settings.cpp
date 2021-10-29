@@ -33,7 +33,7 @@ int AppSettings::persist_user_preferences = 1;
 
 CefString AppSettings::locale;
 
-uint AppSettings::remote_debugging_port = 12355;
+int AppSettings::remote_debugging_port = 12355;
 
 cef_color_t AppSettings::background_color;
 
