@@ -17,16 +17,14 @@
   </qresource>
   <qresource prefix="main"/>
   <qresource prefix="nav">
-    <file>resource/setting.svg</file>
-    <file>resource/setting_checked.svg</file>
-    <file>resource/home.svg</file>
-    <file>resource/home_checked.svg</file>
-    <file>resource/group.svg</file>
-    <file>resource/group_checked.svg</file>
-    <file>resource/people.svg</file>
-    <file>resource/people_checked.svg</file>
-    <file>resource/live.svg</file>
-    <file>resource/live_checked.svg</file>
+      <file>resource/setting.svg</file>
+      <file>resource/setting_checked.svg</file>
+      <file>resource/home.svg</file>
+      <file>resource/home_checked.svg</file>
+      <file>resource/chat.svg</file>
+      <file>resource/chat_checked.svg</file>
+      <file>resource/live.svg</file>
+      <file>resource/live_checked.svg</file>
   </qresource>
   <qresource prefix="common">
     <file>resource/hide.svg</file>

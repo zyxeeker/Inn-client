@@ -45,7 +45,8 @@ struct NET_SERVICE {
         LOGIN_REQ,
         REG_REQ,
         LOGOUT_REQ,
-        HEART_BEAT
+        HEART_BEAT,
+        MSG_REQ
     };
     enum HB_OP {
         TIMER_INIT,
@@ -90,7 +91,7 @@ enum WINDOW_STATE {
 
 enum NAVIGATION {
     HOME,
-    GROUP,
+    CHAT,
     STREAM,
     SETTING,
     EXIT

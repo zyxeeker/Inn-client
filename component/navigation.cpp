@@ -15,8 +15,7 @@
 Navigation::Navigation(QWidget *parent) : QWidget(parent) {
     m_layout = new QVBoxLayout(this);
     m_homeBtn = new QPushButton(this);
-    m_singleChatBtn = new QPushButton(this);
-    m_groupChatBtn = new QPushButton(this);
+    m_chatBtn = new QPushButton(this);
     m_streamBtn = new QPushButton(this);
     m_settingBtn = new QPushButton(this);
     m_exitBtn = new QPushButton(this);
@@ -26,11 +25,8 @@ Navigation::Navigation(QWidget *parent) : QWidget(parent) {
     connect(m_homeBtn, &QPushButton::clicked, this, [=] {
         emit SwitchNav(HOME);
     });
-//    connect(m_singleChatBtn,&QPushButton::clicked,this,[=]{
-//        emit SwitchNav(HOME);
-//    });
-    connect(m_groupChatBtn, &QPushButton::clicked, this, [=] {
-        emit SwitchNav(GROUP);
+    connect(m_chatBtn, &QPushButton::clicked, this, [=] {
+        emit SwitchNav(CHAT);
     });
 //    connect(m_streamBtn,&QPushButton::clicked,this,[=]{
 //        emit SwitchNav(STREAM);
@@ -47,8 +43,7 @@ void Navigation::InitUi() {
     m_layout->setSpacing(0);
     m_layout->setContentsMargins(0, 0, 0, 0);
     m_layout->addWidget(m_homeBtn);
-    m_layout->addWidget(m_singleChatBtn);
-    m_layout->addWidget(m_groupChatBtn);
+    m_layout->addWidget(m_chatBtn);
     m_layout->addWidget(m_streamBtn);
     m_layout->addWidget(m_settingBtn);
     m_layout->addItem(m_uSpacer);
@@ -57,9 +52,7 @@ void Navigation::InitUi() {
     m_layout->setSpacing(0);
     m_layout->setContentsMargins(0, 0, 0, 0);
     Utils::InitBtn(m_homeBtn, 50, 20, NAV_STYLE_1, ":/nav/resource/home.svg", ":/nav/resource/home_checked.svg");
-    Utils::InitBtn(m_singleChatBtn, 50, 20, NAV_STYLE_1, ":/nav/resource/people.svg",
-                   ":/nav/resource/people_checked.svg");
-    Utils::InitBtn(m_groupChatBtn, 50, 20, NAV_STYLE_1, ":/nav/resource/group.svg", ":/nav/resource/group_checked.svg");
+    Utils::InitBtn(m_chatBtn, 50, 20, NAV_STYLE_1, ":/nav/resource/chat.svg", ":/nav/resource/chat_checked.svg");
     Utils::InitBtn(m_streamBtn, 50, 20, NAV_STYLE_1, ":/nav/resource/live.svg", ":/nav/resource/live_checked.svg");
     Utils::InitBtn(m_settingBtn, 50, 20, NAV_STYLE_1, ":/nav/resource/setting.svg",
                    ":/nav/resource/setting_checked.svg");

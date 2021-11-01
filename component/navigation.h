@@ -19,8 +19,7 @@ private:
 private:
     QVBoxLayout *m_layout;
     QPushButton *m_homeBtn;
-    QPushButton *m_singleChatBtn;
-    QPushButton *m_groupChatBtn;
+    QPushButton *m_chatBtn;
     QPushButton *m_streamBtn;
     QPushButton *m_settingBtn;
     QPushButton *m_exitBtn;

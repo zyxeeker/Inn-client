@@ -100,7 +100,7 @@ void MainWindow::SwitchNav(NAVIGATION nav) {
         case HOME:
             m_stackedContent->setCurrentIndex(0);
             break;
-        case GROUP:
+        case CHAT:
             m_stackedContent->setCurrentIndex(1);
             break;
         case EXIT:
