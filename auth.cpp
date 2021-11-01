@@ -8,30 +8,32 @@
 #define LOGIN_RESULT_SUC "Login success!"
 #define LOGIN_RESULT_FAIL "Login failed!"
 
-Auth::Auth(Inn::NetConnService *s) : m_netService(s) {
+Auth::Auth(Inn::NetConnService *s, QWidget *parent) : m_netService(s), BorderlessWindow(parent) {
+    m_centerWidget = new QWidget(this);
+    m_centerLayout = new QVBoxLayout(m_centerWidget);
+
+    m_bar = new AbstractTitleBar(this, true);
     m_title = new QWidget(this);
-    m_content = new QWidget(this);
+    m_titleLayout = new QHBoxLayout(m_title);
+
+    m_content = new QWidget(m_centerWidget);
+    m_contentLayout = new QHBoxLayout(m_content);
     m_user = new QLineEdit(m_content);
     m_pwd = new QLineEdit(m_content);
     m_uLabel = new QLabel(m_content);
     m_pLabel = new QLabel(m_content);
     m_slogan = new QLabel(m_content);
-    m_titleLabel = new QLabel(m_content);
     m_notification = new QLabel(m_content);
     m_loginBtn = new QPushButton(m_content);
     m_quitBtn = new QPushButton(m_content);
     m_registerBtn = new QPushButton(m_content);
     m_forgetBtn = new QPushButton(m_content);
     m_remember = new QCheckBox(m_content);
-    m_minBtn = new QPushButton(m_title);
-    m_closeBtn = new QPushButton(m_title);
-    m_titleLayout = new QHBoxLayout(m_title);
+
     m_forgetLayout = new QHBoxLayout();
     m_regLayout = new QHBoxLayout();
-    m_mainLayout = new QVBoxLayout(this);
     m_layout = new QVBoxLayout();
     m_layout_1 = new QHBoxLayout();
-    m_contentLayout = new QHBoxLayout(m_content);
     m_rLayout = new QVBoxLayout();
     m_lHSpacer = new QSpacerItem(430, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
     m_tVSpacer = new QSpacerItem(0, 120, QSizePolicy::Minimum, QSizePolicy::Maximum);
@@ -39,70 +41,40 @@ Auth::Auth(Inn::NetConnService *s) : m_netService(s) {
     m_bVSpacer = new QSpacerItem(0, 120, QSizePolicy::Expanding, QSizePolicy::Minimum);
     m_fSpacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     m_regSpacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    InitUi();
-    setWindowFlag(Qt::FramelessWindowHint);
-    setAttribute(Qt::WA_TranslucentBackground, true);
-}
 
-void Auth::InitUi() {
+    InitUi();
+    InitTitleBar();
+    InitContent();
+
+    this->setAttribute(Qt::WA_TranslucentBackground, true);
     this->setMaximumSize(700, 500);
     this->setMinimumSize(700, 500);
-    this->setObjectName("bk");
-    this->setStyleSheet("#bk{background:black;}QWidget:focus{outline: none;}");
-    m_mainLayout->addWidget(m_title);
-    m_mainLayout->addWidget(m_content);
-    m_mainLayout->setContentsMargins(0, 0, 0, 0);
-    m_mainLayout->setSpacing(0);
-    InitTitle();
-    InitContent();
+
     connect(m_loginBtn, &QPushButton::clicked, this, &Auth::onReceiveUserInfo);
     connect(m_netService, &Inn::NetConnService::ReqResult, this, &Auth::onReceiveReqResult);
     connect(m_quitBtn, &QPushButton::clicked, [=]() {
         this->close();
         emit ClientQuit();
     });
-    connect(m_minBtn, &QPushButton::clicked, this, &QWidget::showMinimized);
-    connect(m_closeBtn, &QPushButton::clicked, this, [=]() {
-        this->hide();
-    });
+    connect(m_bar, &AbstractTitleBar::SwitchWindow, this, &Auth::SwitchWindow);
 }
 
-void Auth::InitTitle() {
-    m_title->setObjectName("title");
-    m_title->setMaximumSize(700, 30);
-    m_title->setMinimumSize(700, 30);
-    m_title->setStyleSheet("#title{background-color: rgb(36, 36, 36);"
-                           "border-top-right-radius:2px;border-top-left-radius:2px;}");
-    m_titleLayout->setContentsMargins(5, 0, 0, 0);
+void Auth::InitUi() {
+    this->setObjectName("bk");
+    this->setStyleSheet("#bk{background:black;}QWidget:focus{outline: none;}");
+    this->setCentralWidget(m_centerWidget);
+    m_centerLayout->setContentsMargins(0, 0, 0, 0);
+}
+
+void Auth::InitTitleBar() {
+    m_titleLayout->setContentsMargins(0, 0, 0, 0);
     m_titleLayout->setSpacing(0);
-    m_titleLayout->addWidget(m_titleLabel);
-    m_titleLayout->addWidget(m_minBtn);
-    m_titleLayout->addWidget(m_closeBtn);
-
-    m_minBtn->setMinimumSize(30, 30);
-    m_minBtn->setMaximumSize(30, 30);
-    m_closeBtn->setMinimumSize(30, 30);
-    m_closeBtn->setMaximumSize(30, 30);
-    m_minBtn->setStyleSheet("QPushButton{border-top-right-radius:2px;background-color:rgba(65, 65, 65, 120);}"
-                            "QPushButton:hover {background-color:rgba(65, 65, 65, 200);color:white;}"
-                            "QPushButton:pressed {background-color:rgb(65, 65, 65);}");
-    m_closeBtn->setStyleSheet("QPushButton{border-top-right-radius:2px;background-color:rgb(167, 35, 58);}"
-                              "QPushButton:hover {background-color:rgba(205, 45, 75, 240);color:white;}"
-                              "QPushButton:pressed {background-color:rgb(205, 45, 75);}");
-    m_titleLabel->setText("Inn");
-    m_titleLabel->setStyleSheet("font-family:'Microsoft YaHei UI';font-size:13px;color:lightgray;");
-
-    m_closeBtn->setIcon(QIcon(QPixmap(":/common/resource/close.svg")));
-    m_closeBtn->setIconSize(QSize(15, 15));
-
-    m_minBtn->setIcon(QIcon(QPixmap(":/common/resource/hide.svg")));
-    m_minBtn->setIconSize(QSize(15, 15));
-
-    m_closeBtn->setCursor(Qt::PointingHandCursor);
-    m_minBtn->setCursor(Qt::PointingHandCursor);
+    m_titleLayout->addWidget(m_bar);
+    this->layout()->setMenuBar(m_title);
 }
 
 void Auth::InitContent() {
+    m_centerLayout->addWidget(m_content);
     QString pLabelStyle = "color:white;font-family:'Microsoft YaHei UI';font-size:12px;";
     QString pStyleSheet = "QLineEdit{" + pLabelStyle +
                           "font-size:14px;border-radius:2px;padding:5px;border:1px solid rgb(48, 48, 48);"
@@ -114,11 +86,9 @@ void Auth::InitContent() {
                                                        "QPushButton:disabled {color:lightgray;}";
 
     m_content->setObjectName("content");
-    m_content->setStyleSheet("#content{background-image: url(:/auth/resource/bk.png);"
-                             "border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;}");
-    m_content->setMaximumSize(700, 500);
-    m_content->setMinimumSize(700, 500);
+    m_content->setStyleSheet("#content{background-image: url(:/auth/resource/bk.png);}");
 
+    m_contentLayout->setContentsMargins(0, 80, 30, 0);
     m_contentLayout->addItem(m_lHSpacer);
     m_contentLayout->addLayout(m_layout);
     m_contentLayout->addItem(m_rHSpacer);
@@ -213,26 +183,24 @@ void Auth::InitContent() {
 
 }
 
-void Auth::mousePressEvent(QMouseEvent *e) {
-    if (e->button() == Qt::LeftButton) {
-        m_mousePosition = e->pos();
-        if (m_mousePosition.x() <= m_titleXMin) return;
-        if (m_mousePosition.x() >= m_titleXMax) return;
-        if (m_mousePosition.y() <= m_titleYMin) return;
-        if (m_mousePosition.y() >= m_titleYMax) return;
-        m_mousePress = true;
-    }
+bool Auth::HitArea(const QPoint &gPos) {
+    return m_bar->HitArea(gPos);
 }
 
-void Auth::mouseMoveEvent(QMouseEvent *e) {
-    if (m_mousePress) {
-        QPoint position = e->globalPos();
-        this->move(position - m_mousePosition);
+void Auth::mousePressEvent(QMouseEvent *event) {
+#ifdef Q_OS_WIN
+    QRect dragRecet(m_bar->rect().x(),
+                    m_bar->rect().y(),
+                    m_bar->rect().width(),
+                    m_bar->rect().height());
+    if (dragRecet.contains(event->pos()) && event->button() == Qt::LeftButton) {
+        if (::ReleaseCapture()) {
+            SendMessage((HWND) this->winId(), WM_SYSCOMMAND, SC_MOVE + HTCAPTION, 0);
+            event->ignore();
+        }
     }
-}
-
-void Auth::mouseReleaseEvent(QMouseEvent *e) {
-    m_mousePress = false;
+#endif
+    BorderlessWindow::mousePressEvent(event);
 }
 
 void Auth::onReceiveUserInfo() {
@@ -252,5 +220,16 @@ void Auth::onReceiveReqResult(NET_SERVICE::REQ_RESULT result) {
     else if (result == NET_SERVICE::LOGIN_SUC) {
         m_pwd->clear();
         emit LoginSuccess();
+    }
+}
+
+void Auth::SwitchWindow(WINDOW_STATE st) {
+    switch (st) {
+        case WINDOW_CLOSE:
+            this->hide();
+            break;
+        case WINDOW_MIN:
+            this->showMinimized();
+            break;
     }
 }

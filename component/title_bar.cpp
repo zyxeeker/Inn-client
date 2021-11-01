@@ -5,15 +5,15 @@
 #include "title_bar.h"
 #include "model/utils.h"
 
-#define TITLE_STYLE_1 "QPushButton{border-radius:none;background-color:rgba(65, 65, 65, 120);}"\
+#define TITLE_STYLE_1 "QPushButton{border-radius:none;}"\
                     "QPushButton:hover {background-color:rgba(65, 65, 65, 200);}"\
                     "QPushButton:pressed {background-color:rgb(65, 65, 65);}"
-#define TITLE_STYLE_2 "QPushButton{border-radius:none;background-color:rgba(65, 65, 65, 120);}"\
-                    "QPushButton:hover {background-color:rgba(205, 45, 75, 240);color:white;}"\
+#define TITLE_STYLE_2 "QPushButton{border-radius:none;}"\
+                    "QPushButton:hover {background-color:rgba(205, 45, 75, 240);}"\
                     "QPushButton:pressed {background-color:rgb(205, 45, 75);}"
 
 
-AbstractTitleBar::AbstractTitleBar(QWidget *parent) : QWidget(parent) {
+AbstractTitleBar::AbstractTitleBar(QWidget *parent, bool isAuth) : QWidget(parent), m_isAuth(isAuth) {
     m_layout = new QHBoxLayout(this);
     m_closeBtn = new QPushButton(this);
     m_minBtn = new QPushButton(this);
@@ -25,32 +25,35 @@ AbstractTitleBar::AbstractTitleBar(QWidget *parent) : QWidget(parent) {
     connect(m_minBtn, &QPushButton::clicked, this, [=]() {
         emit SwitchWindow(WINDOW_MIN);
     });
-    connect(m_maximizedBtn, &QPushButton::clicked, this, [=]() {
-        if (m_maximized)
-                emit SwitchWindow(WINDOW_NORMAL);
-        else
-                emit SwitchWindow(WINDOW_MAX);
-    });
+    if (!m_isAuth)
+        connect(m_maximizedBtn, &QPushButton::clicked, this, [=]() {
+            if (m_maximized)
+                    emit SwitchWindow(WINDOW_NORMAL);
+            else
+                    emit SwitchWindow(WINDOW_MAX);
+        });
     connect(m_closeBtn, &QPushButton::clicked, this, [=]() {
         emit SwitchWindow(WINDOW_CLOSE);
     });
 }
 
 void AbstractTitleBar::InitUi() {
-    this->setMinimumSize(800, 25);
+    this->setMinimumHeight(25);
     this->setMaximumHeight(25);
     this->setStyleSheet("background:black;");
     m_layout->setContentsMargins(5, 0, 0, 0);
     m_layout->addWidget(m_name);
     m_layout->addItem(m_titleSpacer);
     m_layout->addWidget(m_minBtn);
-    m_layout->addWidget(m_maximizedBtn);
+    if (!m_isAuth) {
+        m_layout->addWidget(m_maximizedBtn);
+        Utils::InitBtn(m_maximizedBtn, 25, 15, TITLE_STYLE_1, ":/common/resource/max.svg", ":/common/resource/min.svg");
+    }
     m_layout->addWidget(m_closeBtn);
     m_layout->setSpacing(0);
     m_name->setText("Inn");
     m_name->setStyleSheet("font-family:'Microsoft YaHei UI';font-size:13px;color:lightgray;");
     Utils::InitBtn(m_minBtn, 25, 15, TITLE_STYLE_1, ":/common/resource/hide.svg");
-    Utils::InitBtn(m_maximizedBtn, 25, 15, TITLE_STYLE_1, ":/common/resource/max.svg", ":/common/resource/min.svg");
     Utils::InitBtn(m_closeBtn, 25, 15, TITLE_STYLE_2, ":/common/resource/close.svg");
 }
 

@@ -16,52 +16,53 @@
 #include <QVBoxLayout>
 #include <QMoveEvent>
 #include <QSystemTrayIcon>
+#include <windows.h>
 #include "service/net_conn_service.h"
+#include "component/borderless_window.h"
+#include "component/title_bar.h"
+#include "model/define.h"
 
-class Auth : public QWidget {
-    Q_OBJECT
+class Auth : public BorderlessWindow {
+Q_OBJECT
 public:
-    Auth(Inn::NetConnService *s);
+    Auth(Inn::NetConnService *s, QWidget *parent = nullptr);
+    bool HitArea(const QPoint &gPos) override;
 private:
     void InitUi();
-    void InitTitle();
+    void InitTitleBar();
     void InitContent();
 protected:
-    void mousePressEvent(QMouseEvent *e);
-    void mouseMoveEvent(QMouseEvent *e);
-    void mouseReleaseEvent(QMouseEvent *e);
+    void mousePressEvent(QMouseEvent *event) override;
 private:
     Inn::NetConnService *m_netService;
-    const int m_titleXMin = 0;
-    const int m_titleYMin = 0;
-    const int m_titleXMax = 700;
-    const int m_titleYMax = 30;
-    bool m_mousePress;
-    QPoint m_mousePosition;
+    AbstractTitleBar *m_bar;
+
+    QWidget *m_centerWidget;
+    QWidget *m_title;
+    QWidget *m_content;
+
     QLineEdit *m_user;
     QLineEdit *m_pwd;
     QLabel *m_uLabel;
     QLabel *m_pLabel;
-    QLabel *m_titleLabel;
     QLabel *m_slogan;
     QLabel *m_notification;
     QPushButton *m_loginBtn;
     QPushButton *m_quitBtn;
-    QPushButton *m_minBtn;
-    QPushButton *m_closeBtn;
+
     QPushButton *m_registerBtn;
     QPushButton *m_forgetBtn;
     QCheckBox *m_remember;
-    QWidget *m_title;
-    QWidget *m_content;
+
+    QVBoxLayout *m_centerLayout;
     QHBoxLayout *m_titleLayout;
     QHBoxLayout *m_layout_1;
     QHBoxLayout *m_contentLayout;
     QHBoxLayout *m_forgetLayout;
     QHBoxLayout *m_regLayout;
-    QVBoxLayout *m_mainLayout;
     QVBoxLayout *m_layout;
     QVBoxLayout *m_rLayout;
+
     QSpacerItem *m_lHSpacer;
     QSpacerItem *m_rHSpacer;
     QSpacerItem *m_tVSpacer;
@@ -74,6 +75,7 @@ signals:
 private slots:
     void onReceiveUserInfo();
     void onReceiveReqResult(NET_SERVICE::REQ_RESULT);
+    void SwitchWindow(WINDOW_STATE);
 };
 
 

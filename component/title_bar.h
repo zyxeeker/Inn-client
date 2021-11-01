@@ -14,7 +14,7 @@
 class AbstractTitleBar : public QWidget {
 Q_OBJECT
 public:
-    AbstractTitleBar(QWidget *parent = nullptr);
+    AbstractTitleBar(QWidget *parent = nullptr, bool isAuth = false);
     void InitUi();
     bool HitArea(const QPoint &gPos);
 private:
@@ -28,6 +28,7 @@ private:
     QSpacerItem *m_titleSpacer;
     QPoint m_pos;
     bool m_maximized = false;
+    bool m_isAuth;
 public slots:
     void SetMaximizedState(bool);
 signals:
