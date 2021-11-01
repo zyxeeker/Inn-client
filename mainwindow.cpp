@@ -17,7 +17,7 @@ MainWindow::MainWindow(Inn::NetConnService *s, QWidget *parent) : m_netService(s
     m_title = new QWidget(this);
     m_titleLayout = new QVBoxLayout(m_title);
     m_overview = new Overview(s->GetUser(), m_stackedContent);
-    m_chatRoom = new GroupChatRoom;
+    m_chatRoom = new ChatRoom;
 
     InitUi();
     InitTitleBar();

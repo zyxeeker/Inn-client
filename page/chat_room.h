@@ -10,44 +10,30 @@
 #include <QVBoxLayout>
 #include <QSplitter>
 #include <QScrollArea>
-#include "./component/text_editor.h"
-#include "./component/chat_content.h"
-#include "./component/smooth_scroll_area.h"
-#include "./component/user.h"
-#include "./component/control_panel.h"
+#include <QResizeEvent>
+#include "component/smooth_scroll_area.h"
+#include "component/control_panel.h"
 #include "cef/cef_widget.h"
 
-
-class AbstractChatRoom : public QWidget {
+class NavItem : public QPushButton {
 Q_OBJECT
 public:
-    AbstractChatRoom();
-
+    NavItem(QWidget *parent = nullptr);
 protected:
-    QHBoxLayout *m_layout;
-    QSplitter *m_splitter;
-    QWidget *m_chatInputArea;
-    TextEditor *m_chatInput;
-    QHBoxLayout *m_chatInputLayout;
-    SmoothScrollArea *m_chatContentViewArea;
-    QVBoxLayout *m_chatContentLayout;
-};
-
-class SingleChatRoom : public AbstractChatRoom {
-public:
-    SingleChatRoom();
-
+    void resizeEvent(QResizeEvent *event) override;
 private:
-    void Init();
+    QLabel *m_icon;
+    QLabel *m_name;
+    QHBoxLayout *m_layout;
 };
 
-class GroupChatRoom : public AbstractChatRoom {
+class ChatRoom : public QWidget {
+Q_OBJECT
 public:
-    GroupChatRoom();
+    ChatRoom(QWidget *parent = nullptr);
 private:
     ControlPanel *m_cPanel;
     QSplitter *m_hSplitter;
-    SmoothScrollArea *m_userListArea;
     QVBoxLayout *m_listLayout;
     SmoothScrollArea *m_navigation;
     QVBoxLayout *m_navigationLayout;

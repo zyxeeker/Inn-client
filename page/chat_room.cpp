@@ -5,45 +5,41 @@
 #include "chat_room.h"
 #include <QDebug>
 
-AbstractChatRoom::AbstractChatRoom() {
-    m_layout = new QHBoxLayout;
-    m_splitter = new QSplitter;
-    m_chatInputArea = new QWidget;
-    m_chatInput = new TextEditor;
-    m_chatInputLayout = new QHBoxLayout;
-    m_chatContentViewArea = new SmoothScrollArea;
-    m_chatContentLayout = new QVBoxLayout;
+NavItem::NavItem(QWidget *parent) : QPushButton(parent) {
+    m_icon = new QLabel(this);
+    m_name = new QLabel(this);
+    m_layout = new QHBoxLayout(this);
 
-    m_chatContentLayout->setAlignment(Qt::AlignTop);
-    m_chatContentViewArea->SetContentLayout(m_chatContentLayout);
+    this->setCheckable(true);
+    this->setAutoExclusive(true);
+    this->setMinimumHeight(50);
+    this->setMaximumHeight(50);
+    this->setStyleSheet("QPushButton{border-radius:2px;background-color:rgb(36, 36, 36);color:white;}\n"
+                        "QPushButton:hover {background-color:rgb(52, 52, 52);}QPushButton:pressed {background-color:rgb(52, 52, 52);}\n"
+                        "QPushButton:checked {background-color:rgb(52, 52, 52);}");
 
-    m_chatInputLayout->addWidget(m_chatInput);
-    m_chatInputLayout->setContentsMargins(0, 0, 0, 0);
-    m_chatInputArea->setLayout(m_chatInputLayout);
-    m_chatInputArea->setStyleSheet("background:rgb(28,30,39);");
+    m_icon->setMaximumSize(40, 40);
+    m_icon->setMinimumSize(40, 40);
+    m_icon->setPixmap(QPixmap(QString::fromUtf8(":/common/resource/patchNote.png")));
+    m_icon->setScaledContents(true);
+    m_icon->setStyleSheet("background:transparent;padding:5px;");
 
-    m_splitter->setOrientation(Qt::Vertical);
-    m_splitter->addWidget(m_chatContentViewArea);
-    m_splitter->addWidget(m_chatInputArea);
-    m_splitter->setHandleWidth(1);
-    m_splitter->setStyleSheet("QSplitter::handle{background-color: rgb(59,59,59);}");
+    m_name->setMaximumHeight(40);
+    m_name->setMinimumHeight(40);
+    m_name->setMinimumWidth(0);
+    m_name->setStyleSheet("background:transparent;color:white;font-family:'Microsoft YaHei UI';font-size:12px;");
 
-    m_layout->addWidget(m_splitter);
-    m_layout->setContentsMargins(0, 0, 0, 0);
+    m_layout->addWidget(m_icon);
+    m_layout->addWidget(m_name);
+    m_layout->setContentsMargins(4, 4, 4, 4);
 }
 
-SingleChatRoom::SingleChatRoom() {
-    Init();
-
+void NavItem::resizeEvent(QResizeEvent *event) {
+    m_name->setText(Utils::ElideText(m_name, "DEV HOME"));
 }
 
-void SingleChatRoom::Init() {
-    this->setLayout(m_layout);
-}
-
-GroupChatRoom::GroupChatRoom() {
+ChatRoom::ChatRoom(QWidget *parent) : QWidget(parent) {
     m_hSplitter = new QSplitter;
-    m_userListArea = new SmoothScrollArea;
     m_listLayout = new QVBoxLayout;
     m_gLayout = new QHBoxLayout;
     m_navigationLayout = new QVBoxLayout;
@@ -56,19 +52,19 @@ GroupChatRoom::GroupChatRoom() {
     m_appLayout = new QHBoxLayout(m_app);
 
     m_navigationLayout->setAlignment(Qt::AlignTop);
-    m_navigation->setLayout(m_navigationLayout);
-//    m_navigation->setStyleSheet("background:white;");
+    m_navigationLayout->setContentsMargins(0, 0, 3, 0);
+    m_navigationLayout->setSpacing(2);
+    m_navigation->SetContentLayout(m_navigationLayout);
     m_sideLayout->addWidget(m_navigation);
     m_sideLayout->addWidget(m_cPanel);
     m_sideLayout->setSpacing(0);
     m_sideLayout->setContentsMargins(0, 0, 0, 0);
-//    m_leftSide->setMaximumWidth(180);
-    m_leftSide->setMinimumWidth(180);
+    m_leftSide->setMaximumWidth(180);
+    m_leftSide->setMinimumWidth(56);
     m_leftSide->setLayout(m_sideLayout);
     m_appLayout->setContentsMargins(0, 0, 0, 0);
 
     m_listLayout->setAlignment(Qt::AlignTop);
-    m_userListArea->SetContentLayout(m_listLayout);
     m_hSplitter->setOrientation(Qt::Horizontal);
     m_hSplitter->addWidget(m_leftSide);
     m_appLayout->addWidget(m_cef);
@@ -79,4 +75,7 @@ GroupChatRoom::GroupChatRoom() {
     m_gLayout->setSpacing(0);
     m_gLayout->setContentsMargins(0, 0, 0, 0);
     this->setLayout(m_gLayout);
+    for (int i = 0; i < 50; ++i) {
+        m_navigationLayout->addWidget(new NavItem);
+    }
 }

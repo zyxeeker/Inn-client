@@ -11,6 +11,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QWidgetAction>
+#include <QResizeEvent>
 
 #ifdef Q_OS_WIN
 
@@ -25,14 +26,15 @@ class ControlPanel : public QWidget {
 Q_OBJECT
 public:
     ControlPanel(QString name);
-
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 private:
     void InitMenu();
-
 private:
     QLabel *m_userIcon;
     QLabel *m_userName;
-    QLabel *m_userStatue;
+    QLabel *m_userStText;
+    QLabel *m_userStIcon;
     QPushButton *m_moreBtn;
     QHBoxLayout *m_layout;
     QVBoxLayout *m_userLayout;
@@ -44,8 +46,12 @@ private:
     QWidget *m_menuContainer;
     QHBoxLayout *m_menuLayout;
     ControlPanelContextMenu *m_menuBody;
-private slots:
+    QString m_st = "ONLINE";
 
+    QPixmap m_online = QPixmap(":/user/resource/online.svg");
+    QPixmap m_busy = QPixmap(":/user/resource/busy.svg");
+    QPixmap m_sleep = QPixmap(":/user/resource/sleep.svg");
+private slots:
     void StatueChanged(int);
 };
 

@@ -3,40 +3,48 @@
 //
 
 #include "control_panel.h"
+#include "service/user_service.h"
+#include "model/utils.h"
+#include <QDebug>
+
+#define FONT_STYLE "color:white;font-family:'Microsoft YaHei UI';font-weight:medium;"
 
 ControlPanel::ControlPanel(QString name) {
-    m_userIcon = new QLabel;
-    m_userName = new QLabel;
-    m_userStatue = new QLabel;
-    m_moreBtn = new QPushButton;
-    m_layout = new QHBoxLayout;
+    m_container = new QWidget(this);
+    m_userIcon = new QLabel(m_container);
+    m_userName = new QLabel(m_container);
+    m_userStText = new QLabel(m_container);
+    m_userStIcon = new QLabel(m_container);
+    m_moreBtn = new QPushButton(m_container);
+    m_containerLayout = new QHBoxLayout(this);
+    m_layout = new QHBoxLayout(m_container);
     m_userLayout = new QVBoxLayout;
-    m_container = new QWidget;
-    m_containerLayout = new QHBoxLayout;
 
     m_userIcon->setMinimumSize(40, 40);
     m_userIcon->setMaximumSize(40, 40);
     m_userIcon->setStyleSheet("border-radius:20px;background:white;");
-    m_userName->setText("TEST TEST TEST");
-    m_userName->setStyleSheet("color:white;font-family:'Microsoft YaHei UI';font-size:14px;font-weight:medium;");
-    m_userStatue->setText("OUTLINE");
-    m_userStatue->setStyleSheet("color:white;font-family:'Microsoft YaHei UI';font-size:10px;font-weight:medium;");
+    m_userName->setStyleSheet(QString(FONT_STYLE) + "font-size:14px;");
+    m_userStText->setStyleSheet(QString(FONT_STYLE) + "font-size:10px;");
+
+    m_userStIcon->setPixmap(m_online);
+    m_userStIcon->setScaledContents(true);
+    m_userStIcon->setGeometry(30, 31, 18, 18);
 
     m_moreBtn->setMaximumSize(30, 30);
     m_moreBtn->setMinimumSize(30, 30);
     m_moreBtn->setIcon(QIcon(":/common/resource/more.svg"));
     m_moreBtn->setIconSize(QSize(22, 22));
     m_moreBtn->setCursor(Qt::PointingHandCursor);
-    m_moreBtn->setStyleSheet(
-            "QPushButton{background:rgb(36, 36, 36);border-radius:6px;}QPushButton:hover{background:rgb(23, 23, 23);}");
+    m_moreBtn->setStyleSheet("QPushButton{background:rgb(36, 36, 36);border-radius:6px;}"
+                             "QPushButton:hover{background:rgb(23, 23, 23);}");
     m_userLayout->addWidget(m_userName);
-    m_userLayout->addWidget(m_userStatue);
+    m_userLayout->addWidget(m_userStText);
     m_userLayout->setContentsMargins(0, 5, 0, 5);
     m_userLayout->setSpacing(1);
     m_layout->addWidget(m_userIcon);
     m_layout->addLayout(m_userLayout);
     m_layout->addWidget(m_moreBtn);
-    m_layout->setContentsMargins(10, 5, 10, 5);
+    m_layout->setContentsMargins(8, 5, 10, 5);
     InitMenu();
     m_container->setObjectName("bk");
     m_container->setLayout(m_layout);
@@ -48,7 +56,7 @@ ControlPanel::ControlPanel(QString name) {
         m_menu->exec(QPoint(QPoint(m_moreBtn->mapToGlobal(QPoint(0, 0)).x(),
                                    m_moreBtn->mapToGlobal(QPoint(0, 0)).y() - 90)));
     });
-    connect(m_menuBody, SIGNAL(StatueChanged(int)), this, SLOT(StatueChanged(int)));
+    connect(m_menuBody, &ControlPanelContextMenu::StatueChanged, this, &ControlPanel::StatueChanged);
 }
 
 void ControlPanel::InitMenu() {
@@ -70,24 +78,40 @@ void ControlPanel::InitMenu() {
     m_menu->setStyleSheet("background:transparent;");
     m_menu->addAction(m_aWidget);
 #ifdef Q_OS_WIN
-    HWND hwnd = reinterpret_cast<HWND>(m_menu->winId());
+    HWND hwnd = (HWND) m_menu->winId();
     DWORD class_style = ::GetClassLong(hwnd, GCL_STYLE);
     class_style &= ~CS_DROPSHADOW;
     ::SetClassLong(hwnd, GCL_STYLE, class_style);
 #endif
 }
 
+void ControlPanel::resizeEvent(QResizeEvent *event) {
+    m_userName->setText(Utils::ElideText(m_userName, QString::fromStdString(UserService::Instance().userName)));
+    m_userStText->setText(Utils::ElideText(m_userStText, m_st));
+    if (event->size().width() <= 90)
+        m_moreBtn->hide();
+    if (event->size().width() > 90)
+        m_moreBtn->show();
+}
+
 void ControlPanel::StatueChanged(int st) {
     switch (st) {
-        case ONLINE:
-            m_userStatue->setText("OUTLINE");
+        case ONLINE: {
+            m_st = "ONLINE";
+            m_userStIcon->setPixmap(m_online);
             break;
-        case BUSY:
-            m_userStatue->setText("BUSY");
+        }
+        case BUSY: {
+            m_st = "BUSY";
+            m_userStIcon->setPixmap(m_busy);
             break;
-        case SLEEP:
-            m_userStatue->setText("SLEEP");
+        }
+        case SLEEP: {
+            m_st = "SLEEP";
+            m_userStIcon->setPixmap(m_sleep);
             break;
+        }
     }
+    m_userStText->setText(m_st);
     m_menu->close();
 }

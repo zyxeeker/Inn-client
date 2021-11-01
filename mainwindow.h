@@ -50,7 +50,7 @@ private:
     QStackedWidget *m_stackedContent;
 
     Overview *m_overview;
-    GroupChatRoom *m_chatRoom;
+    ChatRoom *m_chatRoom;
 //    CefRefPtr<CefClientHandler> simple_handler_;
     Inn::NetConnService *m_netService;
 public slots:

@@ -11,7 +11,7 @@ SmoothScrollArea::SmoothScrollArea() {
     m_content->setStyleSheet("background:rgb(28,30,39);");
     this->setObjectName("QScrollArea");
     this->setStyleSheet("QScrollArea {border:none;}"
-                        "QScrollBar:vertical {border: none;background: rgb(23,23,23);width: 10px;margin: 0px 0 0px 0;}"
+                        "QScrollBar:vertical {border: none;background: rgb(23,23,23);width: 5px;margin: 0px 0 0px 0;}"
                         "QScrollBar::handle:vertical {background: rgb(61,61,61);min-height: 20px;border-radius: 2px;border: none;}"
                         "QScrollBar::add-line:vertical {border: none;background: rgb(0, 0, 0);height: 0px;subcontrol-position: bottom;subcontrol-origin: margin;}"
                         "QScrollBar::sub-line:vertical {border: none;background: rgb(0, 0, 0);height: 0px;subcontrol-position: top;subcontrol-origin: margin;}"
