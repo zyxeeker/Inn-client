@@ -26,6 +26,8 @@ public:
     void OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame,
                           CefRefPtr<CefV8Context> context) override;
 
+    void OnWebKitInitialized() override;
+
 private:
     CefRefPtr<CefV8Handler> m_v8Handler;
     // Include the default reference counting implementation.

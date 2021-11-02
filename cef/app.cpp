@@ -28,15 +28,17 @@ void App::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> fr
     // bind value into window[or you can bind value into window sub node]
     m_v8Handler = new AppV8Handler(browser);
 
-//    pWindow->SetValue("MsgHandler",
-//                     CefV8Value::CreateFunction("MsgHandler", m_V8Handler),
-//                     V8_PROPERTY_ATTRIBUTE_NONE);
     CefRefPtr<CefV8Value> func = CefV8Value::CreateFunction("MsgHandler", m_v8Handler);
+    CefRefPtr<CefV8Value> func1 = CefV8Value::CreateFunction("GetUser", m_v8Handler);
     pWindow->SetValue("MsgHandler", func, V8_PROPERTY_ATTRIBUTE_NONE);
+    pWindow->SetValue("GetUser", func1, V8_PROPERTY_ATTRIBUTE_NONE);
+}
 
-//    CefRefPtr<CefV8Value> strValue = CefV8Value::CreateString("say yes");
-//    pWindow->SetValue("val", strValue, V8_PROPERTY_ATTRIBUTE_NONE);
-//    CefRefPtr<CefFrame> pFrame = browser->GetMainFrame();
-//    frame->ExecuteJavaScript("alert('asasas');",frame->GetURL(), 0);
+void App::OnWebKitInitialized() {
+    std::string extensionCode = "var SetData = function(e){\n"
+                                "    window.user = e;\n"
+                                "}";
+    // Register the extension.
+    CefRegisterExtension("v8/user-center", extensionCode, m_v8Handler);
 
 }

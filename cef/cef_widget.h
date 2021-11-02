@@ -42,11 +42,10 @@ private:
                        CefRefPtr<CefDictionaryValue> extra_info,
                        CefRefPtr<CefRequestContext> request_context);
     void ResizeBrowser(QSize size);
-public:
-//    bool m_isDevToolOpen = false;
 private:
     CefRefPtr<CefBrowser> m_browser;
     CefRefPtr<CefHandler> m_handler;
+    CefRefPtr<CefFrame> m_frame;
     CefWindowInfo m_info;
     QWindow *m_window;
     QVBoxLayout *m_layout;

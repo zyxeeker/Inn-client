@@ -19,6 +19,7 @@ public:
 IMPLEMENT_REFCOUNTING(AppV8Handler);
 private:
     CefRefPtr<CefBrowser> m_browser;
+    CefString m_msgStr;
 };
 
 

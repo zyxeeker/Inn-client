@@ -13,6 +13,7 @@
 #include <QScreen>
 #include <WinUser.h>
 #include <include/wrapper/cef_helpers.h>
+#include "service/user_service.h"
 
 static int mp = 0;
 
@@ -67,6 +68,8 @@ void CefWidget::closeEvent(QCloseEvent *event) {
 void CefWidget::BrowserCreated(CefRefPtr<CefBrowser> browser) {
     m_browser = browser;
     m_winHandle = browser->GetHost()->GetWindowHandle();
+    m_frame = m_browser->GetMainFrame();
+    m_frame->ExecuteJavaScript("SetData('" + UserService::Instance().userName + "');", m_frame->GetURL(), 0);
 }
 
 void CefWidget::BrowserClose(CefRefPtr<CefBrowser> browser) {
@@ -94,6 +97,7 @@ bool CefWidget::BrowserKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent
 bool CefWidget::BrowserMessageEvent(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame,
                                     CefProcessId source_process, CefRefPtr<CefProcessMessage> message) {
 #if 1
+    qInfo() << QString::fromStdString(UserService::Instance().userName);
     qInfo() << QString(message->GetName().ToString().c_str());
 #endif
 }
