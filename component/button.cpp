@@ -3,83 +3,95 @@
 //
 
 #include "button.h"
-#include <QDebug>
 
-OverviewBtn::OverviewBtn(QString url, QString title, QWidget *parent) : m_iconUrl(url), m_titleCtx(title) {
-    Init();
-    InitAnimation();
+AbstractedBtn::AbstractedBtn(QWidget *parent) : QPushButton(parent) {
+    m_shadowEffect = new QGraphicsDropShadowEffect(this);
+    m_shadowEffect->setBlurRadius(45);
+    m_shadowEffect->setXOffset(0);
+    m_shadowEffect->setYOffset(3);
+    this->setGraphicsEffect(m_shadowEffect);
+
+    m_upAnimation = new QPropertyAnimation(m_shadowEffect, "yOffset");
+    m_downAnimation = new QPropertyAnimation(m_shadowEffect, "yOffset");
+
+    m_upAnimation->setEasingCurve(QEasingCurve::OutQuad);
+    m_upAnimation->setDuration(200);
+    m_upAnimation->setEndValue(3);
+
+    m_downAnimation->setEasingCurve(QEasingCurve::OutQuad);
+    m_downAnimation->setDuration(200);
+    m_downAnimation->setEndValue(8);
 }
 
-void OverviewBtn::Init() {
-    m_mainCtx = new QWidget(this);
-    m_effect = new QGraphicsDropShadowEffect(this);
-    m_title = new QLabel(m_mainCtx);
-    m_icon = new QLabel(m_mainCtx);
-    m_layout = new QVBoxLayout(m_mainCtx);
-    m_upAnimation = new QPropertyAnimation(m_mainCtx, "geometry");
-    m_downAnimation = new QPropertyAnimation(m_mainCtx, "geometry");
+LoginBtn::LoginBtn(QWidget *parent) : AbstractedBtn(parent) {
+    m_enterAnimation = new QPropertyAnimation(this,"xBk");
+    m_leaveAnimation = new QPropertyAnimation(this,"xBk");
+    m_shadowEffect->setColor(QColor(121, 74, 255,200));
 
-    m_mainCtx->setGeometry(QRect(10, 10, 150, 150));
-    m_mainCtx->setAttribute(Qt::WA_Hover, true);
-    m_mainCtx->installEventFilter(this);
-    m_mainCtx->setCursor(Qt::PointingHandCursor);
-    m_mainCtx->setObjectName("content");
-    m_mainCtx->setMaximumSize(150, 150);
-    m_mainCtx->setMinimumSize(150, 150);
-    m_mainCtx->setStyleSheet(
-            "#content{border-radius:8px;background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(121, 74, 255, 255), stop:0.59887 rgba(154, 75, 255, 255), stop:1 rgba(174, 76, 255, 255));}");
+    m_enterAnimation->setEasingCurve(QEasingCurve::OutQuad);
+    m_enterAnimation->setDuration(180);
+    m_enterAnimation->setEndValue(150);
 
-    m_iconPx = Utils::LoadSvg(m_iconUrl, 80, 80);
-
-    m_icon->setPixmap(m_iconPx);
-    m_icon->setAlignment(Qt::AlignCenter);
-    m_icon->setMaximumSize(150, 85);
-    m_icon->setMinimumSize(150, 85);
-
-    m_title->setText(m_titleCtx);
-    m_title->setStyleSheet("color:white;font-family:'Microsoft YaHei UI';font-size:18px;");
-    m_title->setAlignment(Qt::AlignCenter);
-
-    m_effect->setOffset(10, 10);
-    m_effect->setColor(QColor(0, 0, 0, 100));
-    m_effect->setBlurRadius(50);
-    m_mainCtx->setGraphicsEffect(m_effect);
-
-    m_layout->addWidget(m_icon);
-    m_layout->addWidget(m_title);
-    m_layout->setContentsMargins(0, 20, 0, 20);
-    m_mainCtx->setLayout(m_layout);
-
+    m_leaveAnimation->setEasingCurve(QEasingCurve::OutQuad);
+    m_leaveAnimation->setDuration(180);
+    m_leaveAnimation->setEndValue(250);
 }
 
-void OverviewBtn::InitAnimation() {
-    m_upAnimation->setEasingCurve(QEasingCurve::InQuad);
-    m_upAnimation->setDuration(100);
-    m_upAnimation->setEndValue(QRect(10, 5, 150, 150));
-
-    m_downAnimation->setEasingCurve(QEasingCurve::InQuad);
-    m_downAnimation->setDuration(100);
-    m_downAnimation->setEndValue(QRect(10, 8, 150, 150));
+void LoginBtn::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    // 设置渐变色,设置起点、终点
+    QLinearGradient linear(0, 50, m_xBk, 50);
+    linear.setColorAt(0, QColor(121, 74, 255));
+    linear.setColorAt(1, QColor(252,145,200));
+    // 设置显示模式
+    linear.setSpread(QGradient::PadSpread);
+    // 设置画笔颜色、宽度
+    painter.setPen(QPen(QColor(255, 255, 255, 0), 1));
+    // 设置画刷填充
+    painter.setBrush(QBrush(linear));
+    // 绘制矩形
+    painter.drawRoundedRect(QRect(0,0,this->width(),this->height()),12,12);
+    // draw text
+    painter.setPen(QPen(QColor(215, 219, 221)));
+    painter.setFont(font());
+    painter.drawText(rect(), Qt::AlignCenter, text());
 }
 
-void OverviewBtn::BtnMoveUp() {
-    m_upAnimation->setStartValue(m_mainCtx->geometry());
-    m_upAnimation->start();
-}
-
-void OverviewBtn::BtnBack2Origin() {
-    m_downAnimation->setStartValue(m_mainCtx->geometry());
+void LoginBtn::enterEvent(QEvent *event){
+    m_isHover = true;
+    m_downAnimation->setStartValue(m_shadowEffect->yOffset());
     m_downAnimation->start();
+    m_enterAnimation->setStartValue(m_xBk);
+    m_enterAnimation->start();
+    QPushButton::enterEvent(event);
 }
 
-bool OverviewBtn::eventFilter(QObject *obj, QEvent *event) {
-    if (obj == m_mainCtx) {
-        if (event->type() == QEvent::HoverEnter)
-            BtnMoveUp();
-        if (event->type() == QEvent::HoverLeave)
-            BtnBack2Origin();
-        if (event->type() == QEvent::MouseButtonRelease)
-                emit OpenPopup();
-    }
-    return QObject::eventFilter(obj, event);
+void LoginBtn::leaveEvent(QEvent *event){
+    m_isHover = false;
+    m_upAnimation->setStartValue(m_shadowEffect->yOffset());
+    m_upAnimation->start();
+    m_leaveAnimation->setStartValue(m_xBk);
+    m_leaveAnimation->start();
+    QPushButton::leaveEvent(event);
+
+}
+
+void LoginBtn::mousePressEvent(QMouseEvent *event){
+    m_isPressed = true;
+    QPushButton::mousePressEvent(event);
+}
+
+void LoginBtn::mouseReleaseEvent(QMouseEvent *event){
+    m_isPressed = false;
+    QPushButton::mouseReleaseEvent(event);
+}
+
+void LoginBtn::setXBk(const int xBk){
+    m_xBk = xBk;
+    update();
+}
+
+int LoginBtn::xBk() const{
+    return m_xBk;
 }

@@ -20,6 +20,7 @@
 #include "service/net_conn_service.h"
 #include "component/borderless_window.h"
 #include "component/title_bar.h"
+#include "component/button.h"
 #include "model/define.h"
 
 class Auth : public BorderlessWindow {
@@ -47,8 +48,7 @@ private:
     QLabel *m_pLabel;
     QLabel *m_slogan;
     QLabel *m_notification;
-    QPushButton *m_loginBtn;
-    QPushButton *m_quitBtn;
+    LoginBtn *m_loginBtn;
 
     QPushButton *m_registerBtn;
     QPushButton *m_forgetBtn;
@@ -56,7 +56,6 @@ private:
 
     QVBoxLayout *m_centerLayout;
     QHBoxLayout *m_titleLayout;
-    QHBoxLayout *m_layout_1;
     QHBoxLayout *m_contentLayout;
     QHBoxLayout *m_forgetLayout;
     QHBoxLayout *m_regLayout;

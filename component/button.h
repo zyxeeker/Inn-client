@@ -5,56 +5,40 @@
 #ifndef INNCLIENT_BUTTON_H
 #define INNCLIENT_BUTTON_H
 
-#include <QWidget>
-#include <QLabel>
-#include <QPixmap>
-#include <QEvent>
-#include <QMouseEvent>
-#include <QHBoxLayout>
 #include <QPropertyAnimation>
 #include <QGraphicsDropShadowEffect>
 #include "./model/utils.h"
 
-class AbstractedButton : public QWidget {
-Q_OBJECT
-//public:
-//    AbstractedButton();
-//private:
-//
-
-};
-
-class OverviewBtn : public AbstractedButton {
+class AbstractedBtn : public QPushButton {
 Q_OBJECT
 public:
-    OverviewBtn(QString url, QString title, QWidget *parent = nullptr);
-
-    void Init();
-
-private:
-    void InitAnimation();
-
-    void BtnMoveUp();
-
-    void BtnBack2Origin();
-
+    AbstractedBtn(QWidget *parent = nullptr);
 protected:
-    bool OverviewBtn::eventFilter(QObject *obj, QEvent *event);
-
-private:
-    QWidget *m_mainCtx;
-    QVBoxLayout *m_layout;
-    QLabel *m_title;
-    QLabel *m_icon;
-    QPixmap m_iconPx;
+    bool m_isHover = false;
+    bool m_isPressed = false;
+    QGraphicsDropShadowEffect *m_shadowEffect;
     QPropertyAnimation *m_upAnimation;
     QPropertyAnimation *m_downAnimation;
-    QGraphicsDropShadowEffect *m_effect;
-    QString m_titleCtx = "WB";
-    QString m_iconUrl = ":/component/resource/weibo.svg";
+    QPropertyAnimation *m_enterAnimation;
+    QPropertyAnimation *m_leaveAnimation;
+};
 
-signals:
-    void OpenPopup();
+class LoginBtn : public AbstractedBtn{
+    Q_OBJECT
+    Q_PROPERTY(double xBk READ xBk WRITE setXBk);
+public:
+    LoginBtn(QWidget *parent = nullptr);
+protected:
+    void paintEvent(QPaintEvent *event) override;
+    void enterEvent(QEvent *event) override;
+    void leaveEvent(QEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+private:
+    int xBk() const;
+    void setXBk(const int xBk);
+private:
+    int m_xBk = 250;
 };
 
 

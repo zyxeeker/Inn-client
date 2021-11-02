@@ -24,8 +24,7 @@ Auth::Auth(Inn::NetConnService *s, QWidget *parent) : m_netService(s), Borderles
     m_pLabel = new QLabel(m_content);
     m_slogan = new QLabel(m_content);
     m_notification = new QLabel(m_content);
-    m_loginBtn = new QPushButton(m_content);
-    m_quitBtn = new QPushButton(m_content);
+    m_loginBtn = new LoginBtn(m_content);
     m_registerBtn = new QPushButton(m_content);
     m_forgetBtn = new QPushButton(m_content);
     m_remember = new QCheckBox(m_content);
@@ -33,7 +32,6 @@ Auth::Auth(Inn::NetConnService *s, QWidget *parent) : m_netService(s), Borderles
     m_forgetLayout = new QHBoxLayout();
     m_regLayout = new QHBoxLayout();
     m_layout = new QVBoxLayout();
-    m_layout_1 = new QHBoxLayout();
     m_rLayout = new QVBoxLayout();
     m_lHSpacer = new QSpacerItem(430, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
     m_tVSpacer = new QSpacerItem(0, 120, QSizePolicy::Minimum, QSizePolicy::Maximum);
@@ -52,10 +50,6 @@ Auth::Auth(Inn::NetConnService *s, QWidget *parent) : m_netService(s), Borderles
 
     connect(m_loginBtn, &QPushButton::clicked, this, &Auth::onReceiveUserInfo);
     connect(m_netService, &Inn::NetConnService::ReqResult, this, &Auth::onReceiveReqResult);
-    connect(m_quitBtn, &QPushButton::clicked, [=]() {
-        this->close();
-        emit ClientQuit();
-    });
     connect(m_bar, &AbstractTitleBar::SwitchWindow, this, &Auth::SwitchWindow);
 }
 
@@ -78,15 +72,15 @@ void Auth::InitContent() {
     QString pLabelStyle = "color:white;font-family:'Microsoft YaHei UI';font-size:12px;";
     QString pStyleSheet = "QLineEdit{" + pLabelStyle +
                           "font-size:14px;border-radius:2px;padding:5px;border:1px solid rgb(48, 48, 48);"
-                          "background-color: rgb(36, 36, 36);selection-background-color: rgb(251, 174, 60);"
+                          "background-color: rgb(36, 36, 36);selection-background-color: rgb(103,78,208);"
                           "selection-color: rgb(36, 36, 36);}"
-                          "QLineEdit:focus{border-color: rgb(251, 174, 60);}";
+                          "QLineEdit:focus{border-color: rgb(103,78,208);}";
     QString pBtnStyle = "QPushButton{" + pLabelStyle + "background-color:transparent;}"
-                                                       "QPushButton:hover{color:rgb(251, 174, 60);}"
+                                                       "QPushButton:hover{color:rgb(103,78,208);}"
                                                        "QPushButton:disabled {color:lightgray;}";
 
     m_content->setObjectName("content");
-    m_content->setStyleSheet("#content{background-image: url(:/auth/resource/bk.png);}");
+    m_content->setStyleSheet("#content{background-image: url(:/auth/resource/bk.svg);}");
 
     m_contentLayout->setContentsMargins(0, 80, 30, 0);
     m_contentLayout->addItem(m_lHSpacer);
@@ -101,23 +95,20 @@ void Auth::InitContent() {
     m_layout->addWidget(m_pLabel);
     m_layout->addWidget(m_pwd);
     m_layout->addWidget(m_notification);
-    m_layout->addLayout(m_layout_1);
+    m_layout->addWidget(m_loginBtn);
     m_layout->addLayout(m_rLayout);
     m_layout->addLayout(m_regLayout);
     m_layout->addLayout(m_forgetLayout);
     m_layout->addItem(m_bVSpacer);
 
     m_rLayout->addWidget(m_remember);
-    m_rLayout->setContentsMargins(0, 0, 0, 0);
+    m_rLayout->setContentsMargins(0, 10, 0, 0);
     m_remember->setText("remember you?");
-    m_remember->setStyleSheet("QCheckBox{" + pLabelStyle + "}QCheckBox::indicator {border:1px solid rgb(251, 174, 60);"
+    m_remember->setStyleSheet("QCheckBox{" + pLabelStyle + "}QCheckBox::indicator {border:1px solid rgb(103,78,208);"
                                                            "border-radius:2px;background:transparent;width:13px;height:13px;}"
                                                            "QCheckBox::indicator:unchecked:hover{background-color: rgba(255, 255, 255, 50);}"
-                                                           "QCheckBox::indicator:checked{background:rgb(251, 174, 60);"
+                                                           "QCheckBox::indicator:checked{background:rgb(103,78,208);"
                                                            "image: url(:/common/resource/checked.png);}");
-
-    m_layout_1->addWidget(m_quitBtn);
-    m_layout_1->addWidget(m_loginBtn);
 
     m_slogan->setMaximumHeight(30);
     m_slogan->setMinimumHeight(30);
@@ -143,28 +134,12 @@ void Auth::InitContent() {
     m_notification->setMaximumHeight(20);
     m_notification->setMinimumHeight(20);
     m_notification->setStyleSheet(pLabelStyle);
-    m_quitBtn->setStyleSheet(
-            "QPushButton{border-radius:2px;border-top-right-radius:5px;"
-            "border-top-left-radius:15px;border-bottom-left-radius:5px;border-bottom-right-radius:5px;"
-            "background-color:#A7233A;}"
-            "QPushButton:hover {background-color:rgb(205, 45, 75);color:white;}"
-            "QPushButton:pressed {background-color:rgb(205, 45, 75);}"
-            "QPushButton:disabled {background-color:gray;color:lightgray;}");
-    m_quitBtn->setMinimumSize(35, 35);
-    m_quitBtn->setMaximumSize(35, 35);
-    m_quitBtn->setIconSize(QSize(15, 15));
-    m_quitBtn->setIcon(QIcon(QPixmap(":/auth/resource/exit.png")));
-    m_quitBtn->setCursor(Qt::PointingHandCursor);
+
     m_loginBtn->setStyleSheet(
-            "QPushButton{color:white;font-family:'Microsoft YaHei UI';font-size:12px;"
-            "border-top-right-radius:15px;border-top-left-radius:5px;border-bottom-left-radius:5px;"
-            "border-bottom-right-radius:5px;background-color:rgb(65, 65, 65);color:white;}"
-            "QPushButton:hover {background-color:rgba(251, 174, 60, 250);color:white;}"
-            "QPushButton:pressed {background-color:rgba(251, 174, 60, 250);}"
-            "QPushButton:disabled {background-color:gray;color:lightgray;}");
+            "QPushButton{color:white;font-family:'Microsoft YaHei UI';font-size:12px;}");
     m_loginBtn->setText("LOGIN");
-    m_loginBtn->setMaximumHeight(35);
-    m_loginBtn->setMaximumHeight(35);
+    m_loginBtn->setMinimumHeight(34);
+    m_loginBtn->setMaximumHeight(34);
     m_loginBtn->setCursor(Qt::PointingHandCursor);
 
     m_regLayout->addItem(m_regSpacer);
@@ -225,11 +200,13 @@ void Auth::onReceiveReqResult(NET_SERVICE::REQ_RESULT result) {
 
 void Auth::SwitchWindow(WINDOW_STATE st) {
     switch (st) {
-        case WINDOW_CLOSE:
-            this->hide();
+        case WINDOW_CLOSE:{
+            this->close();
+            emit ClientQuit();
             break;
+        }
         case WINDOW_MIN:
-            this->showMinimized();
+            this->hide();
             break;
     }
 }
