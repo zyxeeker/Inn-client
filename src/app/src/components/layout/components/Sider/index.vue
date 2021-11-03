@@ -4,7 +4,7 @@
         show-trigger
         collapse-mode="width"
         :collapsed-width="64"
-        :width="240"
+        :width="180"
         :native-scrollbar="false"
         style="max-height: 100%;"
     >

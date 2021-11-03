@@ -6,6 +6,7 @@
         <n-layout
             style="padding-left: 20px;"
             :native-scrollbar="false"
+            ref="content"
         >
             <Title/>
             <template v-for="item in lists" :key="item.id">
@@ -45,10 +46,17 @@ export default defineComponent({
     },
     methods: {
         test(data) {
+            window.MsgHandler(data)
             this.lists.push({
                 id: ++this.nextTodoId,
-                user: 'sa',
+                user: window.user,
                 msg: data
+            })
+            this.$nextTick(() => {
+                this.$refs.content.scrollTo({
+                    top: document.getElementsByClassName("n-scrollbar-content")[1].__vnode.el.offsetHeight,
+                    behavior: 'smooth'
+                })
             })
         }
     }

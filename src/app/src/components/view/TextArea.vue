@@ -3,9 +3,9 @@
         <n-input
             ref="input"
             type="textarea"
-            placeholder="自动调整尺寸"
+            placeholder="Typing something?"
             :autosize="{minRows: 1}"
-            @keyup.enter="SendMsg"
+            @keyup.enter.ctrl="SendMsg"
         >
             <template #prefix>
                 <n-button size="large" text>
@@ -16,7 +16,7 @@
             </template>
             <template #suffix>
                 <div style="height:100%;display: flex;flex-direction: row;align-items: flex-end;margin-bottom:20px; ">
-                    <n-button size="large" text>
+                    <n-button size="large" @click="SendMsg" text>
                         <n-icon>
                             <arrow-enter-left20-regular/>
                         </n-icon>
