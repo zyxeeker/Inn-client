@@ -41,5 +41,25 @@ private:
     int m_xBk = 250;
 };
 
+class NavBtn : public AbstractedBtn {
+Q_OBJECT
+    Q_PROPERTY(double alpha READ alpha WRITE setAlpha);
+public:
+    NavBtn(const QString &url, QWidget *parent = nullptr);
+protected:
+    void paintEvent(QPaintEvent *event) override;
+    void enterEvent(QEvent *event) override;
+    void leaveEvent(QEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+private:
+    int alpha() const;
+    void setAlpha(int alpha);
+private:
+    int m_alpha = 110;
+    QPixmap m_icon;
+    bool m_isChecked = false;
+};
+
 
 #endif //INNCLIENT_BUTTON_H

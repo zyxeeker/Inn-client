@@ -2,6 +2,7 @@
 // Created by zyx on 2021/8/6.
 //
 
+#include <QDebug>
 #include "button.h"
 
 AbstractedBtn::AbstractedBtn(QWidget *parent) : QPushButton(parent) {
@@ -87,11 +88,104 @@ void LoginBtn::mouseReleaseEvent(QMouseEvent *event){
     QPushButton::mouseReleaseEvent(event);
 }
 
-void LoginBtn::setXBk(const int xBk){
+void LoginBtn::setXBk(const int xBk) {
     m_xBk = xBk;
     update();
 }
 
-int LoginBtn::xBk() const{
+int LoginBtn::xBk() const {
     return m_xBk;
+}
+
+NavBtn::NavBtn(const QString &url, QWidget *parent) : AbstractedBtn(parent) {
+    this->setCheckable(true);
+    this->setAutoExclusive(true);
+    this->setMinimumSize(50, 50);
+    this->setMaximumSize(50, 50);
+    m_icon = QPixmap(url);
+
+    m_enterAnimation = new QPropertyAnimation(this, "alpha");
+    m_leaveAnimation = new QPropertyAnimation(this, "alpha");
+    m_shadowEffect->deleteLater();
+    m_upAnimation->deleteLater();
+    m_downAnimation->deleteLater();
+
+    m_enterAnimation->setEasingCurve(QEasingCurve::OutQuad);
+    m_enterAnimation->setDuration(180);
+    m_enterAnimation->setEndValue(255);
+
+    m_leaveAnimation->setEasingCurve(QEasingCurve::OutQuad);
+    m_leaveAnimation->setDuration(180);
+    m_leaveAnimation->setEndValue(110);
+    connect(this, &QPushButton::toggled, this, [=](bool st) {
+        m_isChecked = st;
+        if (st) {
+            m_enterAnimation->setEndValue(255);
+            m_enterAnimation->setStartValue(m_alpha);
+            m_enterAnimation->start();
+        } else {
+            m_leaveAnimation->setStartValue(m_alpha);
+            m_leaveAnimation->start();
+        }
+    });
+}
+
+void NavBtn::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    QLinearGradient linear(0, 0, 50, 50);
+    QColor hoverStyle(52, 52, 52);
+    if (m_isChecked || m_isHover) {
+        hoverStyle.setAlpha(m_alpha);
+    } else {
+        hoverStyle.setAlpha(110);
+    }
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(QBrush(hoverStyle));
+
+    painter.drawRoundedRect(QRect(5, 5, 40, 40), 5, 5);
+    // 图标
+    painter.drawPixmap(15, 15, m_icon);
+    // draw text
+    painter.setPen(QPen(QColor(0, 219, 221)));
+    painter.setFont(font());
+    painter.drawText(rect(), Qt::AlignCenter, text());
+
+}
+
+void NavBtn::enterEvent(QEvent *event) {
+    m_isHover = true;
+    m_enterAnimation->setEndValue(180);
+    m_enterAnimation->setStartValue(m_alpha);
+    m_enterAnimation->start();
+    QPushButton::enterEvent(event);
+}
+
+void NavBtn::leaveEvent(QEvent *event) {
+    m_isHover = false;
+    if (!m_isChecked) {
+        m_leaveAnimation->setStartValue(m_alpha);
+        m_leaveAnimation->start();
+    }
+    QPushButton::leaveEvent(event);
+
+}
+
+void NavBtn::mousePressEvent(QMouseEvent *event) {
+    m_isPressed = true;
+    QPushButton::mousePressEvent(event);
+}
+
+void NavBtn::mouseReleaseEvent(QMouseEvent *event) {
+    m_isPressed = false;
+    QPushButton::mouseReleaseEvent(event);
+}
+
+void NavBtn::setAlpha(const int alpha) {
+    m_alpha = alpha;
+    update();
+}
+
+int NavBtn::alpha() const {
+    return m_alpha;
 }

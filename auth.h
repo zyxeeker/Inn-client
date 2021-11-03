@@ -15,6 +15,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QMoveEvent>
+#include <QAction>
 #include <QSystemTrayIcon>
 #include <windows.h>
 #include "service/net_conn_service.h"
@@ -34,6 +35,7 @@ private:
     void InitContent();
 protected:
     void mousePressEvent(QMouseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 private:
     Inn::NetConnService *m_netService;
     AbstractTitleBar *m_bar;

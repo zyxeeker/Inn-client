@@ -82,6 +82,9 @@ void Auth::InitContent() {
     m_content->setObjectName("content");
     m_content->setStyleSheet("#content{background-image: url(:/auth/resource/bk.svg);}");
 
+    m_user->setAttribute(Qt::WA_InputMethodEnabled, false);
+    m_pwd->setAttribute(Qt::WA_InputMethodEnabled, false);
+
     m_contentLayout->setContentsMargins(0, 80, 30, 0);
     m_contentLayout->addItem(m_lHSpacer);
     m_contentLayout->addLayout(m_layout);
@@ -128,6 +131,7 @@ void Auth::InitContent() {
     m_pwd->setStyleSheet(pStyleSheet);
     m_user->setMaximumHeight(35);
     m_user->setMinimumHeight(35);
+    m_user->setFocus();
     m_pwd->setMaximumHeight(35);
     m_pwd->setMinimumHeight(35);
     m_pwd->setEchoMode(QLineEdit::Password);
@@ -176,6 +180,11 @@ void Auth::mousePressEvent(QMouseEvent *event) {
     }
 #endif
     BorderlessWindow::mousePressEvent(event);
+}
+
+void Auth::keyPressEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_Return)
+        onReceiveUserInfo();
 }
 
 void Auth::onReceiveUserInfo() {
