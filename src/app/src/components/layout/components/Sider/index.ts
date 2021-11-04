@@ -1,3 +1,3 @@
-import Sider from './index.vue'
+import MSider from './index.vue'
 
-export {Sider};
+export {MSider};

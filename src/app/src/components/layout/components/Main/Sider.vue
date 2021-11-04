@@ -1,11 +1,12 @@
 <template>
     <n-layout-sider
         bordered
+        show-trigger
         collapse-mode="width"
         :collapsed-width="64"
+        :width="180"
         :native-scrollbar="false"
         style="max-height: 100%;"
-        :collapsed="true"
     >
         <n-menu
             :collapsed-width="64"
@@ -32,9 +33,10 @@ const menuOptions = [
                 RouterLink,
                 {
                     to: {
-                        name: 'switchGroup',
+                        name: 'switchChannel',
                         params: {
-                            key: '大厅',
+                            title: '大厅',
+                            des: '欢迎来到大厅！'
                         }
                     }
                 },
@@ -49,9 +51,10 @@ const menuOptions = [
                 RouterLink,
                 {
                     to: {
-                        name: 'switchGroup',
+                        name: 'switchChannel',
                         params: {
-                            key: 'TEST',
+                            title: 'TEST',
+                            des: '欢迎来到TEST！'
                         }
                     }
                 },
@@ -63,7 +66,7 @@ const menuOptions = [
 ]
 
 export default defineComponent({
-    name: "MSider",
+    name: "Sider",
     setup() {
         return {
             menuOptions

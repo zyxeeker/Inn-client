@@ -46,18 +46,28 @@ export default defineComponent({
     },
     methods: {
         test(data) {
-            window.MsgHandler(data)
+            if (process.env.NODE_ENV == 'production')
+                window.MsgHandler(data)
             this.lists.push({
                 id: ++this.nextTodoId,
                 user: window.user,
                 msg: data
             })
-            this.$nextTick(() => {
-                this.$refs.content.scrollTo({
-                    top: document.getElementsByClassName("n-scrollbar-content")[1].__vnode.el.offsetHeight,
-                    behavior: 'smooth'
+            if (process.env.NODE_ENV == 'production') {
+                this.$nextTick(() => {
+                    this.$refs.content.scrollTo({
+                        top: document.getElementsByClassName("n-scrollbar-content")[2].offsetHeight,
+                        behavior: 'smooth'
+                    })
                 })
-            })
+            } else {
+                this.$nextTick(() => {
+                    this.$refs.content.scrollTo({
+                        top: document.getElementsByClassName("n-scrollbar-content")[2].__vnode.el.offsetHeight,
+                        behavior: 'smooth'
+                    })
+                })
+            }
         }
     }
 })
