@@ -138,7 +138,7 @@ void NavBtn::paintEvent(QPaintEvent *event) {
     if (m_isChecked || m_isHover) {
         hoverStyle.setAlpha(m_alpha);
     } else {
-        hoverStyle.setAlpha(110);
+        hoverStyle.setAlpha(0);
     }
     painter.setPen(Qt::NoPen);
     painter.setBrush(QBrush(hoverStyle));

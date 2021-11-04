@@ -34,13 +34,12 @@ bool BorderlessWindow::nativeEvent(const QByteArray &eventType, void *message, l
 
                 // 改变后客户区大小
                 RECT bcRect;
-                if (this->isFullScreen()) {
+                if (this->isMaximized()) {
                     bcRect.left = bRect.left;
                     bcRect.top = bRect.top;
                     bcRect.right = bRect.right;
                     bcRect.bottom = bRect.bottom;
                 } else {
-//                    int offset = UtilQt::isWindows10() ? 8 : 4;
                     int offset = 8;
                     bcRect.left = bRect.left + offset;
                     bcRect.top = bRect.top;

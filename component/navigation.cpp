@@ -46,7 +46,7 @@ void Navigation::InitUi() {
     m_layout->addItem(m_uSpacer);
     m_layout->addWidget(m_exitBtn);
     m_layout->addItem(m_dSpacer);
-    m_layout->setSpacing(0);
+    m_layout->setSpacing(5);
     m_layout->setContentsMargins(0, 0, 0, 0);
     Utils::InitBtn(m_exitBtn, 50, 20, NAV_STYLE_2, ":/auth/resource/exit.png");
     m_homeBtn->setChecked(true);
