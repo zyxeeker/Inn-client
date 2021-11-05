@@ -4,7 +4,7 @@
 
 #include "core_service.h"
 
-Inn::CoreService::CoreService(NetConnService *ser) : m_netService(ser) {
+Inn::CoreService::CoreService(NetConnService &ser) : m_netService(&ser) {
     InitTrayService();
     InitAuthGUI();
     connect(m_tray, &QSystemTrayIcon::activated, this, &Inn::CoreService::onReceiveTrayAction);
@@ -47,6 +47,7 @@ void Inn::CoreService::onReceiveLoginSuccess() {
     m_mGUI->show();
     m_aGUI->close();
     connect(m_mGUI, &MainWindow::UserLogout, this, &Inn::CoreService::onReceiveLogout);
+    connect(m_mGUI, &MainWindow::Exit, this, &Inn::CoreService::onReceiveQuit);
 }
 
 void Inn::CoreService::onReceiveLogout() {
@@ -57,6 +58,8 @@ void Inn::CoreService::onReceiveLogout() {
 }
 
 void Inn::CoreService::onReceiveQuit() {
+    if (m_mGUI)
+        m_mGUI->close();
     m_netService->Disconnect();
     m_tray->deleteLater();
 }

@@ -1,6 +1,5 @@
 <RCC>
   <qresource prefix="auth">
-    <file>resource/exit.png</file>
     <file>resource/bk.svg</file>
   </qresource>
   <qresource prefix="component">
@@ -15,9 +14,7 @@
     <file>resource/3.svg</file>
     <file>resource/refresh.svg</file>
   </qresource>
-  <qresource prefix="main">
-    <file>resource/font.otf</file>
-  </qresource>
+  <qresource prefix="main"/>
   <qresource prefix="nav">
     <file>resource/setting.svg</file>
     <file>resource/setting_checked.svg</file>
@@ -46,9 +43,11 @@
     <file>resource/cut.svg</file>
     <file>resource/more.svg</file>
   </qresource>
-  <qresource prefix="user">
-    <file>resource/online.svg</file>
-    <file>resource/busy.svg</file>
-    <file>resource/sleep.svg</file>
-  </qresource>
+    <qresource prefix="user">
+        <file>resource/exit.svg</file>
+        <file>resource/logout.svg</file>
+        <file>resource/online.svg</file>
+        <file>resource/busy.svg</file>
+        <file>resource/sleep.svg</file>
+    </qresource>
 </RCC>

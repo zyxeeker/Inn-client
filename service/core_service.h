@@ -16,7 +16,7 @@ typedef CORE_SERVICE::GUI_STATE GUI_STATE;
 namespace Inn {
     class CoreService : public QObject {
     public:
-        CoreService(NetConnService *ser);
+        CoreService(NetConnService &ser);
     private:
         void InitTrayService();
         void InitAuthGUI();

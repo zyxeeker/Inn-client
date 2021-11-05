@@ -116,17 +116,21 @@ void TextEditContentContextMenu::SetBtnGroup(int st) {
     }
 }
 
-ControlPanelContextMenu::ControlPanelContextMenu() {
-    m_onlineBtn = new QPushButton;
-    m_busyBtn = new QPushButton;
-    m_sleepBtn = new QPushButton;
-    m_layout = new QVBoxLayout;
-    m_effect = new QGraphicsDropShadowEffect;
+CtrlMenu::CtrlMenu(QWidget *parent) : QWidget(parent) {
     m_body = new QWidget(this);
+    m_onlineBtn = new QPushButton(m_body);
+    m_busyBtn = new QPushButton(m_body);
+    m_sleepBtn = new QPushButton(m_body);
+    m_logoutBtn = new QPushButton(m_body);
+    m_exitBtn = new QPushButton(m_body);
+    m_layout = new QVBoxLayout(m_body);
+    m_effect = new QGraphicsDropShadowEffect;
 
     InitBtn(m_onlineBtn, ":/user/resource/online.svg", "  在线");
     InitBtn(m_busyBtn, ":/user/resource/busy.svg", "  忙碌");
     InitBtn(m_sleepBtn, ":/user/resource/sleep.svg", "  离开");
+    InitBtn(m_logoutBtn, ":/user/resource/logout.svg", "Logout");
+    InitBtn(m_exitBtn, ":/user/resource/exit.svg", "Exit");
 
     connect(m_onlineBtn, &QPushButton::clicked, this, [=]() {
         emit StatueChanged(ONLINE);
@@ -135,7 +139,13 @@ ControlPanelContextMenu::ControlPanelContextMenu() {
         emit StatueChanged(BUSY);
     });
     connect(m_sleepBtn, &QPushButton::clicked, this, [=]() {
-        emit StatueChanged(SLEEP);
+        emit StatueChanged(AWAY);
+    });
+    connect(m_logoutBtn, &QPushButton::clicked, this, [=]() {
+        emit Logout();
+    });
+    connect(m_exitBtn, &QPushButton::clicked, this, [=]() {
+        emit Exit();
     });
 
     m_effect->setOffset(0, 0);
@@ -144,14 +154,13 @@ ControlPanelContextMenu::ControlPanelContextMenu() {
     m_body->setStyleSheet("background-color:rgb(53,53,56);border-radius:3px;");
     m_body->setGraphicsEffect(m_effect);
     m_body->move(30, 30);
-    m_body->setLayout(m_layout);
-    m_body->setMinimumSize(80, 86);
-    m_body->setMaximumSize(80, 86);
+    m_body->setMinimumSize(80, 142);
+    m_body->setMaximumSize(80, 142);
     m_layout->setContentsMargins(2, 2, 2, 2);
     m_layout->setSpacing(2);
 }
 
-void ControlPanelContextMenu::InitBtn(QPushButton *btn, QString url, QString name) {
+void CtrlMenu::InitBtn(QPushButton *btn, QString url, QString name) {
     QIcon icon;
     icon.addFile(url);
     btn->setIcon(icon);

@@ -24,6 +24,7 @@
 #include "component/borderless_window.h"
 #include "component/title_bar.h"
 #include "component/navigation.h"
+#include "component/context_menu.h"
 #include "model/define.h"
 
 class MainWindow : public BorderlessWindow {
@@ -37,6 +38,7 @@ protected:
 private:
     void InitUi();
     void InitTitleBar();
+    void InitMenu();
 private:
     AbstractTitleBar *m_bar;
     Navigation *m_nav;
@@ -58,7 +60,7 @@ public slots:
     void SwitchWindow(WINDOW_STATE);
 signals:
     void UserLogout();
-
+    void Exit();
 };
 
 

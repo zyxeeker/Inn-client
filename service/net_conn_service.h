@@ -19,11 +19,13 @@ namespace Inn {
     class NetConnService : public QTcpSocket {
     Q_OBJECT
     public:
+        static NetConnService &Instance(QString ad, uint16_t port);
         NetConnService(QString ad, uint16_t port);
         int Req(NET_SERVICE::REQ_OP req);
         QTcpSocket *GetSocket() const;
         std::string GetUser() const;
         void SetUserInfo(std::string user, std::string pwd);
+        void SetUserMsg(std::string msg);
         void Disconnect();
     private:
         void HBTimerService(NET_SERVICE::HB_OP op);
@@ -32,6 +34,7 @@ namespace Inn {
     private:
         std::string m_user;
         std::string m_pwd;
+        std::string m_msg;
         QString m_address;
         uint16_t m_port;
         QTcpSocket *m_socket;

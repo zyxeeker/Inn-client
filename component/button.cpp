@@ -133,7 +133,6 @@ NavBtn::NavBtn(const QString &url, QWidget *parent) : AbstractedBtn(parent) {
 void NavBtn::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
-    QLinearGradient linear(0, 0, 50, 50);
     QColor hoverStyle(52, 52, 52);
     if (m_isChecked || m_isHover) {
         hoverStyle.setAlpha(m_alpha);

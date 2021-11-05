@@ -3,6 +3,12 @@
 //
 
 #include "net_conn_service.h"
+#include "service/user_service.h"
+
+Inn::NetConnService &Inn::NetConnService::Instance(QString ad, uint16_t port) {
+    static NetConnService netConnService(ad, port);
+    return netConnService;
+}
 
 Inn::NetConnService::NetConnService(QString ad, uint16_t port) : m_address(ad), m_port(port) {
     m_socket = new QTcpSocket;
@@ -76,13 +82,21 @@ int Inn::NetConnService::Req(NET_SERVICE::REQ_OP req) {
         case NET_SERVICE::LOGOUT_REQ:
             Send("LOGOUT " + m_user);
             break;
+        case NET_SERVICE::MSG_REQ:
+            Send("TEXT " + m_user + " " + m_msg);
+            break;
     }
     return 0;
 }
 
 void Inn::NetConnService::SetUserInfo(std::string user, std::string pwd) {
+    UserService::Instance().userName = user;
     m_user = user;
     m_pwd = pwd;
+}
+
+void Inn::NetConnService::SetUserMsg(std::string msg) {
+    m_msg = msg;
 }
 
 void Inn::NetConnService::HBTimerService(NET_SERVICE::HB_OP op) {

@@ -32,7 +32,7 @@ enum TEXT_OPS {
 enum USER_ST {
     ONLINE,
     BUSY,
-    SLEEP
+    AWAY
 };
 
 enum Q_CONN_OP {
@@ -93,8 +93,7 @@ enum NAVIGATION {
     HOME,
     CHAT,
     STREAM,
-    SETTING,
-    EXIT
+    SETTING
 };
 
 #endif //INNCLIENT_DEFINE_H

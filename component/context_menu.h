@@ -62,24 +62,29 @@ protected:
 
 };
 
-class ControlPanelContextMenu : public QWidget {
+class CtrlMenu : public QWidget {
 Q_OBJECT
 public:
-    ControlPanelContextMenu();
-
+    static CtrlMenu &Instance() {
+        static CtrlMenu ctrlMenu;
+        return ctrlMenu;
+    }
+    CtrlMenu(QWidget *parent = nullptr);
 private:
     void InitBtn(QPushButton *btn, QString url, QString name);
-
 private:
     QPushButton *m_onlineBtn;
     QPushButton *m_busyBtn;
     QPushButton *m_sleepBtn;
+    QPushButton *m_exitBtn;
+    QPushButton *m_logoutBtn;
     QVBoxLayout *m_layout;
     QWidget *m_body;
     QGraphicsDropShadowEffect *m_effect;
 signals:
-
-    void StatueChanged(int);
+    void StatueChanged(USER_ST);
+    void Logout();
+    void Exit();
 };
 
 #endif //INNCLIENT_CONTEXT_MENU_H

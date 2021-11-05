@@ -2,8 +2,8 @@
 // Created by zyx on 2021/9/22.
 //
 
+#include "component/context_menu.h"
 #include "service/logger_service.h"
-#include <iostream>
 #include "mainwindow.h"
 
 MainWindow::MainWindow(Inn::NetConnService *s, QWidget *parent) : m_netService(s), BorderlessWindow(parent) {
@@ -29,6 +29,15 @@ MainWindow::MainWindow(Inn::NetConnService *s, QWidget *parent) : m_netService(s
     connect(m_nav, &Navigation::SwitchNav, this, &MainWindow::SwitchNav);
     connect(m_bar, &AbstractTitleBar::SwitchWindow, this, &MainWindow::SwitchWindow);
     connect(this, &MainWindow::UpdateWindowState, m_bar, &AbstractTitleBar::SetMaximizedState);
+
+    connect(&CtrlMenu::Instance(), &CtrlMenu::Logout, this, [=]() {
+        emit UserLogout();
+        CtrlMenu::Instance().close();
+    });
+    connect(&CtrlMenu::Instance(), &CtrlMenu::Exit, this, [=]() {
+        emit Exit();
+        CtrlMenu::Instance().close();
+    });
 }
 
 void MainWindow::InitUi() {
@@ -102,9 +111,6 @@ void MainWindow::SwitchNav(NAVIGATION nav) {
             break;
         case CHAT:
             m_stackedContent->setCurrentIndex(1);
-            break;
-        case EXIT:
-            emit UserLogout();
             break;
     }
 }

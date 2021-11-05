@@ -9,6 +9,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include "component/button.h"
+#include "component/control_btn.h"
 #include "model/define.h"
 
 class Navigation : public QWidget {
@@ -23,11 +24,12 @@ private:
     NavBtn *m_chatBtn;
     NavBtn *m_streamBtn;
     NavBtn *m_settingBtn;
-    QPushButton *m_exitBtn;
+    CtrlBtn *m_ctrlBtn;
     QSpacerItem *m_uSpacer;
     QSpacerItem *m_dSpacer;
 signals:
     void SwitchNav(NAVIGATION);
+    void OpenCtrlMenu();
 };
 
 
