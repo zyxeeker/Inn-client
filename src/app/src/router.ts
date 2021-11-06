@@ -5,22 +5,24 @@ import {Main} from "./components/layout/components/Main/index.ts";
 // @ts-ignore
 import {Home} from "./components/page/index.ts";
 // @ts-ignore
-import {Group} from "./components/layout/index.ts"
+import {Room} from "./components/layout/index.ts"
 
 export default createRouter({
     history: createWebHashHistory(),
     routes: [{
         path: '',
-        components: {Group: Home}
+        components: {'Room': Home}
     }, {
-        path: '',
+        path: '/group/:id',
         name: 'switchGroup',
-        components: {Group: Group},
+        components: {'Room': Room, 'Content': Home},
         children: [{
             path: '',
+            components: {'Content': Home}
+        }, {
+            path: '/group/:id/channel',
             name: 'switchChannel',
-            components: {Main: Main}
+            components: {'Content': Main}
         }]
-    }
-    ]
+    }]
 });
