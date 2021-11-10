@@ -24,7 +24,7 @@
                     <router-view name="Room" v-slot="{Component}">
                         <transition enter-active-class="animate__animated animate__bounceInDown"
                                     leave-active-class="animate__animated animate__bounceOutDown" mode="out-in">
-                            <!--                        <keep-alive exclude="Home,Main">-->
+                            <!--                        <keep-alive exclude="Home,channel">-->
                             <component :key="$route.params.id" :is="Component"/>
                             <!--                        </keep-alive>-->
                         </transition>
@@ -77,7 +77,7 @@ const menuOptions = [
 ]
 export default {
     name: "Layout",
-    // components: {Main, Sider},
+    // components: {channel, Sider},
     setup() {
         return {
             menuOptions

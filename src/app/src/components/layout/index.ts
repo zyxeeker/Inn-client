@@ -1,4 +1,4 @@
 import Layout from './index.vue'
-import Room from './Room.vue'
+import Group from './Group.vue'
 
-export {Layout, Room};
+export {Layout, Group};

@@ -21,7 +21,7 @@
             <router-view name="Content" v-slot="{Component}">
                 <transition enter-active-class="animate__animated animate__bounceInDown"
                             leave-active-class="animate__animated animate__bounceOutDown" mode="out-in">
-                    <!--                        <keep-alive exclude="Home,Main">-->
+                    <!--                        <keep-alive exclude="Home,channel">-->
                     <component :key="$route.hash" :is="Component"/>
                     <!--                        </keep-alive>-->
                 </transition>
@@ -83,7 +83,7 @@ function renderIcon(icon) {
 }
 
 export default {
-    name: "Room",
+    name: "Group",
     setup() {
         return {
             menuOptions

@@ -24,10 +24,10 @@ import {defineComponent} from 'vue'
 import Title from "@/components/view/Title";
 import Content from "@/components/view/Content";
 import TextArea from "@/components/view/TextArea";
-import MainHeader from "@/components/layout/components/Main/Header";
+import MainHeader from "@/components/channel/Header";
 
 export default defineComponent({
-    name: "Main",
+    name: "Channel",
     data() {
         return {
             lists: [

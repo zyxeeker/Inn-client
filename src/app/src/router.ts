@@ -1,11 +1,11 @@
 // Vue Router 4
 import {createRouter, createWebHashHistory} from "vue-router";
 // @ts-ignore
-import {Main} from "./components/layout/components/Main/index.ts";
+import {Channel} from "./components/channel/index.ts";
 // @ts-ignore
-import {Home} from "./components/page/index.ts";
+import {Home, GroupHome} from "./components/page/index.ts";
 // @ts-ignore
-import {Room} from "./components/layout/index.ts"
+import {Group} from "./components/layout/index.ts"
 
 export default createRouter({
     history: createWebHashHistory(),
@@ -15,14 +15,14 @@ export default createRouter({
     }, {
         path: '/group/:id',
         name: 'switchGroup',
-        components: {'Room': Room, 'Content': Home},
+        components: {'Room': Group},
         children: [{
             path: '',
-            components: {'Content': Home}
+            components: {'Content': GroupHome}
         }, {
             path: '/group/:id/channel',
             name: 'switchChannel',
-            components: {'Content': Main}
+            components: {'Content': Channel}
         }]
     }]
 });
