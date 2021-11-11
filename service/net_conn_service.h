@@ -16,11 +16,11 @@
 #include "service/logger_service.h"
 
 namespace Inn {
-    class NetConnService : public QTcpSocket {
+    class NetService : public QTcpSocket {
     Q_OBJECT
     public:
-        static NetConnService &Instance(QString ad, uint16_t port);
-        NetConnService(QString ad, uint16_t port);
+        static NetService *Instance(QString ad = nullptr, uint16_t port = 0);
+        NetService(QString ad, uint16_t port);
         int Req(NET_SERVICE::REQ_OP req);
         QTcpSocket *GetSocket() const;
         std::string GetUser() const;
@@ -32,6 +32,7 @@ namespace Inn {
         void ReconnectService(NET_SERVICE::RECONNECT_OP op);
         void Send(std::string pkt);
     private:
+        static NetService *m_service;
         std::string m_user;
         std::string m_pwd;
         std::string m_msg;

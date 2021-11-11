@@ -5,12 +5,16 @@
 #include "net_conn_service.h"
 #include "service/user_service.h"
 
-Inn::NetConnService &Inn::NetConnService::Instance(QString ad, uint16_t port) {
-    static NetConnService netConnService(ad, port);
-    return netConnService;
+Inn::NetService *Inn::NetService::m_service = nullptr;
+
+Inn::NetService *Inn::NetService::Instance(QString ad, uint16_t port) {
+    if (m_service == nullptr) {
+        m_service = new NetService(ad, port);
+    }
+    return m_service;
 }
 
-Inn::NetConnService::NetConnService(QString ad, uint16_t port) : m_address(ad), m_port(port) {
+Inn::NetService::NetService(QString ad, uint16_t port) : m_address(ad), m_port(port) {
     m_socket = new QTcpSocket;
     m_hbTimer = new QTimer;
     m_reconnectTimer = new QTimer;
@@ -37,23 +41,23 @@ Inn::NetConnService::NetConnService(QString ad, uint16_t port) : m_address(ad), 
         LOGD("Disconnect from server");
 #endif
     });
-    connect(m_socket, &QTcpSocket::readyRead, this, &NetConnService::onReceiveData);
+    connect(m_socket, &QTcpSocket::readyRead, this, &NetService::onReceiveData);
 }
 
-void Inn::NetConnService::Send(std::string pkt) {
+void Inn::NetService::Send(std::string pkt) {
     m_socket->write(pkt.c_str());
     m_socket->flush();
 }
 
-QTcpSocket *Inn::NetConnService::GetSocket() const {
+QTcpSocket *Inn::NetService::GetSocket() const {
     return m_socket;
 }
 
-std::string Inn::NetConnService::GetUser() const {
+std::string Inn::NetService::GetUser() const {
     return m_user;
 }
 
-void Inn::NetConnService::Disconnect() {
+void Inn::NetService::Disconnect() {
 #if _DEBUG
     LOGD("Client Quiting...");
 #endif
@@ -61,12 +65,12 @@ void Inn::NetConnService::Disconnect() {
     m_socket->close();
 }
 
-void Inn::NetConnService::onReceiveData() {
+void Inn::NetService::onReceiveData() {
     m_buffer = new QByteArray(m_socket->readAll());
     emit ReqResult(Inn::PacketParseService::ParsePacket(m_buffer));
 }
 
-int Inn::NetConnService::Req(NET_SERVICE::REQ_OP req) {
+int Inn::NetService::Req(NET_SERVICE::REQ_OP req) {
     switch (req) {
         case NET_SERVICE::LOGIN_REQ:
             Send("LOGIN " + m_user + " " + m_pwd);
@@ -89,22 +93,22 @@ int Inn::NetConnService::Req(NET_SERVICE::REQ_OP req) {
     return 0;
 }
 
-void Inn::NetConnService::SetUserInfo(std::string user, std::string pwd) {
+void Inn::NetService::SetUserInfo(std::string user, std::string pwd) {
     UserService::Instance().userName = user;
     m_user = user;
     m_pwd = pwd;
 }
 
-void Inn::NetConnService::SetUserMsg(std::string msg) {
+void Inn::NetService::SetUserMsg(std::string msg) {
     m_msg = msg;
 }
 
-void Inn::NetConnService::HBTimerService(NET_SERVICE::HB_OP op) {
+void Inn::NetService::HBTimerService(NET_SERVICE::HB_OP op) {
     switch (op) {
         case NET_SERVICE::TIMER_INIT: {
             m_hbTimer->setInterval(5000);
             m_hbTimer->setTimerType(Qt::CoarseTimer);
-            connect(m_hbTimer, &QTimer::timeout, this, &NetConnService::HBOp);
+            connect(m_hbTimer, &QTimer::timeout, this, &NetService::HBOp);
             break;
         }
         case NET_SERVICE::TIMER_START:
@@ -116,12 +120,12 @@ void Inn::NetConnService::HBTimerService(NET_SERVICE::HB_OP op) {
     }
 }
 // TODO Adjust interval time
-void Inn::NetConnService::ReconnectService(NET_SERVICE::RECONNECT_OP op) {
+void Inn::NetService::ReconnectService(NET_SERVICE::RECONNECT_OP op) {
     switch (op) {
         case NET_SERVICE::RECONNECT_INIT: {
             m_reconnectTimer->setInterval(3000);
             m_reconnectTimer->setTimerType(Qt::CoarseTimer);
-            connect(m_reconnectTimer, &QTimer::timeout, this, &NetConnService::Reconnect);
+            connect(m_reconnectTimer, &QTimer::timeout, this, &NetService::Reconnect);
             break;
         }
         case NET_SERVICE::RECONNECT_START:
@@ -134,11 +138,11 @@ void Inn::NetConnService::ReconnectService(NET_SERVICE::RECONNECT_OP op) {
 
 }
 
-void Inn::NetConnService::HBOp() {
+void Inn::NetService::HBOp() {
     Send("ALIVE " + m_user);
 }
 
-void Inn::NetConnService::Reconnect() {
+void Inn::NetService::Reconnect() {
     m_connSt = NET_SERVICE::SERVER_RECONNECTED;
 #if _DEBUG
     LOGD("Reconnect to server");

@@ -8,7 +8,8 @@
 #define LOGIN_RESULT_SUC "Login success!"
 #define LOGIN_RESULT_FAIL "Login failed!"
 
-Auth::Auth(Inn::NetConnService *s, QWidget *parent) : m_netService(s), BorderlessWindow(parent) {
+Auth::Auth(QWidget *parent) : BorderlessWindow(parent) {
+    m_netService = Inn::NetService::Instance();
     m_centerWidget = new QWidget(this);
     m_centerLayout = new QVBoxLayout(m_centerWidget);
 
@@ -49,7 +50,7 @@ Auth::Auth(Inn::NetConnService *s, QWidget *parent) : m_netService(s), Borderles
     this->setMinimumSize(700, 500);
 
     connect(m_loginBtn, &QPushButton::clicked, this, &Auth::onReceiveUserInfo);
-    connect(m_netService, &Inn::NetConnService::ReqResult, this, &Auth::onReceiveReqResult);
+    connect(m_netService, &Inn::NetService::ReqResult, this, &Auth::onReceiveReqResult);
     connect(m_bar, &AbstractTitleBar::SwitchWindow, this, &Auth::SwitchWindow);
 }
 

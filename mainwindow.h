@@ -30,7 +30,7 @@
 class MainWindow : public BorderlessWindow {
 Q_OBJECT
 public:
-    MainWindow(Inn::NetConnService *s = nullptr, QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr);
     bool HitArea(const QPoint &gPos) override;
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -53,8 +53,7 @@ private:
 
     Overview *m_overview;
     ChatRoom *m_chatRoom;
-//    CefRefPtr<CefClientHandler> simple_handler_;
-    Inn::NetConnService *m_netService;
+    Inn::NetService *m_netService;
 public slots:
     void SwitchNav(NAVIGATION);
     void SwitchWindow(WINDOW_STATE);

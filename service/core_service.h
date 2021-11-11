@@ -16,12 +16,12 @@ typedef CORE_SERVICE::GUI_STATE GUI_STATE;
 namespace Inn {
     class CoreService : public QObject {
     public:
-        CoreService(NetConnService &ser);
+        CoreService(NetService *ser);
     private:
         void InitTrayService();
         void InitAuthGUI();
     private:
-        NetConnService *m_netService;
+        NetService *m_netService;
         QSystemTrayIcon *m_tray;
         MainWindow *m_mGUI;
         Auth *m_aGUI;

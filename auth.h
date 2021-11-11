@@ -27,7 +27,7 @@
 class Auth : public BorderlessWindow {
 Q_OBJECT
 public:
-    Auth(Inn::NetConnService *s, QWidget *parent = nullptr);
+    Auth(QWidget *parent = nullptr);
     bool HitArea(const QPoint &gPos) override;
 private:
     void InitUi();
@@ -37,7 +37,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
 private:
-    Inn::NetConnService *m_netService;
+    Inn::NetService *m_netService;
     AbstractTitleBar *m_bar;
 
     QWidget *m_centerWidget;

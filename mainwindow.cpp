@@ -6,7 +6,8 @@
 #include "service/logger_service.h"
 #include "mainwindow.h"
 
-MainWindow::MainWindow(Inn::NetConnService *s, QWidget *parent) : m_netService(s), BorderlessWindow(parent) {
+MainWindow::MainWindow(QWidget *parent) : BorderlessWindow(parent) {
+    m_netService = Inn::NetService::Instance();
     m_centerWidget = new QWidget(this);
     m_centerLayout = new QVBoxLayout(m_centerWidget);
     m_content = new QWidget(m_centerWidget);
@@ -16,7 +17,7 @@ MainWindow::MainWindow(Inn::NetConnService *s, QWidget *parent) : m_netService(s
     m_bar = new AbstractTitleBar(this);
     m_title = new QWidget(this);
     m_titleLayout = new QVBoxLayout(m_title);
-    m_overview = new Overview(s->GetUser(), m_stackedContent);
+    m_overview = new Overview(m_netService->GetUser(), m_stackedContent);
     m_chatRoom = new ChatRoom;
 
     InitUi();
