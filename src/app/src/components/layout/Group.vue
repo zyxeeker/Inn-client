@@ -12,12 +12,11 @@
             <n-menu
                 :collapsed-width="64"
                 :collapsed-icon-size="22"
-                :options="menuOptions"
+                :options="channels"
             />
         </n-layout-sider>
-
-        <n-layout content-style="display:flex;flex-direction: column;overflow:hidden;">
-
+        <n-layout content-style="display:flex;flex-direction: column;overflow:hidden;" sider-placement="right"
+                  has-sider>
             <router-view name="Content" v-slot="{Component}">
                 <transition enter-active-class="animate__animated animate__bounceInDown"
                             leave-active-class="animate__animated animate__bounceOutDown" mode="out-in">
@@ -26,6 +25,20 @@
                     <!--                        </keep-alive>-->
                 </transition>
             </router-view>
+
+            <n-layout-sider
+                bordered
+                show-trigger
+                collapse-mode="width"
+                :collapsed-width="0"
+                :width="180"
+                :native-scrollbar="false"
+                style="max-height: 100%;"
+            >
+                <n-menu
+                    :options="friends"
+                />
+            </n-layout-sider>
         </n-layout>
 
     </n-layout>
@@ -37,42 +50,14 @@ import {RouterLink} from 'vue-router'
 import {NIcon} from 'naive-ui'
 import {Signature} from "@vicons/fa"
 
-const menuOptions = [
+const friends = [
     {
-        label: () =>
-            h(
-                RouterLink,
-                {
-                    to: {
-                        name: 'switchChannel',
-                        hash: '#home',
-                        params: {
-                            title: '大厅',
-                            des: '欢迎来到大厅！'
-                        }
-                    }
-                },
-                {default: () => '大厅'}
-            ),
+        label: '大厅',
         key: 'downtown',
         icon: renderIcon(Signature)
     },
     {
-        label: () =>
-            h(
-                RouterLink,
-                {
-                    to: {
-                        name: 'switchChannel',
-                        hash: '#test',
-                        params: {
-                            title: 'TEST',
-                            des: '欢迎来到TEST！'
-                        }
-                    }
-                },
-                {default: () => 'TEST'}
-            ),
+        label: 'TEST',
         key: 'TEST',
         icon: renderIcon(Signature)
     }
@@ -84,9 +69,44 @@ function renderIcon(icon) {
 
 export default {
     name: "Group",
+    data() {
+        return {
+            channels: []
+        }
+    },
     setup() {
         return {
-            menuOptions
+            friends
+        }
+    },
+    mounted() {
+        window.updateChannel = this.updateChannel
+    },
+    methods: {
+        updateChannel(value) {
+            let data = JSON.parse(value);
+            for (let i = 0, l = data['data'].length; i < l; ++i) {
+                let item = data['data'][i]
+                this.channels.push({
+                    label: () =>
+                        h(
+                            RouterLink,
+                            {
+                                to: {
+                                    name: 'switchChannel',
+                                    hash: item['hash'],
+                                    params: {
+                                        title: item['params']['title'],
+                                        des: item['params']['des']
+                                    }
+                                }
+                            },
+                            {default: () => item['name']}
+                        ),
+                    key: item['name'],
+                    icon: renderIcon(Signature)
+                })
+            }
         }
     }
 }

@@ -5,13 +5,13 @@
             collapse-mode="width"
             :collapsed-width="64"
             :native-scrollbar="false"
-            style="max-height: 100%;"
+            style="max-height: 100vh;"
             :collapsed="true"
         >
             <n-menu
                 :collapsed-width="64"
                 :collapsed-icon-size="22"
-                :options="menuOptions"
+                :options="groups"
             />
         </n-layout-sider>
 
@@ -45,57 +45,42 @@ function renderIcon(icon) {
     return () => h(NIcon, null, {default: () => h(icon)})
 }
 
-const menuOptions = [
-    {
-        label: () =>
-            h(
-                RouterLink,
-                {
-                    to: {
-                        path: '/group/0',
-                    }
-                },
-                {default: () => '大厅'}
-            ),
-        key: 'downtown',
-        icon: renderIcon(Signature)
-    },
-    {
-        label: () =>
-            h(
-                RouterLink,
-                {
-                    to: {
-                        path: '/group/1',
-                    }
-                },
-                {default: () => 'TEST'}
-            ),
-        key: 'TEST',
-        icon: renderIcon(Signature)
-    }
-]
 export default {
     name: "Layout",
-    // components: {channel, Sider},
-    setup() {
+    data() {
         return {
-            menuOptions
+            groups: []
         }
     },
-    watch: {
-        '$route'(to) {
-            if (to.name === '') {
-                console.log(to.query)     // 在此调用函数
+    mounted() {
+        window.updateGroup = this.updateGroup
+    },
+    methods: {
+        updateGroup(value) {
+            let data = JSON.parse(value);
+            for (let i = 0, l = data['data'].length; i < l; ++i) {
+                let item = data['data'][i]
+                this.groups.push({
+                    label: () =>
+                        h(
+                            RouterLink,
+                            {
+                                to: {
+                                    path: '/group/' + item['name'],
+                                    // params: {
+                                    //     title: item['params']['title'],
+                                    //     des: item['params']['des']
+                                    // }
+                                }
+                            },
+                            {default: () => item['name']}
+                        ),
+                    key: item['name'],
+                    icon: renderIcon(Signature)
+                })
             }
         }
-    },
-    computed: {
-        key() {
-            return this.$route.name !== undefined ? this.$route.name + new Date().getTime().toString() : this.$route + new Date().getTime().toString();
-        },
-    },
-
+    }
 }
 </script>
 

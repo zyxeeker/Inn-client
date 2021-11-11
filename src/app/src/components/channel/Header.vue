@@ -5,10 +5,8 @@
         </template>
         <template #header>
             <n-breadcrumb>
-                <n-breadcrumb-item>TEST</n-breadcrumb-item>
-                <n-breadcrumb-item>TEST</n-breadcrumb-item>
-                <n-breadcrumb-item>TEST</n-breadcrumb-item>
-                <n-breadcrumb-item>TEST</n-breadcrumb-item>
+                <n-breadcrumb-item>{{ $route.params.id }}</n-breadcrumb-item>
+                <n-breadcrumb-item>{{ $route.params.title }}</n-breadcrumb-item>
             </n-breadcrumb>
         </template>
         <template #avatar>
